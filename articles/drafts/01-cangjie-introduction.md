@@ -142,7 +142,7 @@ main() {
 |------|---------|------|
 | 仓颉 | 协程 | 轻量级，用户态调度 |
 | Golang | goroutine | 轻量级，M:N调度 |
-| Java | 线程 | 重量级，系统级调度 |
+| Java | 线程/虚拟线程 | 传统线程 + Java 21虚拟线程 |
 | Kotlin | 协程 | 轻量级，结构化并发 |
 
 ### 3.4 面向对象
@@ -221,23 +221,23 @@ cjc hello.cj -o hello
 
 ### 4.2 包管理器
 
-仓颉提供**cpm**包管理器，用于管理项目依赖：
+仓颉提供**cjpm**包管理器，用于管理项目依赖：
 
 ```bash
 # 初始化项目
-cpm init
-
-# 添加依赖
-cpm add package_name
+cjpm init
 
 # 构建项目
-cpm build
+cjpm build
+
+# 运行项目
+cjpm run
 ```
 
 ### 4.3 IDE支持
 
 仓颉支持多种IDE：
-
+·······
 - **VS Code**: 通过插件支持仓颉开发
 - **DevEco Studio**: 华为官方IDE
 - **命令行**: 支持命令行开发
@@ -316,7 +316,7 @@ cpm build
 
 **不同之处**：
 - 仓颉语法更简洁
-- 仓颉有协程（Java需要CompletableFuture）
+- 仓颉有协程（Java 21引入了虚拟线程，但生态仍在发展中）
 - 仓颉有空安全（Java需要注解）
 
 ## 7. 学习路径建议
@@ -338,9 +338,9 @@ cpm build
 
 ### 7.3 推荐学习资源
 
-- **官方文档**: https://docs.cangjie-lang.cn/docs/1.0.5/toc.html
-- **本系列文章**: 系统学习仓颉编程语言
-- **示例代码**: 动手实践每个知识点
+- **官方文档**: https://cangjie-lang.cn/docs?url=%2F1.0.5%2Findex.html
+- **本系列文章**: 系统学习仓颉编程语言（后续文章将持续更新）
+- **示例代码**: 动手实践每个知识点（代码示例将在后续文章中提供）
 
 ## 8. 总结
 
@@ -361,14 +361,14 @@ cpm build
 
 ### 下一步学习
 
-- [开发环境搭建与Hello World](链接)
-- [变量与数据类型](链接)
+- **开发环境搭建与Hello World**（下一篇）
+- **变量与数据类型**（后续更新）
 
 ## 参考资料
 
-1. [仓颉官方文档](https://docs.cangjie-lang.cn/docs/1.0.5/toc.html)
+1. [仓颉官方文档](https://cangjie-lang.cn/docs?url=%2F1.0.5%2Findex.html)
 2. [仓颉编程语言官网](https://cangjie-lang.cn)
-3. [仓颉编程语言白皮书](https://developer.huawei.com/consumer/cn/doc/cangjie-guides-V5/cj-wp-abstract-V5)
+3. [仓颉编程语言白皮书](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fwhite_paper%2Fsource_zh_cn%2Fcj-wp-abstract.html)
 
 ## 练习题
 
@@ -378,6 +378,6 @@ cpm build
 
 ---
 
-**版权声明**: 本文原创发布于微信公众号【仓颉编程学习】，转载请注明出处，侵权必究。
+**版权声明**: 本文原创发布于微信公众号【如春日午后阳光】，欢迎转载，请注明出处。
 
 **版本信息**: 本文基于仓颉1.0.5 LTS版本编写
