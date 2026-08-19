@@ -124,13 +124,16 @@ main() {
 
 ```cangjie
 // 协程示例
-// 注意：协程语法可能因版本而异，请参考官方文档
-
 main() {
-    // 简单示例：主线程执行
-    println("主线程执行")
-    
-    // 实际协程示例将在并发编程章节详细讲解
+    // 创建协程并返回计算结果
+    let future = spawn {
+        println("在协程中执行")
+        return 42
+    }
+
+    // 等待协程完成并获取结果
+    let result = future.get()
+    println("协程返回: ${result}")
 }
 ```
 
