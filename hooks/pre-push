@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# 仓颉编程语言学习笔记 - Git pre-push钩子
+# 在推送到远程仓库前自动运行测试
+
+set -e
+
+# 颜色定义
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo ""
+echo "=========================================="
+echo "Git Pre-Push钩子 - 代码测试"
+echo "=========================================="
+echo ""
+
+# 检查是否在项目根目录
+if [ ! -f "tools/test-local.sh" ]; then
+    echo -e "${RED}[ERROR]${NC} 未找到测试脚本 tools/test-local.sh"
+    echo "请确保您在项目根目录"
+    exit 1
+fi
+
+# 运行本地测试
+echo -e "${BLUE}[INFO]${NC} 运行本地测试..."
+echo ""
+
+if ./tools/test-local.sh; then
+    echo ""
+    echo -e "${GREEN}[SUCCESS]${NC} 所有测试通过！"
+    echo ""
+    exit 0
+else
+    echo ""
+    echo -e "${RED}[ERROR]${NC} 测试失败！"
+    echo ""
+    echo -e "${YELLOW}[WARNING]${NC} 根据项目规范，本地测试未通过前禁止推送到GitHub"
+    echo ""
+    echo "请修复所有测试失败的代码示例后重试"
+    echo ""
+    echo "如需跳过测试（不推荐），请使用: git push --no-verify"
+    echo ""
+    exit 1
+fi
