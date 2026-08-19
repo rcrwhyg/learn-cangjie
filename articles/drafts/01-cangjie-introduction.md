@@ -98,7 +98,7 @@ class Person {
 }
 
 main() {
-    let person = Person(name: "Alice", age: 25)
+    let person = Person("Alice", 25)
     println(person.name)
     // 当 person 不再使用时，GC会自动回收内存
 }
@@ -158,20 +158,20 @@ interface Drawable {
     func draw(): Unit
 }
 
-class Circle implements Drawable {
-    let radius: Double
+class Circle <: Drawable {
+    let radius: Float64
     
-    init(radius: Double) {
+    init(radius: Float64) {
         this.radius = radius
     }
     
-    func draw() {
+    public func draw(): Unit {
         println("画一个半径为${radius}的圆")
     }
 }
 
 main() {
-    let circle = Circle(radius: 5.0)
+    let circle = Circle(5.0)
     circle.draw()
 }
 ```
@@ -192,7 +192,7 @@ main() {
     let numbers = [1, 2, 3, 4, 5]
     
     // 简单遍历示例
-    for number in numbers {
+    for (number in numbers) {
         println(number)
     }
     

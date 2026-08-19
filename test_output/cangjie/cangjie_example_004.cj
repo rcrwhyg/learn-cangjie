@@ -3,19 +3,19 @@ interface Drawable {
     func draw(): Unit
 }
 
-class Circle implements Drawable {
-    let radius: Double
+class Circle <: Drawable {
+    let radius: Float64
     
-    init(radius: Double) {
+    init(radius: Float64) {
         this.radius = radius
     }
     
-    func draw() {
+    public func draw(): Unit {
         println("画一个半径为${radius}的圆")
     }
 }
 
 main() {
-    let circle = Circle(radius: 5.0)
+    let circle = Circle(5.0)
     circle.draw()
 }

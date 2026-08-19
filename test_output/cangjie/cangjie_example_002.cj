@@ -10,7 +10,7 @@ class Person {
 }
 
 main() {
-    let person = Person(name: "Alice", age: 25)
+    let person = Person("Alice", 25)
     println(person.name)
     // 当 person 不再使用时，GC会自动回收内存
 }
