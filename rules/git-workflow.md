@@ -122,10 +122,18 @@ Closes #123
 
 1. **文章完成**
    - 文章内容完成并经过审核
-   - 代码示例验证通过
+   - 代码示例验证通过（本地测试和GitHub Actions测试）
    - 格式排版符合规范
 
-2. **本地提交**
+2. **本地测试**
+   ```bash
+   # 运行本地测试
+   ./tools/test-local.sh
+   
+   # 确认所有测试通过
+   ```
+
+3. **本地提交**
    ```bash
    # 添加文件
    git add articles/published/article-name.md
@@ -134,11 +142,11 @@ Closes #123
    git commit -m "feat(article): 发布文章《文章标题》"
    ```
 
-3. **用户确认**
+4. **用户确认**
    - 提交信息发送给用户确认
    - 用户确认无误后继续
 
-4. **合并到main**
+5. **合并到main**
    ```bash
    # 切换到main分支
    git checkout main
@@ -150,7 +158,12 @@ Closes #123
    git push origin main
    ```
 
-5. **创建标签**
+6. **GitHub Actions验证**
+   - 等待GitHub Actions测试完成
+   - 确认所有测试通过
+   - 查看测试报告
+
+7. **创建标签**
    ```bash
    # 创建版本标签
    git tag -a v1.0.0 -m "发布文章《文章标题》"
