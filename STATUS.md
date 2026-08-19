@@ -29,10 +29,10 @@
 - [x] docs/ - 学习文档目录结构
 - [x] articles/ - 文章目录结构
 
-### 🔄 进行中
-- [ ] 初始化Git仓库
-- [ ] 创建初始提交
-- [ ] 创建GitHub仓库
+### ✅ 已完成（基础设施）
+- [x] 初始化Git仓库
+- [x] 创建初始提交
+- [x] 创建GitHub仓库: https://github.com/rcrwhyg/learn-cangjie
 
 ### ⏳ 待开始
 - [ ] 第一篇文章撰写
