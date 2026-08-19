@@ -1,0 +1,291 @@
+name: Test Code Examples
+
+on:
+  push:
+    branches: [ main, draft ]
+  pull_request:
+    branches: [ main, draft ]
+  workflow_dispatch:
+
+jobs:
+  test-cangjie:
+    name: Test Cangjie Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Cangjie
+        run: |
+          # 下载并安装仓颉SDK
+          wget https://cangjie-lang.cn/download/1.0.5/cangjie-1.0.5-linux-x64.tar.gz
+          tar -xzf cangjie-1.0.5-linux-x64.tar.gz
+          sudo mv cangjie-1.0.5 /opt/cangjie
+          echo "/opt/cangjie/bin" >> $GITHUB_PATH
+
+      - name: Verify Cangjie installation
+        run: cjc --version
+
+      - name: Extract and test Cangjie code examples
+        run: |
+          # 从文章中提取仓颉代码示例
+          python3 .github/scripts/extract_code.py --lang cangjie --output cangjie_examples/
+          
+          # 编译并测试每个示例
+          for file in cangjie_examples/*.cj; do
+            echo "Testing $file..."
+            cjc "$file" -o "${file%.cj}" || exit 1
+            # 如果有main函数，运行程序
+            if grep -q "^main()" "$file"; then
+              "./${file%.cj}" || exit 1
+            fi
+          done
+
+  test-java:
+    name: Test Java Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Verify Java installation
+        run: java --version
+
+      - name: Extract and test Java code examples
+        run: |
+          # 从文章中提取Java代码示例
+          python3 .github/scripts/extract_code.py --lang java --output java_examples/
+          
+          # 编译并测试每个示例
+          for file in java_examples/*.java; do
+            echo "Testing $file..."
+            javac "$file" || exit 1
+            # 运行main类
+            classname=$(basename "$file" .java)
+            java -cp java_examples/ "$classname" || exit 1
+          done
+
+  test-golang:
+    name: Test Golang Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Verify Go installation
+        run: go version
+
+      - name: Extract and test Go code examples
+        run: |
+          # 从文章中提取Go代码示例
+          python3 .github/scripts/extract_code.py --lang go --output go_examples/
+          
+          # 编译并测试每个示例
+          for file in go_examples/*.go; do
+            echo "Testing $file..."
+            go run "$file" || exit 1
+          done
+
+  test-kotlin:
+    name: Test Kotlin Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Kotlin
+        run: |
+          # 下载并安装Kotlin
+          wget https://github.com/JetBrains/kotlin/releases/download/v1.9.23/kotlin-compiler-1.9.23.zip
+          unzip kotlin-compiler-1.9.23.zip
+          sudo mv kotlinc /opt/kotlinc
+          echo "/opt/kotlinc/bin" >> $GITHUB_PATH
+
+      - name: Verify Kotlin installation
+        run: kotlinc -version
+
+      - name: Extract and test Kotlin code examples
+        run: |
+          # 从文章中提取Kotlin代码示例
+          python3 .github/scripts/extract_code.py --lang kotlin --output kotlin_examples/
+          
+          # 编译并测试每个示例
+          for file in kotlin_examples/*.kt; do
+            echo "Testing $file..."
+            kotlinc "$file" -include-runtime -d "${file%.kt}.jar" || exit 1
+            java -jar "${file%.kt}.jar" || exit 1
+          done
+
+  test-swift:
+    name: Test Swift Examples
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify Swift installation
+        run: swift --version
+
+      - name: Extract and test Swift code examples
+        run: |
+          # 从文章中提取Swift代码示例
+          python3 .github/scripts/extract_code.py --lang swift --output swift_examples/
+          
+          # 编译并测试每个示例
+          for file in swift_examples/*.swift; do
+            echo "Testing $file..."
+            swiftc "$file" -o "${file%.swift}" || exit 1
+            "./${file%.swift}" || exit 1
+          done
+
+  test-rust:
+    name: Test Rust Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Verify Rust installation
+        run: rustc --version
+
+      - name: Extract and test Rust code examples
+        run: |
+          # 从文章中提取Rust代码示例
+          python3 .github/scripts/extract_code.py --lang rust --output rust_examples/
+          
+          # 编译并测试每个示例
+          for file in rust_examples/*.rs; do
+            echo "Testing $file..."
+            rustc "$file" -o "${file%.rs}" || exit 1
+            "./${file%.rs}" || exit 1
+          done
+
+  test-cpp:
+    name: Test C++ Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup C++
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ cmake
+
+      - name: Verify C++ installation
+        run: g++ --version
+
+      - name: Extract and test C++ code examples
+        run: |
+          # 从文章中提取C++代码示例
+          python3 .github/scripts/extract_code.py --lang cpp --output cpp_examples/
+          
+          # 编译并测试每个示例
+          for file in cpp_examples/*.cpp; do
+            echo "Testing $file..."
+            g++ -std=c++17 "$file" -o "${file%.cpp}" || exit 1
+            "./${file%.cpp}" || exit 1
+          done
+
+  test-zig:
+    name: Test Zig Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Zig
+        run: |
+          wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
+          tar -xf zig-linux-x86_64-0.11.0.tar.xz
+          sudo mv zig-linux-x86_64-0.11.0 /opt/zig
+          echo "/opt/zig" >> $GITHUB_PATH
+
+      - name: Verify Zig installation
+        run: zig version
+
+      - name: Extract and test Zig code examples
+        run: |
+          # 从文章中提取Zig代码示例
+          python3 .github/scripts/extract_code.py --lang zig --output zig_examples/
+          
+          # 编译并测试每个示例
+          for file in zig_examples/*.zig; do
+            echo "Testing $file..."
+            zig run "$file" || exit 1
+          done
+
+  test-python:
+    name: Test Python Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify Python installation
+        run: python3 --version
+
+      - name: Extract and test Python code examples
+        run: |
+          # 从文章中提取Python代码示例
+          python3 .github/scripts/extract_code.py --lang python --output python_examples/
+          
+          # 测试每个示例
+          for file in python_examples/*.py; do
+            echo "Testing $file..."
+            python3 "$file" || exit 1
+          done
+
+  summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [test-cangjie, test-java, test-golang, test-kotlin, test-swift, test-rust, test-cpp, test-zig, test-python]
+    if: always()
+    steps:
+      - name: Generate test report
+        run: |
+          echo "# 代码示例测试报告" > test_report.md
+          echo "" >> test_report.md
+          echo "## 测试结果" >> test_report.md
+          echo "" >> test_report.md
+          echo "| 语言 | 状态 |" >> test_report.md
+          echo "|------|------|" >> test_report.md
+          echo "| 仓颉 | ${{ needs.test-cangjie.result }} |" >> test_report.md
+          echo "| Java | ${{ needs.test-java.result }} |" >> test_report.md
+          echo "| Golang | ${{ needs.test-golang.result }} |" >> test_report.md
+          echo "| Kotlin | ${{ needs.test-kotlin.result }} |" >> test_report.md
+          echo "| Swift | ${{ needs.test-swift.result }} |" >> test_report.md
+          echo "| Rust | ${{ needs.test-rust.result }} |" >> test_report.md
+          echo "| C++ | ${{ needs.test-cpp.result }} |" >> test_report.md
+          echo "| Zig | ${{ needs.test-zig.result }} |" >> test_report.md
+          echo "| Python | ${{ needs.test-python.result }} |" >> test_report.md
+          
+          cat test_report.md
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test_report.md
