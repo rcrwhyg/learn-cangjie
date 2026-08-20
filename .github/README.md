@@ -32,20 +32,6 @@ python3 .github/scripts/sync_examples.py
 
 `tools/test-local.sh` 与 Actions 使用相同的 `examples/` 目录。macOS 上对仓颉执行静态库编译检查；Linux 和 Windows 执行完整编译运行。
 
-## 微信发布器测试
-
-工作流文件：`.github/workflows/wechat-publisher-test.yml`
-
-该工作流在发布器代码、文章或规范示例变化时执行：
-
-- `npm ci`
-- 文章与示例同步检查
-- TypeScript 类型检查
-- Vitest 单元测试和 V8 覆盖率
-- TypeScript 构建
-
-普通 CI 不调用真实微信公众号 API；真实接口测试必须显式配置凭证后单独执行。
-
 ## 新增示例
 
 1. 在 `examples/<language>/` 创建完整、可运行的源文件。

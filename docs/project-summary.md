@@ -44,7 +44,7 @@
 
 #### 1. 文章风格规范
 - **文件**: `rules/article-style.md`
-- **内容**: 整体风格、排版规范、文章结构、代码规范、特殊元素
+- **内容**: 文章结构、代码规范和特殊元素
 - **状态**: 已完成
 
 #### 2. 内容质量要求
@@ -66,7 +66,7 @@
 
 #### 2. 文章模板规范
 - **文件**: `specs/article-template.md`
-- **内容**: 模板结构、模板元素说明、文章类型模板、格式规范、公众号特定格式
+- **内容**: 模板结构、模板元素说明、文章类型模板和内容规范
 - **状态**: 已完成
 
 #### 3. 版本策略
@@ -144,7 +144,6 @@ learn-cangjie/
 │   └── comparison/              # 语言对比
 ├── articles/                    # 文章存储
 │   ├── drafts/                  # 草稿
-│   ├── published/               # 已发布
 │   └── templates/               # 文章模板
 │       ├── README.md            # 模板使用指南
 │       └── 01-variables-and-types-template.md
@@ -156,10 +155,7 @@ learn-cangjie/
 │   └── glossary.md              # 术语表
 ├── tools/                       # 工具脚本
 │   ├── publish.sh               # 发布脚本
-│   └── wechat-publisher/        # TypeScript 微信公众号发布器
-├── skills/wechat-publisher/     # 发布器 AI 工作技能
-├── rules/wechat-publisher.md    # 发布器约束
-└── specs/wechat-publisher.md    # 发布器技术设计
+└── tools/                       # 仓库辅助脚本
 ```
 
 ## 技术栈
@@ -178,7 +174,6 @@ learn-cangjie/
 - **VS Code**: 代码编辑器
 - **Shell**: 脚本编写
 - **Python**: 辅助脚本
-- **Node.js + TypeScript**: 微信公众号排版、CLI 和 MCP Server
 
 ## 质量保证
 
@@ -208,7 +203,7 @@ learn-cangjie/
 3. **文章撰写**: 基于知识库撰写文章
 4. **审核优化**: 与用户协商修改
 5. **版本管理**: 本地提交，用户确认后推送
-6. **发布准备**: 生成公众号可导入格式
+6. **发布准备**: 将 Markdown 交由用户选择的工具处理
 
 ### 质量检查
 1. **技术准确性**: 基于官方文档，技术准确
@@ -265,7 +260,6 @@ learn-cangjie/
 
 ### 中期目标（1-2月）
 1. 完成阶段一前3篇文章
-2. 建立文章发布流程
 3. 收集读者反馈
 
 ### 长期目标（3-6月）

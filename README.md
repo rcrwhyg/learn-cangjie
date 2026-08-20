@@ -31,18 +31,15 @@ learn-cangjie/
 │   └── comparison/           # 语言对比
 ├── articles/                 # 文章存储目录
 │   ├── drafts/               # 草稿
-│   ├── published/            # 已发布
 │   └── templates/            # 文章模板
 ├── examples/                 # 可测试代码示例的唯一来源
 │   └── cangjie/              # 仓颉示例
 ├── skills/                   # 项目级 AI 工作技能
-│   └── wechat-publisher/     # 微信公众号发布技能
 ├── knowledge-base/           # 知识库
 │   ├── cheatsheet.md         # 语法速查表
 │   └── glossary.md           # 术语表
 └── tools/                    # 工具脚本
     ├── publish.sh            # 发布脚本
-    └── wechat-publisher/     # TypeScript 微信公众号发布器
 ```
 
 ## 工作流程
@@ -55,7 +52,7 @@ learn-cangjie/
 6. **审核优化**: 与用户协商修改，确保质量
 7. **版本管理**: 本地提交，用户确认后推送到GitHub
 8. **自动测试**: GitHub Actions测试规范源并校验文章同步
-8. **发布准备**: 确认测试通过后，生成公众号可导入的文章格式
+8. **发布准备**: 确认内容和示例测试通过后，交由用户选择的工具处理
 
 ## AI Agent协作
 
@@ -64,11 +61,10 @@ learn-cangjie/
 - 文章初稿撰写和优化
 - 代码示例生成和验证
 - 多语言对比分析
-- 文章格式化和排版
+- 文章结构和内容质量检查
 
 所有AI Agent的行为规范详见 [AGENT.md](./AGENT.md)
 
-微信公众号发布工具的架构和使用方式详见 [`specs/wechat-publisher.md`](./specs/wechat-publisher.md)。
 
 ## 快速开始
 

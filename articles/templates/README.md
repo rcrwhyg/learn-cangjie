@@ -1,6 +1,6 @@
 # 文章模板使用指南
 
-> 本目录包含微信公众号文章的统一模板，用于保证文章风格的一致性
+> 本目录包含学习文章的统一内容模板，用于保证文章结构的一致性
 
 ## 模板列表
 
@@ -45,7 +45,7 @@ cp articles/templates/01-variables-and-types-template.md articles/drafts/02-oper
 ### 6. 质量检查
 - 技术内容准确性
 - 代码示例可运行性
-- 格式排版规范性
+- Markdown 结构规范性
 - 语言表达流畅性
 
 ## 模板自定义
@@ -101,7 +101,7 @@ cp articles/templates/01-variables-and-types-template.md articles/drafts/02-oper
 
 ### 风格检查
 - [ ] 符合模板规范
-- [ ] 排版一致
+- [ ] Markdown 结构一致
 - [ ] 风格统一
 - [ ] 专业感强
 

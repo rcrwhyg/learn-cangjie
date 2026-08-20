@@ -6,12 +6,5 @@ echo "运行提交前校验..."
 python3 .github/scripts/sync_examples.py
 ./tools/test-local.sh
 
-if [ -f "tools/wechat-publisher/package.json" ]; then
-    if [ ! -d "tools/wechat-publisher/node_modules" ]; then
-        echo "缺少微信发布器依赖，请先运行: npm install --prefix tools/wechat-publisher"
-        exit 1
-    fi
-    npm --prefix tools/wechat-publisher run check
-fi
 
 echo "提交前校验通过"

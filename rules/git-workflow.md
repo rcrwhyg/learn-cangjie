@@ -138,7 +138,7 @@ Closes #123
 1. **文章完成**
    - 文章内容完成并经过审核
    - 代码示例验证通过（本地测试和GitHub Actions测试）
-   - 格式排版符合规范
+   - Markdown 结构符合规范
 
 2. **本地测试**
    ```bash
@@ -151,7 +151,7 @@ Closes #123
 3. **本地提交**
    ```bash
    # 添加文件
-   git add articles/published/article-name.md
+   git add articles/drafts/article-name.md
    
    # 提交更改
    git commit -m "feat(article): 发布文章《文章标题》"
@@ -260,7 +260,7 @@ Closes #123
 ### 审查内容
 - 技术内容准确性
 - 代码示例可运行性
-- 格式排版规范性
+- Markdown 结构规范性
 - 文章结构合理性
 
 ### 审查流程
@@ -273,7 +273,7 @@ Closes #123
 ### 审查标准
 - 技术内容准确无误
 - 代码示例完整可运行
-- 格式排版符合规范
+- Markdown 结构符合规范
 - 文章结构清晰合理
 
 ## 冲突解决

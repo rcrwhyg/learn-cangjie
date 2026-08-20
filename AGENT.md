@@ -66,7 +66,7 @@
 7. **最终确认**
    - 用户确认文章质量
    - 检查技术准确性
-   - 确认格式和排版
+   - 确认 Markdown 结构和内容质量
 
 8. **版本提交**
    - 本地Git提交
@@ -75,8 +75,7 @@
 
 9. **发布准备**
    - 确认GitHub Actions测试通过
-   - 生成公众号可导入的文章格式
-   - 准备发布
+   - 将 Markdown 文章交给用户选择的公众号工具处理
 
 ### 知识库维护流程
 
@@ -179,14 +178,6 @@
 
 ## 工具使用规范
 
-### 微信公众号发布器
-
-- 相关约束见 [`rules/wechat-publisher.md`](./rules/wechat-publisher.md)
-- 相关技能见 [`skills/wechat-publisher/SKILL.md`](./skills/wechat-publisher/SKILL.md)
-- 发布器实现见 [`tools/wechat-publisher/`](./tools/wechat-publisher/)
-- 优先使用 MCP 工具，CLI 用于调试和自动化
-- 创建草稿前必须先执行 dry-run 或预览
-
 ### 文档工具
 - **官方文档**: 优先使用官方文档作为信息源
 - **代码验证**: 重要代码示例需要验证
@@ -207,7 +198,7 @@
 ### 文章发布前检查
 - [ ] 技术内容准确无误
 - [ ] 代码示例可运行
-- [ ] 格式排版符合规范
+- [ ] Markdown 结构清晰
 - [ ] 语言对比分析到位
 - [ ] 用户确认无问题
 - [ ] Git提交信息规范

@@ -57,13 +57,6 @@ chmod +x .git/hooks/pre-push
 
 - 文章与 `examples/` 同步检查
 - 仓颉示例本地测试
-- 微信发布器 TypeScript 类型检查和单元测试
-
-如果发布器依赖未安装，提交会被阻止。安装依赖：
-
-```bash
-npm install --prefix tools/wechat-publisher
-```
 
 ### 正常使用
 
