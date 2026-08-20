@@ -55,6 +55,7 @@
 - **类型推断**: 编译器可以自动推断变量类型，减少显式类型注解
 - **类型安全**: 避免类型混淆导致的错误
 
+<!-- example: cangjie/001-types.cj -->
 ```cangjie
 // 类型推断示例
 main() {
@@ -85,6 +86,7 @@ main() {
 - **避免内存泄漏**: GC自动回收不再使用的对象
 - **降低开发门槛**: 减少因内存管理导致的bug
 
+<!-- example: cangjie/002-memory.cj -->
 ```cangjie
 // 内存管理示例
 class Person {
@@ -122,6 +124,7 @@ main() {
 - **高效调度**: 用户态调度，减少上下文切换开销
 - **简洁语法**: 提供简洁的异步编程语法
 
+<!-- example: cangjie/003-coroutines.cj -->
 ```cangjie
 // 协程示例
 main() {
@@ -155,6 +158,7 @@ main() {
 - **接口**: 支持多接口实现
 - **封装**: 支持访问控制
 
+<!-- example: cangjie/004-oop.cj -->
 ```cangjie
 // 面向对象示例
 interface Drawable {
@@ -187,6 +191,7 @@ main() {
 - **Lambda表达式**: 支持匿名函数
 - **不可变性**: 支持不可变变量
 
+<!-- example: cangjie/005-functional.cj -->
 ```cangjie
 // 函数式编程示例
 // 注意：数组方法可能因版本而异，请参考官方文档

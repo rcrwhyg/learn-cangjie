@@ -2,6 +2,25 @@
 
 > 本文档说明如何编写可测试的代码示例
 
+## 唯一来源与同步
+
+完整可测试示例统一维护在 `examples/<language>/`，文章只负责展示。文章草稿和已发布文章中的代码块，必须在代码块前标记对应源文件：
+
+```markdown
+<!-- example: cangjie/001-types.cj -->
+```cangjie
+// 与 examples/cangjie/001-types.cj 完全一致
+```
+```
+
+不要把示例写入 `test_output/`；该目录只用于临时产物，且不应提交。`articles/templates/` 中的演示片段只用于说明文章结构，不参与自动测试。
+
+修改示例时，先修改 `examples/` 源文件，再同步文章代码块，并运行：
+
+```bash
+python3 .github/scripts/sync_examples.py
+```
+
 ## 核心原则
 
 ### 1. 可运行性
@@ -264,6 +283,7 @@ if __name__ == "__main__":
 ### 仓颉示例
 
 ```markdown
+<!-- example: cangjie/001-types.cj -->
 ```cangjie
 main() {
     println("Hello, Cangjie!")
@@ -302,43 +322,17 @@ func main() {
 ### 本地测试
 
 ```bash
-# 测试仓颉代码
-cjc hello.cj -o hello
-./hello
-
-# 测试Java代码
-javac HelloWorld.java
-java HelloWorld
-
-# 测试Golang代码
-go run hello.go
-
-# 测试Kotlin代码
-kotlinc HelloWorld.kt -include-runtime -d HelloWorld.jar
-java -jar HelloWorld.jar
-
-# 测试Swift代码
-swift hello.swift
-
-# 测试Rust代码
-rustc hello.rs -o hello
-./hello
-
-# 测试C++代码
-g++ -std=c++17 hello.cpp -o hello
-./hello
-
-# 测试Python代码
-python3 hello.py
+python3 .github/scripts/sync_examples.py
+./tools/test-local.sh
 ```
 
 ### 自动化测试
 
-使用GitHub Actions自动测试所有代码示例：
+使用GitHub Actions自动测试 `examples/` 中的规范源文件：
 
 ```bash
-# 运行本地测试
-./tools/test-local.sh
+# 查看最近一次工作流
+gh run list --workflow "Test Code Examples.yml" --limit 5
 ```
 
 ## 常见问题
@@ -388,7 +382,7 @@ A:
 
 - [GitHub Actions说明](../.github/README.md)
 - [本地测试脚本](../tools/test-local.sh)
-- [代码提取脚本](../.github/scripts/extract_code.py)
+- [示例同步检查脚本](../.github/scripts/sync_examples.py)
 
 ---
 

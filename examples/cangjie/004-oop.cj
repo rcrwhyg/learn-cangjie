@@ -5,11 +5,11 @@ interface Drawable {
 
 class Circle <: Drawable {
     let radius: Float64
-    
+
     init(radius: Float64) {
         this.radius = radius
     }
-    
+
     public func draw(): Unit {
         println("画一个半径为${radius}的圆")
     }

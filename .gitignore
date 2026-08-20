@@ -42,6 +42,7 @@ temp/
 .env.*.local
 
 # 测试文件
+test_output/
 coverage/
 .coverage
 htmlcov/

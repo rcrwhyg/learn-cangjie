@@ -2,7 +2,7 @@
 class Person {
     let name: String
     let age: Int
-    
+
     init(name: String, age: Int) {
         this.name = name
         this.age = age

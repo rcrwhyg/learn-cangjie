@@ -3,11 +3,11 @@
 
 main() {
     let numbers = [1, 2, 3, 4, 5]
-    
+
     // 简单遍历示例
     for (number in numbers) {
         println(number)
     }
-    
+
     // 实际高阶函数示例将在函数式编程章节详细讲解
 }

@@ -64,8 +64,11 @@ git push
 ### 查看测试报告
 
 ```bash
-# 查看测试报告
-cat test_output/test_report.md
+# 检查文章和规范示例同步
+python3 .github/scripts/sync_examples.py
+
+# 运行本地测试
+./tools/test-local.sh
 ```
 
 ### 跳过测试（不推荐）
@@ -90,11 +93,9 @@ Git调用 pre-push 钩子
        ↓
 钩子运行 ./tools/test-local.sh
        ↓
-测试脚本提取代码示例
-       ↓
-测试脚本编译和运行代码
-       ↓
-测试脚本生成测试报告
+测试脚本检查文章与 examples/ 的同步
+        ↓
+测试脚本编译和运行 examples/ 中的规范源
        ↓
 如果测试通过 → 允许推送
 如果测试失败 → 阻止推送
@@ -130,8 +131,8 @@ git push
 **原因**: 代码示例无法编译或运行
 
 **解决方案**:
-1. 查看测试报告: `cat test_output/test_report.md`
-2. 修复失败的代码示例
+1. 查看同步检查和编译器诊断
+2. 修复 `examples/` 中的规范源及文章同步内容
 3. 重新运行测试: `./tools/test-local.sh`
 4. 测试通过后再次推送
 

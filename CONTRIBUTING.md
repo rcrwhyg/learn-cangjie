@@ -43,6 +43,9 @@
 #### 示例代码
 
 - 提供完整的代码示例
+- 先在 `examples/<language>/` 中维护唯一规范源
+- 在文章代码块前添加 `<!-- example: 路径 -->` 同步标记
+- 运行 `python3 .github/scripts/sync_examples.py` 校验文章同步
 - 优化现有代码
 - 添加错误处理
 - 改进代码风格
@@ -92,6 +95,8 @@ git remote add upstream https://github.com/rcrwhyg/learn-cangjie.git
 - 安装Markdown编辑器
 - 安装仓颉SDK（用于测试代码）
 - 配置Git用户信息
+
+示例代码的详细管理规则见 [`examples/README.md`](./examples/README.md) 和 [`rules/code-testing.md`](./rules/code-testing.md)。
 
 ### 2. 开发工作
 
@@ -213,6 +218,7 @@ git push origin feature/your-feature-name
 - 命名规范清晰
 - 注释详细完整
 - 错误处理完善
+- 示例源文件与文章代码块必须通过同步校验
 
 #### 提交规范
 
