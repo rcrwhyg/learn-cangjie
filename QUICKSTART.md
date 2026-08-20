@@ -62,8 +62,8 @@ learn-cangjie/
 │   └── version-strategy.md   # 版本策略
 ├── docs/                     # 学习文档
 ├── articles/                 # 文章存储
-│   ├── README.md             # 文章状态与目录约定
-│   ├── drafts/               # 草稿
+│   ├── README.md             # 文章目录约定
+│   ├── 01-cangjie-introduction.md
 │   └── templates/            # 文章模板
 ├── knowledge-base/           # 知识库
 │   ├── cheatsheet.md         # 速查表
@@ -89,7 +89,7 @@ learn-cangjie/
 - 快速浏览基础语法部分
 
 #### 编程新手
-- 从文章1《仓颉编程语言简介》草稿开始
+- 从文章1《仓颉编程语言简介》开始
 - 循序渐进学习每个知识点
 - 多做练习，多写代码
 
@@ -100,7 +100,7 @@ learn-cangjie/
 
 ### 5. 开始学习
 
-当前可阅读的第一篇内容是 [文章1草稿](./articles/drafts/01-cangjie-introduction.md)。草稿会在审核确认后移动到 `articles/` 根目录成为正式文章。
+当前可阅读的第一篇内容是 [文章1](./articles/01-cangjie-introduction.md)。文章会在同一份文件上持续修改，确认后直接交给公众号工具发布。
 
 #### 阅读文章
 1. 选择要学习的文章

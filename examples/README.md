@@ -3,7 +3,7 @@
 `examples/` 是项目代码示例的唯一规范来源。
 
 - 每个可测试示例只在这里维护一份源文件。
-- 草稿和已发布文章通过 `<!-- example: 路径 -->` 标记引用示例。
+- 文章通过 `<!-- example: 路径 -->` 标记引用示例。
 - 文章中的代码块必须与源文件保持同步。
 - 运行 `python3 .github/scripts/sync_examples.py` 检查同步状态。
 - `articles/templates/` 只存放写作模板，不参与示例测试。

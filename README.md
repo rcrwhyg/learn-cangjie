@@ -29,8 +29,8 @@ learn-cangjie/
 │   ├── ecosystem/            # 生态工具
 │   └── comparison/           # 语言对比
 ├── articles/                 # 文章存储目录
-│   ├── README.md             # 文章状态与目录约定
-│   ├── drafts/               # 草稿
+│   ├── README.md             # 文章目录约定
+│   ├── 01-cangjie-introduction.md
 │   └── templates/            # 文章模板
 ├── examples/                 # 可测试代码示例的唯一来源
 │   └── cangjie/              # 仓颉示例
@@ -70,7 +70,7 @@ learn-cangjie/
 1. 克隆仓库
 2. 阅读 [AGENT.md](./AGENT.md) 了解AI Agent行为规范
 3. 查看 [学习计划](./specs/learning-plan.md) 了解学习路径
-4. 阅读第一篇文章草稿：[仓颉编程语言简介与特性概览](./articles/drafts/01-cangjie-introduction.md)
+4. 阅读第一篇文章：[仓颉编程语言简介与特性概览](./articles/01-cangjie-introduction.md)
 
 ## 贡献指南
 

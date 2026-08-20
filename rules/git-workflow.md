@@ -7,7 +7,7 @@
 ### 分支类型
 ```
 main          # 主分支，存放已发布的文章
-├── draft     # 草稿分支，存放正在撰写的文章
+├── draft     # 开发分支，存放正在修改的文章
 ├── feature/  # 特性分支，用于特定主题的学习
 │   ├── feature/basics      # 基础语法学习
 │   ├── feature/advanced    # 进阶特性学习
@@ -151,7 +151,7 @@ Closes #123
 3. **本地提交**
    ```bash
    # 添加文件
-   git add articles/drafts/article-name.md
+   git add articles/article-name.md
    
    # 提交更改
    git commit -m "feat(article): 发布文章《文章标题》"

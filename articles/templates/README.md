@@ -22,8 +22,8 @@
 
 ### 2. 复制模板
 ```bash
-# 复制模板到草稿目录
-cp articles/templates/01-variables-and-types-template.md articles/drafts/02-operators.md
+# 复制模板到文章目录
+cp articles/templates/01-variables-and-types-template.md articles/02-operators.md
 ```
 
 ### 3. 替换占位符

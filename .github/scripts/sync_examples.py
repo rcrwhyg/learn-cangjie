@@ -18,7 +18,6 @@ EXTENSIONS = {
     "zig": ".zig",
     "python": ".py",
 }
-ARTICLE_DIRS = ("drafts", "published")
 FENCE_RE = re.compile(r"```([A-Za-z0-9_+-]+)\n(.*?)```", re.DOTALL)
 MARKER_RE = re.compile(r"<!--\s*example:\s*([^\s]+)\s*-->\s*$")
 
@@ -29,10 +28,9 @@ def normalized(text):
 
 
 def article_files(articles_dir):
-    for directory in ARTICLE_DIRS:
-        path = articles_dir / directory
-        if path.exists():
-            yield from sorted(path.glob("**/*.md"))
+    for path in sorted(articles_dir.glob("**/*.md")):
+        if "templates" not in path.relative_to(articles_dir).parts:
+            yield path
 
 
 def main():
@@ -79,7 +77,7 @@ def main():
 
     for relative in sorted(source_files):
         if relative not in references:
-            errors.append(f"{relative}: not referenced by a draft or published article")
+            errors.append(f"{relative}: not referenced by an article")
 
     if errors:
         print("Example synchronization failed:")

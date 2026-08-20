@@ -14,7 +14,7 @@
 
 工作流只测试 `examples/` 中的规范源文件，不扫描文章和模板目录。执行顺序为：
 
-1. 检查 `examples/` 与草稿、已发布文章的同步关系。
+1. 检查 `examples/` 与文章的同步关系。
 2. 下载并校验仓颉 1.0.5 LTS Linux SDK。
 3. 编译并运行规范示例。
 
@@ -35,7 +35,7 @@ python3 .github/scripts/sync_examples.py
 ## 新增示例
 
 1. 在 `examples/<language>/` 创建完整、可运行的源文件。
-2. 在草稿或已发布文章的代码块前添加：
+2. 在文章的代码块前添加：
 
    `<!-- example: <language>/<file> -->`
 
