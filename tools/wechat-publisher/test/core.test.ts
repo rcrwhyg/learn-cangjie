@@ -41,10 +41,16 @@ describe("configuration and token storage", () => {
 describe("article renderer", () => {
   it("renders HTML with inline styles", () => {
     const renderer = new ArticleRenderer(stylesDir);
-    const result = renderer.render(parseArticle("# Title\n\n## Section\n\nText"));
+    const result = renderer.render(parseArticle("# Title\n\n**垃圾回收（GC）**\n\n<!-- example: cangjie/001-types.cj -->\n\n```cangjie\nlet value = 42\n```"));
     expect(result.html).toContain("wechat-article");
     expect(result.html).toContain("style=");
-    expect(result.html).toContain("Section");
+    expect(result.html).toContain("垃圾回收（GC）");
+    expect(result.html).toContain("<strong style=");
+    expect(result.html).not.toContain("**垃圾回收");
+    expect(result.html).toContain("code-window");
+    expect(result.html).toContain("syntax-keyword");
+    expect(result.html).not.toContain("example: cangjie");
+    expect(result.html).toContain("wechat-footer");
   });
 });
 

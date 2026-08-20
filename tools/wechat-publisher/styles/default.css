@@ -24,6 +24,21 @@
   font-size: 18px;
   margin: 24px 0 12px;
 }
+.wechat-article strong {
+  color: #1e3a5f;
+  font-weight: 700;
+}
+.wechat-article a {
+  color: #1677ff;
+  text-decoration: none;
+}
+.wechat-article ul,
+.wechat-article ol {
+  padding-left: 24px;
+}
+.wechat-article li::marker {
+  color: #1677ff;
+}
 .wechat-article blockquote {
   background: #f5f7fa;
   border-left: 4px solid #cbd5e1;
@@ -38,6 +53,55 @@
   overflow-x: auto;
   padding: 16px;
 }
+.wechat-article .code-window {
+  background: #1e293b;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+  margin: 20px 0;
+  overflow: hidden;
+}
+.wechat-article .code-window-bar {
+  align-items: center;
+  background: #334155;
+  display: flex;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+}
+.wechat-article .code-dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+.wechat-article .code-dot-red { background: #fb7185; }
+.wechat-article .code-dot-yellow { background: #fbbf24; }
+.wechat-article .code-dot-green { background: #4ade80; }
+.wechat-article .code-language {
+  color: #cbd5e1;
+  font-family: sans-serif;
+  font-size: 12px;
+  margin-left: 8px;
+}
+.wechat-article .code-window pre {
+  background: transparent;
+  border-radius: 0;
+  margin: 0;
+}
+.wechat-article .code-window code {
+  color: #e2e8f0;
+  display: block;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: auto;
+  padding: 16px;
+  white-space: pre;
+}
+.wechat-article .syntax-comment { color: #94a3b8; }
+.wechat-article .syntax-string { color: #86efac; }
+.wechat-article .syntax-keyword { color: #93c5fd; }
+.wechat-article .syntax-type { color: #f9a8d4; }
+.wechat-article .syntax-number { color: #fcd34d; }
 .wechat-article code {
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.9em;
@@ -68,4 +132,16 @@
 }
 .wechat-article th {
   background: #f1f5f9;
+}
+.wechat-article .wechat-footer {
+  border-top: 1px solid #e2e8f0;
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 48px;
+  padding-top: 16px;
+  text-align: center;
+}
+.wechat-article .wechat-footer p {
+  margin: 4px 0;
 }

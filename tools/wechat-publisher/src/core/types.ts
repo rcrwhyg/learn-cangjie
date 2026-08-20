@@ -1,5 +1,10 @@
 export type StyleProfile = "default" | "minimal" | "code-focused";
 
+export interface FooterConfig {
+  copyright: string;
+  version: string;
+}
+
 export interface ArticleDocument {
   title: string;
   author?: string;
