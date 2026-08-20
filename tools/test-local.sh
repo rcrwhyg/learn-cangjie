@@ -35,7 +35,7 @@ test_cangjie() {
             # The current macOS SDK cannot link the 1.0.5 native runtime.
             cjc "$file" --output-type staticlib -o "$output"
         else
-            cjc "$file" -o "$output"
+            cjc "$file" --set-runtime-rpath -o "$output"
             if grep -q '^main()' "$file"; then
                 "$output"
             fi
