@@ -54,7 +54,6 @@ learn-cangjie/
 ├── QUICKSTART.md             # 快速开始指南
 ├── STATUS.md                 # 项目状态
 ├── rules/                    # 规则文件
-│   ├── article-style.md      # 文章风格规范
 │   ├── content-quality.md    # 内容质量要求
 │   └── git-workflow.md       # Git工作流程
 ├── specs/                    # 规范文档
@@ -63,6 +62,7 @@ learn-cangjie/
 │   └── version-strategy.md   # 版本策略
 ├── docs/                     # 学习文档
 ├── articles/                 # 文章存储
+│   ├── README.md             # 文章状态与目录约定
 │   ├── drafts/               # 草稿
 │   └── templates/            # 文章模板
 ├── knowledge-base/           # 知识库
@@ -84,12 +84,12 @@ learn-cangjie/
 根据您的背景选择起点：
 
 #### 有编程经验
-- 直接从文章3《变量与数据类型》开始
+- 直接从文章3《变量与数据类型》开始（文章1和文章3当前仍在规划/撰写中）
 - 重点关注仓颉与其他语言的差异
 - 快速浏览基础语法部分
 
 #### 编程新手
-- 从文章1《仓颉编程语言简介》开始
+- 从文章1《仓颉编程语言简介》草稿开始
 - 循序渐进学习每个知识点
 - 多做练习，多写代码
 
@@ -99,6 +99,8 @@ learn-cangjie/
 - 实践迁移案例
 
 ### 5. 开始学习
+
+当前可阅读的第一篇内容是 [文章1草稿](./articles/drafts/01-cangjie-introduction.md)。草稿会在审核确认后移动到 `articles/` 根目录成为正式文章。
 
 #### 阅读文章
 1. 选择要学习的文章

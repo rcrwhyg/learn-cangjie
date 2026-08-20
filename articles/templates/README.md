@@ -125,7 +125,6 @@ A: 不需要，已发布的文章保持原样。新文章使用更新后的模�
 
 ## 相关文档
 
-- [文章风格规范](../../rules/article-style.md)
 - [内容质量要求](../../rules/content-quality.md)
 - [文章模板规范](../../specs/article-template.md)
 

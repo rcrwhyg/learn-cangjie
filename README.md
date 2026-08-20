@@ -18,7 +18,6 @@ learn-cangjie/
 ├── README.md                 # 项目说明
 ├── AGENT.md                  # AI Agent行为规范
 ├── rules/                    # 规则文件目录
-│   ├── article-style.md      # 文章风格规范
 │   ├── content-quality.md    # 内容质量要求
 │   └── git-workflow.md       # Git工作流程
 ├── specs/                    # 规范文档目录
@@ -30,11 +29,11 @@ learn-cangjie/
 │   ├── ecosystem/            # 生态工具
 │   └── comparison/           # 语言对比
 ├── articles/                 # 文章存储目录
+│   ├── README.md             # 文章状态与目录约定
 │   ├── drafts/               # 草稿
 │   └── templates/            # 文章模板
 ├── examples/                 # 可测试代码示例的唯一来源
 │   └── cangjie/              # 仓颉示例
-├── skills/                   # 项目级 AI 工作技能
 ├── knowledge-base/           # 知识库
 │   ├── cheatsheet.md         # 语法速查表
 │   └── glossary.md           # 术语表
@@ -52,7 +51,7 @@ learn-cangjie/
 6. **审核优化**: 与用户协商修改，确保质量
 7. **版本管理**: 本地提交，用户确认后推送到GitHub
 8. **自动测试**: GitHub Actions测试规范源并校验文章同步
-8. **发布准备**: 确认内容和示例测试通过后，交由用户选择的工具处理
+9. **发布准备**: 确认内容和示例测试通过后，交由用户选择的工具处理
 
 ## AI Agent协作
 
@@ -71,7 +70,7 @@ learn-cangjie/
 1. 克隆仓库
 2. 阅读 [AGENT.md](./AGENT.md) 了解AI Agent行为规范
 3. 查看 [学习计划](./specs/learning-plan.md) 了解学习路径
-4. 开始学习第一篇文章：[变量与数据类型](./articles/01-variables-and-types.md)
+4. 阅读第一篇文章草稿：[仓颉编程语言简介与特性概览](./articles/drafts/01-cangjie-introduction.md)
 
 ## 贡献指南
 
