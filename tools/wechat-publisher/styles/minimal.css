@@ -1,0 +1,5 @@
+.wechat-article { color: #333; font-family: sans-serif; font-size: 16px; line-height: 1.8; }
+.wechat-article h1 { color: #111; font-size: 26px; margin-bottom: 24px; }
+.wechat-article h2 { border-bottom: 1px solid #ddd; color: #222; font-size: 21px; padding-bottom: 6px; }
+.wechat-article pre { background: #f6f6f6; border: 1px solid #ddd; color: #222; overflow-x: auto; padding: 14px; }
+.wechat-article img { display: block; height: auto; margin: 20px auto; max-width: 100%; }

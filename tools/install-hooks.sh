@@ -48,6 +48,16 @@ else
     echo -e "${YELLOW}[WARNING]${NC} 未找到hooks/pre-push文件"
 fi
 
+# 安装pre-commit钩子
+if [ -f "hooks/pre-commit" ]; then
+    echo -e "${BLUE}[INFO]${NC} 安装pre-commit钩子..."
+    cp hooks/pre-commit .git/hooks/pre-commit
+    chmod +x .git/hooks/pre-commit
+    echo -e "${GREEN}[SUCCESS]${NC} pre-commit钩子安装成功"
+else
+    echo -e "${YELLOW}[WARNING]${NC} 未找到hooks/pre-commit文件"
+fi
+
 echo ""
 echo "=========================================="
 echo -e "${GREEN}[SUCCESS]${NC} Git钩子安装完成！"

@@ -20,6 +20,7 @@
 - 统一使用 `examples/` 管理可测试代码示例
 - 增加文章代码块与规范示例的同步校验
 - 重构本地测试和GitHub Actions测试流程
+- 设计并创建 Node.js + TypeScript 微信公众号发布器 Core、CLI 和 MCP Server
 
 ## [1.0.0] - 2024-01-XX
 

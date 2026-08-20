@@ -35,11 +35,14 @@ learn-cangjie/
 │   └── templates/            # 文章模板
 ├── examples/                 # 可测试代码示例的唯一来源
 │   └── cangjie/              # 仓颉示例
+├── skills/                   # 项目级 AI 工作技能
+│   └── wechat-publisher/     # 微信公众号发布技能
 ├── knowledge-base/           # 知识库
 │   ├── cheatsheet.md         # 语法速查表
 │   └── glossary.md           # 术语表
 └── tools/                    # 工具脚本
-    └── publish.sh            # 发布脚本
+    ├── publish.sh            # 发布脚本
+    └── wechat-publisher/     # TypeScript 微信公众号发布器
 ```
 
 ## 工作流程
@@ -64,6 +67,8 @@ learn-cangjie/
 - 文章格式化和排版
 
 所有AI Agent的行为规范详见 [AGENT.md](./AGENT.md)
+
+微信公众号发布工具的架构和使用方式详见 [`specs/wechat-publisher.md`](./specs/wechat-publisher.md)。
 
 ## 快速开始
 

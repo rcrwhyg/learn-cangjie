@@ -154,8 +154,12 @@ learn-cangjie/
 ├── knowledge-base/              # 知识库
 │   ├── cheatsheet.md            # 速查表
 │   └── glossary.md              # 术语表
-└── tools/                       # 工具脚本
-    └── publish.sh               # 发布脚本
+├── tools/                       # 工具脚本
+│   ├── publish.sh               # 发布脚本
+│   └── wechat-publisher/        # TypeScript 微信公众号发布器
+├── skills/wechat-publisher/     # 发布器 AI 工作技能
+├── rules/wechat-publisher.md    # 发布器约束
+└── specs/wechat-publisher.md    # 发布器技术设计
 ```
 
 ## 技术栈
@@ -174,6 +178,7 @@ learn-cangjie/
 - **VS Code**: 代码编辑器
 - **Shell**: 脚本编写
 - **Python**: 辅助脚本
+- **Node.js + TypeScript**: 微信公众号排版、CLI 和 MCP Server
 
 ## 质量保证
 

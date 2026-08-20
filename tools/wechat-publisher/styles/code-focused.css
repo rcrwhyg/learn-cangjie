@@ -1,0 +1,6 @@
+.wechat-article { color: #243447; font-family: sans-serif; font-size: 16px; line-height: 1.8; }
+.wechat-article h1 { color: #0f172a; font-size: 28px; }
+.wechat-article h2 { background: #eff6ff; border-left: 5px solid #2563eb; color: #1d4ed8; padding: 8px 12px; }
+.wechat-article pre { background: #0f172a; border-radius: 8px; color: #dbeafe; overflow-x: auto; padding: 18px; }
+.wechat-article code { font-family: "SFMono-Regular", Consolas, monospace; }
+.wechat-article img { display: block; height: auto; margin: 20px auto; max-width: 100%; }

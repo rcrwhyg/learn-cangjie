@@ -179,6 +179,14 @@
 
 ## 工具使用规范
 
+### 微信公众号发布器
+
+- 相关约束见 [`rules/wechat-publisher.md`](./rules/wechat-publisher.md)
+- 相关技能见 [`skills/wechat-publisher/SKILL.md`](./skills/wechat-publisher/SKILL.md)
+- 发布器实现见 [`tools/wechat-publisher/`](./tools/wechat-publisher/)
+- 优先使用 MCP 工具，CLI 用于调试和自动化
+- 创建草稿前必须先执行 dry-run 或预览
+
 ### 文档工具
 - **官方文档**: 优先使用官方文档作为信息源
 - **代码验证**: 重要代码示例需要验证
