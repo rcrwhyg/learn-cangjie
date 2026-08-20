@@ -103,9 +103,9 @@ int age = 25;
 
 ## 参考资料
 
-1. [仓颉官方文档 - 变量与类型](https://docs.cangjie-lang.cn/docs/1.0.5/toc.html)
-2. [相关文章链接](链接地址)
-3. [其他参考资料](链接地址)
+1. 仓颉官方文档 - 变量与类型：https://docs.cangjie-lang.cn/docs/1.0.5/toc.html
+2. 相关文章链接：链接地址
+3. 其他参考资料：链接地址
 
 ## 练习题
 

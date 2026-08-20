@@ -369,9 +369,9 @@ cjpm run
 
 ## 参考资料
 
-1. [仓颉官方文档](https://cangjie-lang.cn/docs?url=%2F1.0.5%2Findex.html)
-2. [仓颉编程语言官网](https://cangjie-lang.cn)
-3. [仓颉编程语言白皮书](https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fwhite_paper%2Fsource_zh_cn%2Fcj-wp-abstract.html)
+1. 仓颉官方文档：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Findex.html
+2. 仓颉编程语言官网：https://cangjie-lang.cn
+3. 仓颉编程语言白皮书：https://cangjie-lang.cn/docs?url=%2F0.53.18%2Fwhite_paper%2Fsource_zh_cn%2Fcj-wp-abstract.html
 
 ## 练习题
 
