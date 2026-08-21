@@ -5,10 +5,11 @@
 - `articles/`：文章文件目录。
 - `templates/`：文章模板目录，不属于文章内容，也不参与发布或代码示例测试。
 
-当前第一篇文章：
+当前文章：
 
 - `01-cangjie-introduction.md`：仓颉编程语言简介与特性概览
 - `02-development-environment.md`：仓颉开发环境搭建与 Hello World
 - `03-variables-and-data-types.md`：仓颉变量与数据类型
 - `04-operators-and-expressions.md`：仓颉运算符与表达式
 - `05-control-flow.md`：仓颉控制流语句
+- `06-functions.md`：仓颉函数基础（待审核）

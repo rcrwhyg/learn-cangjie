@@ -35,3 +35,11 @@
 - 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/expression.html
 - match 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/match.html
 - 区间类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/range.html
+
+文章：`articles/06-functions.md`
+
+以下链接于 2026-08-21 已逐条访问并返回对应的官方页面内容：
+
+- 基本概念：函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/function.html
+- 定义函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/define_functions.html
+- 调用函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/call_functions.html
