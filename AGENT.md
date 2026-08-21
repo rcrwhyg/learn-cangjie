@@ -20,6 +20,8 @@
 - **同步验证**: 推送前必须运行 `python3 .github/scripts/sync_examples.py`
 - **测试通过**: 必须运行 `./tools/test-local.sh` 并确认通过
 - **失败处理**: 测试失败时必须修复所有问题才能推送
+- **远程门禁**: 推送后必须使用 `gh run list`/`gh run watch` 检查对应 GitHub Actions，只有所有相关工作流成功后流程才能结束
+- **远程失败处理**: GitHub Actions 失败时必须查看失败 job 和日志，修复根因，创建修复提交并重新推送，不能以本地测试通过代替远程验证
 
 ### 3. 质量保证
 - **深度优先**: 每篇文章主题明确，知识点讲解透彻，避免浮于表面
@@ -72,12 +74,14 @@
    - 确认 Markdown 结构和内容质量
 
 8. **版本提交**
-   - 本地Git提交
-   - 用户确认后推送到GitHub
-   - 等待GitHub Actions测试通过
+    - 本地Git提交
+    - 用户确认后推送到GitHub
+    - 使用 `gh run watch <run-id> --exit-status` 等待对应 GitHub Actions 完成
+    - 只有 GitHub Actions 成功后才能进入发布准备
+    - Actions 失败时查看日志、修复、重新提交并推送，直到成功
 
 9. **发布准备**
-   - 确认GitHub Actions测试通过
+    - 确认GitHub Actions测试通过
    - 将 Markdown 文章交给用户选择的公众号工具处理
 
 ### 知识库维护流程

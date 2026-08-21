@@ -174,9 +174,11 @@ Closes #123
    ```
 
 6. **GitHub Actions验证**
-    - 等待GitHub Actions测试完成
-    - 确认所有测试通过
-    - 查看失败日志（如有）并修复根因
+     - 使用 `gh run list --branch main` 找到本次提交对应的工作流
+     - 使用 `gh run watch <run-id> --exit-status` 等待工作流完成
+     - 确认所有相关 job 的 conclusion 均为 `success`
+     - 查看失败 job 日志并修复根因，创建修复提交、重新推送和重新检查
+     - 在 Actions 成功前，不得宣布任务完成或进入发布准备
 
 7. **创建标签**
    ```bash
