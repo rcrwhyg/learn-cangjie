@@ -126,6 +126,7 @@ learn-cangjie/
 ├── .gitignore                   # Git忽略文件
 ├── rules/                       # 规则文件
 │   ├── content-quality.md       # 内容质量要求
+│   ├── official-docs.md         # 官方文档核验规范
 │   └── git-workflow.md          # Git工作流程规范
 ├── specs/                       # 规范文档
 │   ├── learning-plan.md         # 学习计划
@@ -135,7 +136,8 @@ learn-cangjie/
 │   ├── basics/                  # 基础语法
 │   ├── advanced/                # 进阶特性
 │   ├── ecosystem/               # 生态工具
-│   └── comparison/              # 语言对比
+│   ├── comparison/              # 语言对比
+│   └── reference-link-checks.md # 参考资料链接检查记录
 ├── articles/                    # 文章存储
 │   ├── README.md                # 文章目录约定
 │   ├── 01-cangjie-introduction.md
@@ -225,13 +227,14 @@ learn-cangjie/
 ## 学习计划
 
 ### 文章规划
-- **总计**: 43篇文章
-- **阶段一**: 10篇（入门基础）
-- **阶段二**: 10篇（进阶特性）
-- **阶段三**: 8篇（高级主题）
-- **阶段四**: 6篇（生态系统）
-- **阶段五**: 4篇（实战项目）
-- **阶段六**: 5篇（深入原理）
+- **总计**: 52篇文章
+- **阶段一**: 15篇（语言基础）
+- **阶段二**: 11篇（核心语言特性）
+- **阶段三**: 14篇（运行时、标准库、互操作与工具链）
+- **阶段四**: 7篇（深入原理）
+- **阶段五**: 5篇（实战项目）
+
+完整的文章主题和官方章节覆盖矩阵见 [学习计划](../specs/learning-plan.md)。
 
 ### 发布频率
 - **建议频率**: 每周1-2篇
