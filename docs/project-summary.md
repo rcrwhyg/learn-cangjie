@@ -139,6 +139,7 @@ learn-cangjie/
 ├── articles/                    # 文章存储
 │   ├── README.md                # 文章目录约定
 │   ├── 01-cangjie-introduction.md
+│   ├── 02-development-environment.md
 │   └── templates/               # 文章模板
 │       ├── README.md            # 模板使用指南
 │       └── 01-variables-and-types-template.md

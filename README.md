@@ -31,6 +31,7 @@ learn-cangjie/
 ├── articles/                 # 文章存储目录
 │   ├── README.md             # 文章目录约定
 │   ├── 01-cangjie-introduction.md
+│   ├── 02-development-environment.md
 │   └── templates/            # 文章模板
 ├── examples/                 # 可测试代码示例的唯一来源
 │   └── cangjie/              # 仓颉示例

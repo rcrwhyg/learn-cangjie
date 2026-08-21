@@ -57,6 +57,7 @@ site/
 *.dll
 *.so
 *.dylib
+*.cjo
 
 # 压缩文件
 *.zip
