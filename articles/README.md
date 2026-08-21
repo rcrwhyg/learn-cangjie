@@ -9,3 +9,4 @@
 
 - `01-cangjie-introduction.md`：仓颉编程语言简介与特性概览
 - `02-development-environment.md`：仓颉开发环境搭建与 Hello World
+- `03-variables-and-data-types.md`：仓颉变量与数据类型

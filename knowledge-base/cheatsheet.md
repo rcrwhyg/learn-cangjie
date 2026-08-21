@@ -8,8 +8,8 @@
 ```cangjie
 // 变量声明
 let name = "Alice"          // 不可变变量
-var age = 25                // 可变变量
-let pi: Float = 3.14        // 类型注解
+var age: Int64 = 25         // 可变变量
+const pi: Float64 = 3.14    // 编译时常量
 let list = [1, 2, 3]        // 数组字面量
 let map = {"key": "value"}  // 字典字面量
 ```
@@ -17,22 +17,22 @@ let map = {"key": "value"}  // 字典字面量
 ### 数据类型
 ```cangjie
 // 基本类型
-let intVal: Int = 42
-let floatVal: Float = 3.14
-let doubleVal: Double = 3.14159
+let intVal: Int64 = 42
+let floatVal: Float64 = 3.14
+let float32Val: Float32 = 3.14159
 let boolVal: Bool = true
 let strVal: String = "hello"
-let charVal: Char = 'A'
+let charVal: Rune = r'A'
 
 // 集合类型
-let array: Array<Int> = [1, 2, 3]
-let list: List<Int> = [1, 2, 3]
-let set: Set<Int> = [1, 2, 3]
-let map: Map<String, Int> = {"a": 1, "b": 2}
+let array: Array<Int64> = [1, 2, 3]
+let list: List<Int64> = [1, 2, 3]
+let set: Set<Int64> = [1, 2, 3]
+let map: Map<String, Int64> = {"a": 1, "b": 2}
 
 // 可选类型
-let optional: ?Int = 42
-let optionalNull: ?Int = null
+let optional: ?Int64 = 42
+let optionalNull: ?Int64 = null
 ```
 
 ### 运算符

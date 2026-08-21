@@ -1,0 +1,19 @@
+# 参考资料链接检查记录
+
+本文件记录文章参考资料的实际访问结果。检查不是一次性保证，文章参考资料发生变化或官方版本更新后必须重新检查。
+
+## 2026-08-21
+
+文章：`articles/03-variables-and-data-types.md`
+
+以下链接均已通过实际 HTTP 内容访问检查，并返回对应的官方页面内容：
+
+- 程序结构与变量：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/program_structure.html
+- 整数类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/integer.html
+- 浮点类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/float.html
+- 布尔类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/bool.html
+- 字符类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/characters.html
+- 字符串类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/strings.html
+- Unit 类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/unit.html
+- Nothing 类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/nothing.html
+- 常量求值：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/const_func_and_eval.html

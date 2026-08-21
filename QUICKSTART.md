@@ -65,6 +65,7 @@ learn-cangjie/
 │   ├── README.md             # 文章目录约定
 │   ├── 01-cangjie-introduction.md
 │   ├── 02-development-environment.md
+│   ├── 03-variables-and-data-types.md
 │   └── templates/            # 文章模板
 ├── knowledge-base/           # 知识库
 │   ├── cheatsheet.md         # 速查表
