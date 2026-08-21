@@ -27,3 +27,11 @@
 - 浮点类型与操作：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/float.html
 - 布尔类型与操作：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/bool.html
 - 操作符优先级：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Appendix/operator.html
+
+文章：`articles/05-control-flow.md`
+
+以下链接于 2026-08-21 已逐条访问并返回对应的官方页面内容：
+
+- 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/expression.html
+- match 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/match.html
+- 区间类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/range.html

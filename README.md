@@ -34,6 +34,7 @@ learn-cangjie/
 │   ├── 02-development-environment.md
 │   ├── 03-variables-and-data-types.md
 │   ├── 04-operators-and-expressions.md
+│   ├── 05-control-flow.md
 │   └── templates/            # 文章模板
 ├── examples/                 # 可测试代码示例的唯一来源
 │   └── cangjie/              # 仓颉示例

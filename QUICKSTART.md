@@ -67,6 +67,7 @@ learn-cangjie/
 │   ├── 02-development-environment.md
 │   ├── 03-variables-and-data-types.md
 │   ├── 04-operators-and-expressions.md
+│   ├── 05-control-flow.md
 │   └── templates/            # 文章模板
 ├── knowledge-base/           # 知识库
 │   ├── cheatsheet.md         # 速查表
