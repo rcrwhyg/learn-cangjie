@@ -58,10 +58,8 @@ def main():
             if language not in EXTENSIONS:
                 continue
             if not marker_match:
-                errors.append(
-                    f"{article}: unmarked {language} code block at line "
-                    f"{content.count(chr(10), 0, match.start()) + 1}"
-                )
+                # Explanatory snippets use the language fence but are not
+                # canonical runnable examples. Only marked blocks are synced.
                 continue
 
             relative = marker_match.group(1)

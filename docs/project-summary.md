@@ -141,6 +141,7 @@ learn-cangjie/
 │   ├── 01-cangjie-introduction.md
 │   ├── 02-development-environment.md
 │   ├── 03-variables-and-data-types.md
+│   ├── 04-operators-and-expressions.md
 │   └── templates/               # 文章模板
 │       ├── README.md            # 模板使用指南
 │       └── 01-variables-and-types-template.md

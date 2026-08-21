@@ -14,13 +14,13 @@
 
 仓颉变量声明的基本形式是：
 
-```text
+```cangjie
 修饰符 变量名: 变量类型 = 初始值
 ```
 
 定义变量时，可变性修饰符是必要的。`let` 和 `var` 都是变量修饰符：`let` 变量只能被赋值一次，`var` 变量可以被多次赋值。`const` 是用于编译时常量求值的特殊修饰符，虽然同样具有不可变特性，但在使用上比 `let` 更严格。
 
-```text
+```cangjie
 let language: String = "Cangjie"
 ```
 
@@ -28,7 +28,7 @@ let language: String = "Cangjie"
 
 如果 `let` 变量已经完成初始化，再次赋值会导致编译错误：
 
-```text
+```cangjie
 let count = 1
 // count = 2  // 错误：let 声明的变量不能重新赋值
 ```
@@ -37,7 +37,7 @@ let count = 1
 
 需要在运行过程中多次赋值时，使用 `var`：
 
-```text
+```cangjie
 var count = 1
 count = 2
 ```
@@ -50,7 +50,7 @@ count = 2
 
 `const` 变量在编译时完成求值，必须在声明时提供初始化表达式，并且运行时不可改变：
 
-```text
+```cangjie
 const maxRetries: Int64 = 3
 const gravity = 6.674e-11
 ```
@@ -63,7 +63,7 @@ const gravity = 6.674e-11
 
 类型注解写在变量名之后，使用冒号分隔：
 
-```text
+```cangjie
 let age: Int64 = 25
 let height: Float64 = 1.68
 let enabled: Bool = true
@@ -81,14 +81,14 @@ let title: String = "仓颉"
 
 全局变量和静态成员变量必须在声明时初始化。局部变量和实例成员变量可以先声明、后初始化，但必须在被引用前完成初始化：
 
-```text
+```cangjie
 let retryCount: Int64 = 0
 var message: String = "等待中"
 ```
 
 局部 `let` 变量也可以先声明、后完成一次初始化：
 
-```text
+```cangjie
 let message: String
 message = "等待中"
 ```
@@ -99,7 +99,7 @@ message = "等待中"
 
 仓颉可以根据初始化表达式推断变量类型，因此很多时候不需要重复写类型注解：
 
-```text
+```cangjie
 let count = 25       // 推断为 Int64
 let ratio = 1.68     // 推断为 Float64
 let ready = true     // 推断为 Bool
@@ -133,7 +133,7 @@ let name = "Alice"  // 推断为 String
 
 在没有类型上下文时，整数字面量默认推断为 `Int64`：
 
-```text
+```cangjie
 let year: Int64 = 2026
 var attempts: Int64 = 0
 attempts = attempts + 1
@@ -145,7 +145,7 @@ attempts = attempts + 1
 
 仓颉的浮点类型包括 `Float16`、`Float32` 和 `Float64`。其中 `Float64` 是双精度浮点类型：
 
-```text
+```cangjie
 let price: Float64 = 19.9
 let temperature: Float64 = 26.5
 ```
@@ -156,7 +156,7 @@ let temperature: Float64 = 26.5
 
 `Bool` 只有 `true` 和 `false` 两个值，通常用于表达条件状态：
 
-```text
+```cangjie
 let loggedIn: Bool = true
 let hasPermission: Bool = false
 ```
@@ -167,14 +167,14 @@ let hasPermission: Bool = false
 
 `Rune` 用于表示 Unicode 字符，可以表示 Unicode 字符集中的所有字符。Rune 字面量必须以 `r` 开头，后面跟单引号或双引号包围的字符。
 
-```text
+```cangjie
 let initial: Rune = r'A'
 let quoted: Rune = r"B"
 ```
 
 Rune 字面量有三种常见形式：普通字符、转义字符和通用字符。转义字符以反斜杠开头，通用字符使用 `\u{}` 表示 Unicode 值：
 
-```text
+```cangjie
 let slash: Rune = r'\\'
 let newLine: Rune = r'\n'
 let chinese: Rune = r'\u{4f60}'
@@ -186,7 +186,7 @@ Rune 支持按 Unicode 值进行 `<`、`>`、`<=`、`>=`、`==` 和 `!=` 比较�
 
 当表达式只关心副作用而不关心结果时，其类型是 `Unit`。`Unit` 只有一个值，字面量是 `()`。例如赋值表达式、循环表达式和只执行输出的函数调用都可以产生 `Unit`。
 
-```text
+```cangjie
 let result: Unit = ()
 ```
 
@@ -202,7 +202,7 @@ let result: Unit = ()
 
 单行字符串使用一对单引号或双引号，不能跨越多行，并支持转义：
 
-```text
+```cangjie
 let s1: String = "Hello Cangjie Lang"
 let s2 = '可以使用单引号'
 let s3 = "第一行\n第二行"
@@ -212,7 +212,7 @@ let s3 = "第一行\n第二行"
 
 多行字符串使用三个单引号或三个双引号，可以跨越多行：
 
-```text
+```cangjie
 let message = """
     Hello,
     Cangjie Lang
@@ -223,7 +223,7 @@ let message = """
 
 多行原始字符串使用一对带井号的引号。开头和结尾的井号数量必须相同，内容中的转义序列会保持原样，不会被解释：
 
-```text
+```cangjie
 let raw = ###"
     原样保留 \\n、缩进和其他字符
     "###
@@ -233,7 +233,7 @@ let raw = ###"
 
 插值字符串允许在字符串中嵌入表达式。插值表达式使用 `${}` 包围，表达式的最后一项结果会替换对应位置；多行原始字符串不支持插值：
 
-```text
+```cangjie
 let name = "Alice"
 let count = 10
 let greeting = "${name} has ${count} apples"
@@ -244,7 +244,7 @@ let area = "area=${let pi = 3.14; pi * 2.0}"
 
 String 支持关系比较和 `+` 拼接，也可以使用标准库提供的操作进行包含判断和分割：
 
-```text
+```cangjie
 let left = "abc"
 let right = "ABCabc"
 let same = left == right
