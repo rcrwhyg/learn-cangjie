@@ -12,4 +12,4 @@
 - `03-variables-and-data-types.md`：仓颉变量与数据类型
 - `04-operators-and-expressions.md`：仓颉运算符与表达式
 - `05-control-flow.md`：仓颉控制流语句
-- `06-functions.md`：仓颉函数基础（待审核）
+- `06-functions.md`：仓颉函数基础（已审核通过，待发布）
