@@ -38,3 +38,42 @@
 
 - 完整运行验证需在 Linux/Windows 环境或 GitHub Actions 上完成（macOS native runtime 链接限制为已知问题，符合 `rules/code-testing.md` 规范）。
 - 与本文章相关的 `function/const_func_and_eval.html`（常量函数）将在后续文章 16 或独立专题承接。
+
+
+---
+
+## 2026-08-22（文章 7 撰写过程核验）
+
+### 文章：`articles/07-struct.md`（仓颉结构类型 struct）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（11/11 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/011-struct.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 struct 链接已实际访问核验（define_struct / create_instance / mut / generic_struct）
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `struct/define_struct.html` 结构体定义、成员变量、静态初始化器、构造函数、成员函数、访问修饰符、禁止递归 | 文章 1-6 节 |
+| `struct/create_instance.html` 创建实例、值类型拷贝语义 | 文章 7 节 |
+| `struct/mut.html` mut 函数 | 文中 Q7 提示 + 留待后续专题 |
+| `generic/generic_struct.html` 泛型结构体 | 留待后续专题 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] `let` 成员无初值时可在 init 中赋值（与官方示例一致）
+- [x] `let` 成员有初值时不可在 init 中再赋值（`cannot assign to immutable value`）
+- [x] 递归 struct 定义被拒绝（`value type recursive detected: 'R1->R1'`）
+- [x] 所有成员有初值且无自定义构造函数时，可调用自动生成的无参 init
+
+**审核中发现并已修复的问题**
+
+1. Q7 关于 `mut` 函数与 `let` 成员的描述不准确：明确说明 `mut` 函数也不能修改 `let` 成员。
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。

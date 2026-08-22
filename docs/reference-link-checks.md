@@ -43,3 +43,12 @@
 - 基本概念：函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/function.html
 - 定义函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/define_functions.html
 - 调用函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/call_functions.html
+
+文章：`articles/07-struct.md`
+
+以下链接于 2026-08-22 已逐条访问并返回对应的官方页面内容：
+
+- 定义 struct 类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/define_struct.html
+- 创建 struct 实例：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/create_instance.html
+- mut 函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/mut.html
+- 泛型结构体：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_struct.html

@@ -13,3 +13,4 @@
 - `04-operators-and-expressions.md`：仓颉运算符与表达式
 - `05-control-flow.md`：仓颉控制流语句
 - `06-functions.md`：仓颉函数基础（已审核通过，待发布）
+- `07-struct.md`：仓颉结构类型（待审核）
