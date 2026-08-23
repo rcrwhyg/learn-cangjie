@@ -50,6 +50,7 @@
 - [x] 统一代码示例目录与文章同步机制
 - [ ] 第十二篇文章：仓颉数组、元组与区间（撰写中）
 - [ ] 第十三篇文章：仓颉字符串与字符处理（撰写中）
+- [ ] 第十四篇文章：仓颉 Collection 集合类型（撰写中）
 - [x] 重构本地测试和GitHub Actions测试流程
 
 ### ⏳ 待开始
@@ -73,7 +74,7 @@
 - [ ] 文章11: 模式匹配（撰写中）
 - [ ] 文章12: 数组、元组与区间（撰写中）
 - [ ] 文章13: 字符串与字符处理（撰写中）
-- [ ] 文章14: Collection集合类型
+- [ ] 文章14: Collection集合类型（撰写中）
 - [ ] 文章15: 包、模块与程序入口
 
 ### 阶段二：核心语言特性（0/11篇）
@@ -231,6 +232,13 @@
 - 完成文章 13「仓颉字符串与字符处理」初稿与 `examples/cangjie/017-strings-and-characters.cj`
 - 同步检查 17/17 通过；本地静态库编译 17/17 通过
 - 2 个官方 1.0.5 basic_data_type 链接（strings / characters）完成实际访问核验
+
+
+### 2026-08-23（续 6）
+- 完成文章 14「仓颉 Collection 集合类型」初稿与 `examples/cangjie/018-collection.cj`
+- 同步检查 18/18 通过；本地静态库编译 18/18 通过
+- 在线 dev-guide 暂未提供 std.collection 完整 API 页面，1.0.5 文档索引根链接（200 OK）作为唯一参考入口
+- 验证：ArrayList/HashSet/HashMap 关键 API（构造器、add/remove/contains、| & - 运算、keys/values、sort 全局函数）全部通过 cjc 编译
 
 
 *本状态文档将定期更新，反映项目最新进展*

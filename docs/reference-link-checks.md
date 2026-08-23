@@ -103,3 +103,11 @@
 
 - 字符串类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/strings.html
 - 字符类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/characters.html
+
+文章：`articles/14-collection.md`
+
+以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容：
+
+- 仓颉 1.0.5 LTS 文档索引（含 std.collection 标准库说明）：https://docs.cangjie-lang.cn/docs/1.0.5/
+
+> **说明**：仓颉 1.0.5 LTS 官方在线文档的 dev-guide 章节暂未提供 std.collection 包的完整 API HTML 页面（已尝试 collection/、libs/std/collection/、library/collection/、standard_library/、直接 ArrayList.html 等多种 URL 形式，均返回 404）。文章 14 的 API 描述以仓颉 1.0.5 SDK 中 std.collection 模块的公开方法签名为准，可由 1.0.5 文档索引页（https://docs.cangjie-lang.cn/docs/1.0.5/ ）作为入口访问。

@@ -301,3 +301,56 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+---
+
+## 2026-08-23（文章 14 撰写过程核验）
+
+### 文章：`articles/14-collection.md`（仓颉 Collection 集合类型）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（18/18 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/018-collection.cj --output-type staticlib`
+- [x] 1 个官方 1.0.5 文档索引链接（https://docs.cangjie-lang.cn/docs/1.0.5/ ）已实际访问核验（200 OK）
+
+**关于参考链接的特殊说明**
+
+仓颉 1.0.5 LTS 官方在线文档（docs.cangjie-lang.cn）的 dev-guide 章节**未提供** std.collection 包的完整 API HTML 页面（已逐一探测 `collection/`、`libs/std/collection/`、`library/collection/`、`standard_library/`、根目录的 `ArrayList.html`、`arraylist.html` 等 10+ 种 URL 形式，均返回 404）。文章 14 的 API 描述以仓颉 1.0.5 SDK（`darwin_aarch64_cjnative/std/std.collection.cjo`）的公开方法签名为准，并以 docs.cangjie-lang.cn 1.0.5 文档根索引作为唯一可核验的官方入口链接（200 OK，15909 字节）。
+
+**覆盖矩阵（SDK 模块 → 文章承接）**
+
+| 类型 / 功能 | 覆盖位置 |
+|---|---|
+| `ArrayList<T>` 创建、属性（size / first / last / capacity）、增删改查、reverse、slice、clear、toArray | 文章 2.1-2.5 节 |
+| `ArrayList<T>` 排序（`std.sort.sort` 全局函数） | 文章 2.4 节 |
+| `HashSet<T>` 创建、add/remove/contains、集合运算 `\|` `&` `-`、subsetOf、retain、toArray、遍历 | 文章 3.1-3.5 节 |
+| `HashMap<K, V>` 创建、`[]` get/set、add/remove/contains、keys()/values()、遍历、词频统计 | 文章 4.1-4.4 节 |
+| 集合选型指南 | 文章 5 节 |
+| FAQ + 总结 + 参考资料 | 文章 6-7 节 + FAQ + 总结 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] `ArrayList<T>(arr)` 从 Array 构造；`ArrayList<T>([...])` 从字面量构造
+- [x] `ArrayList<T>(n, {i => v})` 长度 n 的 lambda 初始化
+- [x] `first` / `last` 是**属性**而非方法（`list.first` 正确，`list.first()` 编译报错）
+- [x] `add(value)` / `add(value, at: idx)` / `add(all: collection)`
+- [x] `remove(at: idx)` 按下标删；`remove(range)` 按区间删；**无 `remove(value)`**，按值删用 `removeIf(closure)`
+- [x] `remove(value)` 直接调用会与 `remove(range)` 歧义报 `cannot convert an integer literal to type 'Struct-Range<Int64>'`
+- [x] `[]` 下标可读可写；`get(idx)` 同步取值
+- [x] `ArrayList.sort()` 已废弃，推荐用 `import std.sort.sort; sort(unsorted)` 全局函数
+- [x] `HashSet<T>` 的 `add` / `remove` 返回 `Bool`（是否真的改变了集合）
+- [x] `HashSet` 三个运算符 `|`（并）/ `&`（交）/ `-`（差）返回**新集合**
+- [x] `subsetOf(other)` 子集判断
+- [x] `retain(all: collection)` 原地保留交集
+- [x] `HashMap<K, V>` 的 `[]` get 返回值类型（缺失键返回零值，**不抛异常**）；`[]` set 写值
+- [x] `map[k]` 缺失键时若 V 是引用类型返回 `null`，需要 `??` 兜底
+- [x] `keys(): Collection<K>`、`values(): Collection<V>` 是方法（带括号）
+- [x] `for ((k, v) in map)` 元组解构遍历
+- [x] `ArrayList` / `HashSet` / `HashMap` 都实现 `Equatable`，可用 `==` 比较内容
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。
