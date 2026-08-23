@@ -16,6 +16,7 @@
 - 文章 6《仓颉函数基础》并配套 `examples/cangjie/010-functions.cj`
 - 文章 7《仓颉结构类型 struct》（待审核）并配套 `examples/cangjie/011-struct.cj`
 - 文章 8《仓颉类类型 class》（待审核）并配套 `examples/cangjie/012-class.cj`
+- 文章 9《仓颉接口、属性与子类型》（待审核）并配套 `examples/cangjie/013-interface.cj`
 - 学习计划扩展为 52 篇，明确泛型、标准库与工具链的完整路线，并补充官方章节覆盖矩阵与小阶段复盘门禁
 - 文章代码块与规范示例的同步校验流程
 - `docs/article-reviews.md`：文章审核记录

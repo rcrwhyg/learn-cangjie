@@ -113,3 +113,38 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+
+---
+
+## 2026-08-23（文章 9 撰写过程核验）
+
+### 文章：`articles/09-interface.md`（仓颉接口、属性与子类型）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（13/13 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/013-interface.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 class_and_interface 链接已实际访问核验
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `class_and_interface/interface.html` 接口定义、成员、默认实现、sealed、继承与实现、Any | 文章 1-3 节 |
+| `class_and_interface/prop.html` 属性定义、mut、抽象属性、覆盖重定义 | 文章 4 节 |
+| `class_and_interface/subtype.html` 子类型关系（class/interface/tuple/function/Nothing/Any/Object/transitivity） | 文章 5 节 |
+| `class_and_interface/typecast.html` 类型转换 | 留待后续专题（文章 10 enum/pattern-match 中涉及） |
+
+**撰写过程 cjc 语义核验**
+
+- [x] Any 类型变量不能直接 println（需 ToString 接口），与官方示例一致
+- [x] sealed interface 限制包外继承
+- [x] 多接口实现 `class C <: A & B`
+- [x] 抽象属性 `prop`/`mut prop` 与 getter/setter 实现
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。
