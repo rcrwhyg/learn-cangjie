@@ -219,3 +219,42 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+---
+
+## 2026-08-23（文章 12 撰写过程核验）
+
+### 文章：`articles/12-array-tuple-range.md`（仓颉数组、元组与区间）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（16/16 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/016-array-tuple-range.cj --output-type staticlib`
+- [x] 3 个官方 1.0.5 basic_data_type 链接已实际访问核验（array / tuple / range）
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `basic_data_type/array.html` Array 创建/访问/切片/操作符/类型转换/VArray | 文章 1-3 节 |
+| `basic_data_type/tuple.html` Tuple 字面量/类型参数/访问/多赋值 | 文章 4 节 |
+| `basic_data_type/range.html` Range 字面量/遍历/steps 形式 | 文章 5 节 |
+| FAQ + 总结 + 参考资料 | 文章 6-7 节 + FAQ + 总结 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] `Array<Int64>` 通过字面量 `[1, 2, 3]` 创建，元素访问 `a[0]`、`a[1] = 20`
+- [x] 数组切片 `a[0..2]`、`a[1..=2]`（含 `=` 的尾闭区间）
+- [x] Array 引用类型语义：`let` 引用赋值后修改可见，`b.copy()` 深拷贝互不影响
+- [x] `VArray<Int64, $3>` 栈上定长值类型数组，支持 `for-in` 与下标读写
+- [x] Tuple `(1, "hello", true)` 多类型字面量；`.0`、`.1`、`.2` 访问
+- [x] Tuple 解构 `let (x, y, z) = (10, 20, 30)` 与函数返回 Tuple
+- [x] 命名 Tuple `let p: (name: String, age: Int64) = ("Alice", 30)`；通过 `.name` / `.age` 访问
+- [x] `Range<Int64>` 字面量 `0..10`（左闭右开）、`0..=10`（双闭）、`0..10:2`（带步长）
+- [x] `for (i in 0..5) { ... }` 与 `for-in` 遍历 Array / VArray / Range 一致行为
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。
