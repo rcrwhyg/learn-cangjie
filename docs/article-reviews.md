@@ -148,3 +148,39 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+
+---
+
+## 2026-08-23（文章 10 撰写过程核验）
+
+### 文章：`articles/10-enum.md`（仓颉枚举类型 enum）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（14/14 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/014-enum.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 enum_and_pattern_match 链接已实际访问核验
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `enum_and_pattern_match/enum.html` enum 定义、构造器、递归、成员、使用 | 文章 1-4 节 |
+| `enum_and_pattern_match/pattern_overview.html` 模式类型 | 留待文章 11 |
+| `enum_and_pattern_match/option_type.html` Option 类型 | 留待后续专题 |
+| `enum_and_pattern_match/match.html` match 表达式 | 留待文章 11 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] enum 类型不自动实现 ToString，无法直接 println 插值
+- [x] 穷尽 enum 的 match 中 `case _` 不可达（编译器告警）
+- [x] non-exhaustive enum（带 `...`）的 match 必须有 `case _` 兜底
+- [x] 递归 enum（如 Expr 表达式树）正常编译
+- [x] enum 实现 interface 正常
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。
