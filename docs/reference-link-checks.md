@@ -52,3 +52,12 @@
 - 创建 struct 实例：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/create_instance.html
 - mut 函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/mut.html
 - 泛型结构体：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_struct.html
+
+文章：`articles/08-class.md`
+
+以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容：
+
+- class 定义：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/class.html
+- interface 接口：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/interface.html
+- 属性：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/prop.html
+- 子类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/subtype.html

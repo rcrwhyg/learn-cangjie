@@ -77,3 +77,39 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+
+---
+
+## 2026-08-23（文章 8 撰写过程核验）
+
+### 文章：`articles/08-class.md`（仓颉类类型 class）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（12/12 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/012-class.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 class_and_interface 链接已实际访问核验
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `class_and_interface/class.html` class 定义、抽象类、构造函数、终结器、成员函数、This 类型、访问修饰符、创建对象、继承与覆盖 | 文章 1-10 节 |
+| `class_and_interface/interface.html` | 留待文章 9 |
+| `class_and_interface/prop.html` 属性 | 留待文章 9 |
+| `class_and_interface/subtype.html` 子类型 | 留待文章 9 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] 抽象函数无 `abstract` 关键字修饰（1.0.5 语法），通过"无函数体 + abstract class 上下文"判定
+- [x] `This` 类型作为实例成员函数返回类型
+- [x] 子类主构造函数不能重声明父类成员（`the variable 'a' must not shadow a member variable of the supertype`）
+- [x] 子类 init 中 `super(args)` 必须作为函数体第一个表达式
+- [x] 引用类型：多个变量指向同一对象，修改可见
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。
