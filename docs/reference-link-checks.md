@@ -79,3 +79,12 @@
 - 模式概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/pattern_overview.html
 - Option 类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/option_type.html
 - match 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/match.html
+
+文章：`articles/11-pattern.md`
+
+以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容：
+
+- 模式概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/pattern_overview.html
+- match 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/match.html
+- 枚举类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/enum.html
+- 其他使用模式的地方：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/other.html

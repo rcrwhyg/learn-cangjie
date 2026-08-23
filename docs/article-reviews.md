@@ -184,3 +184,38 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+
+---
+
+## 2026-08-23（文章 11 撰写过程核验）
+
+### 文章：`articles/11-pattern.md`（仓颉模式匹配）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（15/15 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/015-pattern.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 enum_and_pattern_match 链接已实际访问核验
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `enum_and_pattern_match/pattern_overview.html` 6 种模式 | 文章 2-7 节 |
+| `enum_and_pattern_match/match.html` match 表达式 | 文章 9 节 |
+| `enum_and_pattern_match/other.html` 模式在其他位置 | 文章 10 节 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] 常量、通配符、绑定、Tuple、类型、enum 六种模式都覆盖
+- [x] 模式守卫 where 子句
+- [x] 嵌套模式（Tuple 内嵌 enum，enum 内嵌常量/绑定）
+- [x] irrefutable 模式在 let / for-in 中可用
+- [x] 常量传播：match 目标值为编译期常量时，编译器会告警"不可达"分支（已通过将匹配封装在函数中规避）
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。
