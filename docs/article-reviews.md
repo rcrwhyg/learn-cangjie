@@ -318,7 +318,7 @@
 
 **关于参考链接的特殊说明**
 
-仓颉 1.0.5 LTS 官方在线文档（docs.cangjie-lang.cn）的 dev-guide 章节**未提供** std.collection 包的完整 API HTML 页面（已逐一探测 `collection/`、`libs/std/collection/`、`library/collection/`、`standard_library/`、根目录的 `ArrayList.html`、`arraylist.html` 等 10+ 种 URL 形式，均返回 404）。文章 14 的 API 描述以仓颉 1.0.5 SDK（`darwin_aarch64_cjnative/std/std.collection.cjo`）的公开方法签名为准，并以 docs.cangjie-lang.cn 1.0.5 文档根索引作为唯一可核验的官方入口链接（200 OK，15909 字节）。
+仓颉 1.0.5 LTS 标准库文档托管在 `cangjie-lang.cn` 域名（**注意没有 `docs.` 前缀**），通过 `/docs?url=/1.0.5/libs/std/collection/...` 形式访问。最初仅探测了 `docs.cangjie-lang.cn` 域名，误判为不存在；用户提示真实 URL 后，6 个链接全部 200 OK（约 26~27KB 字节数）。文章 14 的 API 描述与官方 `libs/std/collection/...` 章节保持一致。
 
 **覆盖矩阵（SDK 模块 → 文章承接）**
 

@@ -106,8 +106,13 @@
 
 文章：`articles/14-collection.md`
 
-以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容：
+以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容（**重要**：仓颉官方标准库文档托管在 `cangjie-lang.cn` 域名下，通过 `/docs?url=/1.0.5/libs/...` 形式访问）：
 
-- 仓颉 1.0.5 LTS 文档索引（含 std.collection 标准库说明）：https://docs.cangjie-lang.cn/docs/1.0.5/
+- 仓颉 1.0.5 LTS 文档索引：https://docs.cangjie-lang.cn/docs/1.0.5/
+- 仓颉 1.0.5 LTS std.collection 包总览：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Fcollection_package_overview.html
+- 仓颉 1.0.5 LTS ArrayList 类：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Farraylist.html
+- 仓颉 1.0.5 LTS HashSet 类：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Fhashset.html
+- 仓颉 1.0.5 LTS HashMap 类：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Fhashmap.html
+- 仓颉 1.0.5 LTS std.collection.concurrent 包总览：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection_concurrent%2Fcollection_concurrent_package_overview.html
 
-> **说明**：仓颉 1.0.5 LTS 官方在线文档的 dev-guide 章节暂未提供 std.collection 包的完整 API HTML 页面（已尝试 collection/、libs/std/collection/、library/collection/、standard_library/、直接 ArrayList.html 等多种 URL 形式，均返回 404）。文章 14 的 API 描述以仓颉 1.0.5 SDK 中 std.collection 模块的公开方法签名为准，可由 1.0.5 文档索引页（https://docs.cangjie-lang.cn/docs/1.0.5/ ）作为入口访问。
+> **修正**：此前基于 `docs.cangjie-lang.cn` 域名探测时未能找到 std.collection 完整 API 页面（猜测是 dev-guide 与 libs 在不同子站点托管）。用户提示 `cangjie-lang.cn` 域名（无 `docs.` 前缀）+ `/docs?url=/1.0.5/libs/std/...` 路径后，6 个链接全部 200 OK（26~27KB 字节数），属于官方真实可访问 URL。

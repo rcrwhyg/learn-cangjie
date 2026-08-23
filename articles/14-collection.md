@@ -27,7 +27,7 @@ import std.collection.HashSet
 import std.collection.HashMap
 ```
 
-> **关于文档来源**：仓颉 1.0.5 LTS 官方在线文档（docs.cangjie-lang.cn）的 dev-guide 章节暂未提供 std.collection 包的完整 API 页面，本文的 API 描述以仓颉 1.0.5 SDK 中 `std.collection` 模块的公开方法签名为准。
+> **关于文档来源**：仓颉 1.0.5 LTS 官方标准库文档托管在 `cangjie-lang.cn/docs`（**注意域名是 `cangjie-lang.cn`，不是 `docs.cangjie-lang.cn`**），可通过 `/docs?url=/1.0.5/libs/...` 形式访问 std.collection 等包的完整 API 页面。本文的 API 描述与官方 `libs/std/collection/...` 章节保持一致。
 
 ## 2. ArrayList 动态数组
 
@@ -509,9 +509,12 @@ for (x in list) {
 
 ## 参考资料
 
-1. 仓颉 1.0.5 LTS 文档索引（含 std.collection 标准库说明）：https://docs.cangjie-lang.cn/docs/1.0.5/
-
-> **说明**：仓颉 1.0.5 LTS 官方在线文档的 dev-guide 章节暂未提供 std.collection 包的完整 API HTML 页面，本文 API 描述以仓颉 1.0.5 SDK（`darwin_aarch64_cjnative/std/std.collection.cjo`）的公开方法签名为准。
+1. 仓颉 1.0.5 LTS 文档索引：https://docs.cangjie-lang.cn/docs/1.0.5/
+2. 仓颉 1.0.5 LTS std.collection 包总览：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Fcollection_package_overview.html
+3. 仓颉 1.0.5 LTS ArrayList 类：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Farraylist.html
+4. 仓颉 1.0.5 LTS HashSet 类：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Fhashset.html
+5. 仓颉 1.0.5 LTS HashMap 类：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection%2Fhashmap.html
+6. 仓颉 1.0.5 LTS std.collection.concurrent 包总览：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection_concurrent%2Fcollection_concurrent_package_overview.html
 
 **版本信息**: 本文基于仓颉 1.0.5 LTS 编写
 

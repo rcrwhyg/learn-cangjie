@@ -241,4 +241,10 @@
 - 验证：ArrayList/HashSet/HashMap 关键 API（构造器、add/remove/contains、| & - 运算、keys/values、sort 全局函数）全部通过 cjc 编译
 
 
+### 2026-08-23（续 7）
+- 补充文章 14 官方参考链接：用户提示 cangjie-lang.cn 域名（无 docs. 前缀）+ /docs?url=/1.0.5/libs/... 路径后，6 个 std.collection 链接全部 200 OK
+- 更新 reference-link-checks、article-reviews，修正"文档缺失"说明为真实 URL
+- 文章 14 "关于文档来源"提示和"参考资料"小节已同步补充 5 个 std.collection 详细页
+
+
 *本状态文档将定期更新，反映项目最新进展*
