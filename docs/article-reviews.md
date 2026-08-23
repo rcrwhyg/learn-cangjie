@@ -258,3 +258,46 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+---
+
+## 2026-08-23（文章 13 撰写过程核验）
+
+### 文章：`articles/13-strings-and-characters.md`（仓颉字符串与字符处理）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（17/17 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/017-strings-and-characters.cj --output-type staticlib`
+- [x] 2 个官方 1.0.5 basic_data_type 链接已实际访问核验（strings / characters）
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|----------|----------|
+| `basic_data_type/strings.html` 字符串字面量（单行/多行/原始）、插值、关系运算、+、常用方法 | 文章 1-4 节 |
+| `basic_data_type/characters.html` Rune 字面量（单字符/转义/通用字符）、Rune 关系运算、Rune↔UInt32 转换 | 文章 5 节 |
+| String 与 Rune 互转（`toRuneArray`、ASCII 字面量→Byte/Rune） | 文章 6 节 |
+| FAQ + 总结 + 参考资料 | 文章 7-8 节 + FAQ + 总结 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] 单行字符串双引号/单引号等价（`"..."` == `'...'`）
+- [x] 多行字符串 `"""..."""` 可跨行、可含插值
+- [x] 多行原始字符串 `##"..."##` 中 `\n`、`\u{4f60}` 不转义
+- [x] 字符串插值 `${expr}` 与多表达式序列（用 `;` 分隔，取最后一个值）
+- [x] 字符串关系运算 `==`/`<`/`<=`/`>`/`>=`/`!=` 是内容相等
+- [x] `+` 拼接：`"abc" + "ABC"` 正常
+- [x] 常用方法：`size`、`isEmpty`、`contains`、`startsWith`、`endsWith`、`indexOf`、`count`、`split`、`replace`、`toAsciiUpper`、`toAsciiLower`、`toRuneArray` 全部可用
+- [x] `String[i]` 返回 `Byte`（UInt8），不是 `Rune`
+- [x] `String.toRuneArray(): Array<Rune>` 按 Unicode 码点拆分
+- [x] Rune 字面量 `r'a'`、`r'\n'`、`r'\u{4f60}'`（通用字符 1~8 位十六进制）
+- [x] Rune 关系运算按 Unicode 码点比较（`'你' > 'A'`，因为你 = 0x4f60）
+- [x] `UInt32(r)` 与 `Rune(UInt32(65))` 双向转换
+- [x] 文档中提到的 Byte↔ASCII 字符串字面量、Rune↔单字符字符串字面量的隐式赋值（仅限字面量场景）
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。

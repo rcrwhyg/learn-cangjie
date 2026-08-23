@@ -96,3 +96,10 @@
 - 数组类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/array.html
 - 元组类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/tuple.html
 - 区间类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/range.html
+
+文章：`articles/13-strings-and-characters.md`
+
+以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容：
+
+- 字符串类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/strings.html
+- 字符类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/characters.html

@@ -19,3 +19,4 @@
 - `10-enum.md`：仓颉枚举类型（待审核）
 - `11-pattern.md`：仓颉模式匹配（待审核）
 - `12-array-tuple-range.md`：仓颉数组、元组与区间（待审核）
+- `13-strings-and-characters.md`：仓颉字符串与字符处理（待审核）
