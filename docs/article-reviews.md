@@ -354,3 +354,50 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+---
+
+## 2026-08-23（文章 15 撰写过程核验）
+
+### 文章：`articles/15-package-module-entry.md`（仓颉包、模块与程序入口）
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（19/19 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/019-package-module-entry.cj --output-type staticlib`
+- [x] 6 个官方 1.0.5 dev-guide 链接已实际访问核验（全部 200 OK）
+
+**覆盖矩阵（官方章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `basic_programming_concepts/program_structure.html` 顶层作用域、变量、作用域 | 文章 1 节 |
+| `package/package_overview.html` 包的定义、模块的定义 | 文章 2、3 节 |
+| `package/import.html` import 各种语法、隐式 import core、import as、重导出、import 可见性 | 文章 4 节 |
+| `package/entry.html` main 入口合法签名与限制 | 文章 5 节 |
+| `package/toplevel_access.html` 4 级访问修饰符、默认修饰符 | 文章 2.3-2.4 节 |
+| `first_understanding/hello_world.html` cjpm init / cjpm run | 文章 3 节 |
+| FAQ + 总结 + 参考资料 | 文章 7-8 节 + FAQ + 总结 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] `package` 声明必须出现在源文件首行
+- [x] `import std.collection.ArrayList` 单个导入
+- [x] `import std.collection.{HashSet, HashMap}` 批量导入
+- [x] `import std.collection.ArrayList as AL` 重命名导入
+- [x] 顶层变量 `public let / let / private let` 三种可见性
+- [x] 顶层函数 `public / internal / protected` 三种可见性
+- [x] 顶层 struct / class / enum 的 public 声明
+- [x] `String` / `Int64` / `Array` / `Range` 隐式导入（无需 import）
+- [x] `main(): Int64` / `main(): Unit` / `main(args: Array<String>): Int64` / `main(args: Array<String>): Unit` 四种合法签名
+- [x] `main` 不可被访问修饰符修饰
+- [x] `Range.size` 不存在（用 `r.start` / `r.end` 属性）
+- [x] `enum` 不实现 `ToString`，不能直接 `${c}` 插值；用 `match` 转换
+- [x] `main` 返回 String 编译报错：`expected 'Int64', found 'Struct-String'`
+- [x] `import std.io.*` 通配符导入若未使用会报 unused import warning
+
+**状态**
+
+🔄 初稿已完成，等待用户验收后进入审核流程。

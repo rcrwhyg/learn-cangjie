@@ -21,3 +21,4 @@
 - `12-array-tuple-range.md`：仓颉数组、元组与区间（待审核）
 - `13-strings-and-characters.md`：仓颉字符串与字符处理（待审核）
 - `14-collection.md`：仓颉 Collection 集合类型（待审核）
+- `15-package-module-entry.md`：仓颉包、模块与程序入口（待审核）

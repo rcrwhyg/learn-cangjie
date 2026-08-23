@@ -116,3 +116,14 @@
 - 仓颉 1.0.5 LTS std.collection.concurrent 包总览：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fcollection_concurrent%2Fcollection_concurrent_package_overview.html
 
 > **修正**：此前基于 `docs.cangjie-lang.cn` 域名探测时未能找到 std.collection 完整 API 页面（猜测是 dev-guide 与 libs 在不同子站点托管）。用户提示 `cangjie-lang.cn` 域名（无 `docs.` 前缀）+ `/docs?url=/1.0.5/libs/std/...` 路径后，6 个链接全部 200 OK（26~27KB 字节数），属于官方真实可访问 URL。
+
+文章：`articles/15-package-module-entry.md`
+
+以下链接于 2026-08-23 已逐条访问并返回对应的官方页面内容：
+
+- 仓颉 1.0.5 LTS 包的概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/package_overview.html
+- 仓颉 1.0.5 LTS 使用 import 语句导入其他包中的声明或定义：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/import.html
+- 仓颉 1.0.5 LTS 顶层声明的可见性：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/toplevel_access.html
+- 仓颉 1.0.5 LTS 程序入口：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/entry.html
+- 仓颉 1.0.5 LTS 程序结构（顶层作用域、变量、作用域）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/program_structure.html
+- 仓颉 1.0.5 LTS 运行第一个仓颉程序（cjpm init / cjpm run）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/first_understanding/hello_world.html
