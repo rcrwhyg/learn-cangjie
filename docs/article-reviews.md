@@ -81,6 +81,43 @@
 
 ---
 
+## 2026-08-25（文章 7 用户评审意见修复）
+
+### 文章：`articles/07-struct.md`（仓颉结构类型 struct）
+
+**核验方式**：逐条回到官方 1.0.5 `struct/define_struct.html` 与 `function/operator_overloading.html` 原文核对。
+
+**用户意见与修复**
+
+| 行（修复前） | 用户意见 | 官方核实结论 | 修复 |
+|----|----|----|----|
+| 26（成员属性） | 结构体是否含成员属性？后文未详述 | `define_struct` 明确：struct 定义体可含"成员属性（参见属性）"，合法 | 保留该条目，并加注"定义方式与 class 一致，详见官方《属性》章节，将在《接口、属性与子类型》展开" |
+| 30（操作符函数） | 结构体是否支持操作符函数？后文未详述 | `define_struct` 明确 struct 成员含"操作符函数"；`operator_overloading` 明确"操作符函数只能定义在 class、interface、struct、enum 和 extend 中" | 保留该条目，并加注"详见官方《操作符重载》，后续函数专题展开" |
+| 118（主构造等价） | 等价介绍不明确 | 官方：主构造函数"同时扮演定义成员变量和构造函数参数的功能" | 改写为"先声明两个 let 成员 + 再写把参数赋给成员的普通构造函数"，并给出展开后的等价代码 |
+| 159（实例函数访问成员） | 去掉"同名的"，需代码示例 | 官方：实例成员函数中可通过 `this` 访问实例成员变量 | 删除"同名的"，新增 `Counter` 示例演示直接访问与 `this` 消歧 |
+| 205（访问修饰符） | 区分当前模块/外部模块，当前模块应优先 `protected` | 官方：`protected`=当前模块可见，`public`=模块内外均可见 | 改写为按"同模块内其他包用 protected / 跨模块用 public"区分 |
+| 209（递归禁止） | 参照官方核实 | `define_struct`：递归和互递归定义的 struct 均是非法的 | 加"官方《定义 struct 类型》明确禁止" |
+| 224（布局） | 应描述编译器确定内存布局 | — | "确定布局"改为"确定内存布局" |
+| 251 & Q5 | 突出引用类型成员状况，Q5 拆分"不影响/影响" | 官方 `create_instance`：成员变量为引用类型时仅复制引用 | 新增 7.1 节专门讲引用类型成员（含 `Pair` 示例）；Q5 拆分：Q5 值类型成员不影响、Q6 引用类型成员会互相影响 |
+| 411（Q7 条件） | — | — | 随 Q5 拆分顺延为 Q8 |
+
+**新增参考链接（已实际访问 200 OK）**
+
+- 属性：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/prop.html
+- 操作符重载：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/operator_overloading.html
+
+**门禁复验**
+
+- [x] 同步检查通过（`sync_examples.py`，19/19 一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/011-struct.cj --output-type staticlib`（新增 `Pair` 引用类型示例编译通过）
+
+**状态**
+
+🔄 已按用户评审意见修复，等待用户再次验收。
+
+
+---
+
 ## 2026-08-23（文章 8 撰写过程核验）
 
 ### 文章：`articles/08-class.md`（仓颉类类型 class）

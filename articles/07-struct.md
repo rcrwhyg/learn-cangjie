@@ -20,14 +20,16 @@ struct Rectangle {
 }
 ```
 
-上例定义了名为 `Rectangle` 的结构体，它拥有两个 `Int64` 类型的成员变量 `width` 和 `height`。结构体定义体中可以声明的内容包括：
+上例定义了名为 `Rectangle` 的结构体，它拥有两个 `Int64` 类型的成员变量 `width` 和 `height`。结构体定义体（`struct` 定义体）中可以声明的内容包括：
 
 - 成员变量（实例成员变量与静态成员变量）
-- 成员属性
+- 成员属性（定义方式与 class 一致，详见官方《属性》章节，将在《接口、属性与子类型》一文中展开）
 - 静态初始化器
 - 构造函数（普通构造函数与主构造函数）
 - 成员函数（实例成员函数与静态成员函数）
-- 操作符函数
+- 操作符函数（详见官方《操作符重载》，将在后续函数专题展开）
+
+> 说明：本文聚焦成员变量、构造函数、成员函数与值类型语义。成员属性与操作符函数都属于 `struct` 的合法成员（官方《定义 struct 类型》已确认），其详细用法将在对应专题文章中系统讲解，避免此处重复或遗漏。
 
 ## 2. 成员变量
 
@@ -115,7 +117,21 @@ struct Rectangle {
 }
 ```
 
-上例等价于先声明两个 `let` 成员变量 `width`、`height`，再编写一个无函数体的构造函数。使用主构造函数可以显著简化只有赋值的结构体定义。
+上例的主构造函数 `public Rectangle(let width: Int64, let height: Int64) {}` 在语义上等价于：先声明两个 `let` 成员变量 `width`、`height`，再编写一个把参数分别赋给成员变量的普通构造函数。主构造函数只是把"声明成员变量"和"参数赋值"两步合并到参数列表中，由编译器自动完成，因此函数体可以为空：
+
+```cangjie
+struct Rectangle {
+    let width: Int64
+    let height: Int64
+
+    public init(width: Int64, height: Int64) {
+        this.width = width
+        this.height = height
+    }
+}
+```
+
+两种写法在"成员构成"和"初始化行为"上完全一致，区别仅在于主构造函数更简洁。
 
 主构造函数的参数列表也可以混合两种形参：
 
@@ -156,7 +172,24 @@ struct Rectangle {
 }
 ```
 
-实例成员函数可以直接访问同名的实例成员变量，仓颉会优先解析为成员变量。`this` 关键字仅在需要消除歧义时显式使用。
+实例成员函数可以直接访问实例成员变量，仓颉会优先把名字解析为成员变量；只有当出现同名局部名（如参数名）需要区分时，才显式使用 `this`：
+
+```cangjie
+struct Counter {
+    var count: Int64 = 0
+
+    // 直接访问成员变量 count，无需 this
+    public func incr(): Int64 {
+        count = count + 1
+        count
+    }
+
+    // 参数名与成员变量同名，用 this 区分
+    public func set(count: Int64) {
+        this.count = count
+    }
+}
+```
 
 ### 4.2 静态成员函数
 
@@ -202,11 +235,16 @@ public struct Rectangle {
 }
 ```
 
-访问修饰符控制了外部代码能访问到的成员；缺省情况下 struct 本身也是 `internal`，需在多包场景下加 `public` 让其他包也能引用该类型。
+访问修饰符控制外部代码能访问到的成员，也控制 `struct` 类型本身对外的可见性。`struct` 类型与成员缺省都是 `internal`（仅当前包及子包可见），但"让其他包也能引用"要分清范围：
+
+- **同一模块内的其他包**：把 `struct` 或成员声明为 `protected` 即可，无需设为 `public`（`protected` 表示当前模块可见）。
+- **跨模块（外部模块）**：才需要把 `struct` 或成员声明为 `public`。
+
+因此，同模块内跨包访问应优先使用 `protected`，只有面向外部模块时才用 `public`。
 
 ## 6. 禁止递归 struct
 
-递归和互递归定义的 struct 都被禁止：
+递归和互递归定义的 struct 均是非法的（官方《定义 struct 类型》明确禁止），例如：
 
 ```cangjie
 struct R1 {
@@ -221,7 +259,7 @@ struct R3 {
 }
 ```
 
-这是 struct 的硬性约束——值类型在编译期需要确定布局，递归定义会导致大小无法求解。
+这是 struct 的硬性约束——值类型在编译期需要确定内存布局，递归定义会导致大小无法求解。
 
 ## 7. 创建 struct 实例与值类型语义
 
@@ -248,7 +286,7 @@ main() {
 }
 ```
 
-struct 是值类型，赋值或传参时会复制实例（成员变量为引用类型时，仅复制引用）。修改一个实例不会影响其他实例：
+struct 是值类型，赋值或传参时会复制实例（成员变量为引用类型时，仅复制引用）。当所有成员变量都是值类型时，修改一个实例不会影响其他实例：
 
 ```cangjie
 main() {
@@ -261,6 +299,35 @@ main() {
 }
 ```
 
+### 7.1 注意：成员变量为引用类型时
+
+上面的"互不影响"只在成员变量都是值类型（如 `Int64`、`Bool`、`Float64`）时成立。当某个成员变量本身是**引用类型**（如 `Array`、`String`、`HashMap` 或 class 实例）时，赋值只复制"引用"而**不会复制被引用的对象**。于是新旧实例的该成员指向同一个对象，通过其中任一实例修改这个共享对象（例如修改数组里的某个元素），另一实例也会看到变化：
+
+```cangjie
+struct Pair {
+    public var data: Array<Int64>   // Array 是引用类型
+    public var n: Int64             // Int64 是值类型
+
+    public init(data: Array<Int64>, n: Int64) {
+        this.data = data
+        this.n = n
+    }
+}
+
+main() {
+    var a = Pair([1, 2, 3], 10)
+    let b = a                       // 值拷贝：n 被完整复制；data 仅复制引用（指向同一数组）
+
+    a.n = 99                        // 不影响 b.n：值类型成员各自独立
+    a.data[0] = 999                 // 影响 b.data！a 与 b 共享同一个 Array 对象
+
+    // b.n == 10
+    // b.data[0] == 999
+}
+```
+
+小结：**值类型成员独立拷贝、互不影响；引用类型成员只拷贝引用、共享同一对象，修改会互相影响。** 这正是使用 struct 封装可变引用类型时需要特别小心的点。
+
 这个语义是 struct 与 class 的核心区别，也是 struct 适合表示纯数据结构的根本原因。
 
 ## 8. 一个完整示例
@@ -271,7 +338,7 @@ main() {
 ```cangjie
 // 结构体基础示例
 // 演示：struct 定义、成员变量、普通 init、主构造函数、实例/静态成员函数、
-// this、值类型拷贝语义、可变成员变量修改
+// this、值类型拷贝语义、可变成员变量修改、引用类型成员共享
 
 // 普通构造函数 + 实例成员变量 + 实例/静态成员函数
 struct Rectangle {
@@ -324,6 +391,17 @@ struct Counter {
     }
 }
 
+// 引用类型成员：值类型成员独立拷贝，引用类型成员只拷贝引用（共享同一对象）
+struct Pair {
+    public var data: Array<Int64>   // Array 是引用类型
+    public var n: Int64             // Int64 是值类型
+
+    public init(data: Array<Int64>, n: Int64) {
+        this.data = data
+        this.n = n
+    }
+}
+
 main() {
     // 1) 普通构造函数创建实例并访问实例成员
     let r = Rectangle(10, 20)
@@ -362,6 +440,15 @@ main() {
     println("c3.id = ${c3.id}")
     println("Counter.instances = ${Counter.instances}")
     println("Counter.currentCount() = ${Counter.currentCount()}")
+
+    // 6) 引用类型成员：值类型成员独立、引用类型成员共享同一对象
+    var a = Pair([1, 2, 3], 10)
+    let b = a                       // 值拷贝：n 被完整复制；data 仅复制引用（指向同一数组）
+    a.n = 99                        // 不影响 b.n：值类型成员各自独立
+    a.data[0] = 999                 // 影响 b.data！a 与 b 共享同一个 Array 对象
+    println("a.n = ${a.n}")          // 99
+    println("b.n = ${b.n}")          // 10（值类型成员独立拷贝）
+    println("b.data[0] = ${b.data[0]}")  // 999（引用类型成员共享同一数组）
 }
 ```
 
@@ -382,6 +469,9 @@ c2.id = 2
 c3.id = 3
 Counter.instances = 3
 Counter.currentCount() = 3
+a.n = 99
+b.n = 10
+b.data[0] = 999
 ```
 
 ## 9. 常见问题
@@ -402,15 +492,19 @@ Counter.currentCount() = 3
 
 不能。静态成员函数中不能访问实例成员变量，也不能调用实例成员函数；如果需要访问实例数据，必须通过参数传入。
 
-### Q5: 为什么 struct 赋值后修改一个变量不影响另一个？
+### Q5: 为什么修改一个实例的"值类型成员"不影响另一个？
 
-struct 是值类型，赋值或传参时会发生复制（成员变量是引用类型时仅复制引用），新旧实例彼此独立。这是 struct 与 class 的核心语义区别。
+struct 是值类型，赋值或传参时会对整个实例做值拷贝：所有值类型成员（如 `Int64`、`Bool`）都会被完整复制，新旧实例各持一份独立数据。因此修改其中一个实例的值类型成员，不会影响另一个实例。这是 struct 与 class 的核心语义区别之一。
 
-### Q6: struct 能继承或实现接口吗？
+### Q6: 那引用类型成员呢？为什么有时又会"互相影响"？
+
+当成员变量本身是引用类型（如 `Array`、`String`、`HashMap` 或 class 实例）时，赋值只复制"引用"而**不复制被引用的对象**。于是新旧实例的该成员指向同一个对象，通过其中任一实例修改这个共享对象（例如修改数组里的某个元素），另一实例也会看到变化。区分点在于：**值类型成员独立拷贝，引用类型成员共享同一对象**。这也是第 7.1 节强调的 struct 使用陷阱。
+
+### Q7: struct 能继承或实现接口吗？
 
 struct 不能继承其他类型，但可以实现 `interface`；被实现的接口方法必须保持一致的 `mut` 修饰。详细规则将在后续《class 类类型》与《接口、属性与子类型》文章中介绍。
 
-### Q7: 修改实例成员变量需要哪些条件？
+### Q8: 修改实例成员变量需要哪些条件？
 
 需要同时满足两点：变量本身用 `var` 声明（不能用 `let`），且要修改的成员变量也是 `var` 声明（不能用 `let`）。如需在 `let` 变量上调用的函数能修改成员变量，可以借助 `mut` 函数，但 `mut` 函数本身也只能修改 `var` 成员变量，无法修改 `let`。`mut` 函数将在后续专题展开。
 
@@ -431,6 +525,8 @@ struct 不能继承其他类型，但可以实现 `interface`；被实现的接�
 2. 仓颉 1.0.5 LTS 创建 struct 实例：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/create_instance.html
 3. 仓颉 1.0.5 LTS mut 函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/mut.html
 4. 仓颉 1.0.5 LTS 泛型结构体：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_struct.html
+5. 仓颉 1.0.5 LTS 属性（struct 成员属性定义方式参见此章节）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/prop.html
+6. 仓颉 1.0.5 LTS 操作符重载（struct 操作符函数）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/operator_overloading.html
 
 **版本信息**: 本文基于仓颉 1.0.5 LTS 编写
 

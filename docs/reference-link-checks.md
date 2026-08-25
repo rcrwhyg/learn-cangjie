@@ -52,6 +52,8 @@
 - 创建 struct 实例：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/create_instance.html
 - mut 函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/struct/mut.html
 - 泛型结构体：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_struct.html
+- 属性（struct 成员属性定义方式）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/prop.html （2026-08-25 访问 200 OK）
+- 操作符重载（struct 操作符函数）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/operator_overloading.html （2026-08-25 访问 200 OK）
 
 文章：`articles/08-class.md`
 

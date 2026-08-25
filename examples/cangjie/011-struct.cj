@@ -1,6 +1,6 @@
 // 结构体基础示例
 // 演示：struct 定义、成员变量、普通 init、主构造函数、实例/静态成员函数、
-// this、值类型拷贝语义、可变成员变量修改
+// this、值类型拷贝语义、可变成员变量修改、引用类型成员共享
 
 // 普通构造函数 + 实例成员变量 + 实例/静态成员函数
 struct Rectangle {
@@ -53,6 +53,17 @@ struct Counter {
     }
 }
 
+// 引用类型成员：值类型成员独立拷贝，引用类型成员只拷贝引用（共享同一对象）
+struct Pair {
+    public var data: Array<Int64>   // Array 是引用类型
+    public var n: Int64             // Int64 是值类型
+
+    public init(data: Array<Int64>, n: Int64) {
+        this.data = data
+        this.n = n
+    }
+}
+
 main() {
     // 1) 普通构造函数创建实例并访问实例成员
     let r = Rectangle(10, 20)
@@ -91,4 +102,13 @@ main() {
     println("c3.id = ${c3.id}")
     println("Counter.instances = ${Counter.instances}")
     println("Counter.currentCount() = ${Counter.currentCount()}")
+
+    // 6) 引用类型成员：值类型成员独立、引用类型成员共享同一对象
+    var a = Pair([1, 2, 3], 10)
+    let b = a                       // 值拷贝：n 被完整复制；data 仅复制引用（指向同一数组）
+    a.n = 99                        // 不影响 b.n：值类型成员各自独立
+    a.data[0] = 999                 // 影响 b.data！a 与 b 共享同一个 Array 对象
+    println("a.n = ${a.n}")          // 99
+    println("b.n = ${b.n}")          // 10（值类型成员独立拷贝）
+    println("b.data[0] = ${b.data[0]}")  // 999（引用类型成员共享同一数组）
 }
