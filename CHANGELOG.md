@@ -12,13 +12,14 @@
 ## [未发布]
 
 ### 新增
-- 文章 5《仓颉控制流语句》并配套 `examples/cangjie/009-control-flow.cj`
-- 文章 6《仓颉函数基础》并配套 `examples/cangjie/010-functions.cj`
-- 文章 7《仓颉结构类型 struct》（待审核）并配套 `examples/cangjie/011-struct.cj`
-- 文章 8《仓颉类类型 class》（待审核）并配套 `examples/cangjie/012-class.cj`
-- 文章 9《仓颉接口、属性与子类型》（待审核）并配套 `examples/cangjie/013-interface.cj`
-- 文章 10《仓颉枚举类型 enum》（待审核）并配套 `examples/cangjie/014-enum.cj`
-- 文章 11《仓颉模式匹配》（待审核）并配套 `examples/cangjie/015-pattern.cj`
+- 文章 1 至文章 8 已发布，覆盖仓颉语言基础阶段前 8 篇文章
+- 文章 5《仓颉控制流语句》（已发布）并配套 `examples/cangjie/009-control-flow.cj`
+- 文章 6《仓颉函数基础》（已发布）并配套 `examples/cangjie/010-functions.cj`
+- 文章 7《仓颉结构类型 struct》（已发布）并配套 `examples/cangjie/011-struct.cj`
+- 文章 8《仓颉类类型 class》（已发布）并配套 `examples/cangjie/012-class.cj`
+- 文章 9《仓颉接口、属性与子类型》（已发布）并配套 `examples/cangjie/013-interface.cj`
+- 文章 10《仓颉枚举类型 enum》（已发布）并配套 `examples/cangjie/014-enum.cj`
+- 文章 11《仓颉模式匹配》（已发布）并配套 `examples/cangjie/015-pattern.cj`
 - 文章 12《仓颉数组、元组与区间》（待审核）并配套 `examples/cangjie/016-array-tuple-range.cj`
 - 文章 13《仓颉字符串与字符处理》（待审核）并配套 `examples/cangjie/017-strings-and-characters.cj`
 - 文章 14《仓颉 Collection 集合类型》（待审核）并配套 `examples/cangjie/018-collection.cj`
@@ -33,13 +34,23 @@
 - 修正文章 6 中嵌套函数定义位置与 Go 命名返回值的对比描述
 
 ### 待办
-- 第一篇文章：仓颉编程语言简介与特性概览（持续修改中）
-- 第二篇文章：仓颉开发环境搭建与 Hello World（持续修改中）
-- 第三篇文章：仓颉变量与数据类型（暂停，等待官方资料核验）
-- 第四篇文章：仓颉运算符与表达式（持续修改中）
-- 第五篇文章：仓颉控制流语句（持续修改中）
+- 第九篇文章：仓颉接口、属性与子类型（待审核）
+- 第十篇文章：仓颉枚举类型 enum（待审核）
+- 第十一篇文章：仓颉模式匹配（待审核）
+- 第十二篇文章：仓颉数组、元组与区间（待审核）
+- 第十三篇文章：仓颉字符串与字符处理（待审核）
+- 第十四篇文章：仓颉 Collection 集合类型（待审核）
+- 第十五篇文章：仓颉包、模块与程序入口（待审核）
 - 学习文档编写
 - 知识库完善
+
+### 发布记录
+- 截止 2026-08-26：阶段一文章 1 至文章 11 已发布（共 11/15 篇）
+- 2026-08-25：文章 7《仓颉结构类型 struct》完成用户审核并发布
+- 2026-08-25：文章 8《仓颉类类型 class》完成用户审核并发布
+- 2026-08-26：文章 9《仓颉接口、属性与子类型》完成用户审核并发布
+- 2026-08-26：文章 10《仓颉枚举类型 enum》完成用户审核并发布
+- 2026-08-26：文章 11《仓颉模式匹配》完成用户审核并发布
 
 ## [1.0.0] - 2024-01-XX
 
