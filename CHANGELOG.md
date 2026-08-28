@@ -20,7 +20,7 @@
 - 文章 9《仓颉接口、属性与子类型》（已发布）并配套 `examples/cangjie/013-interface.cj`
 - 文章 10《仓颉枚举类型 enum》（已发布）并配套 `examples/cangjie/014-enum.cj`
 - 文章 11《仓颉模式匹配》（已发布）并配套 `examples/cangjie/015-pattern.cj`
-- 文章 12《仓颉数组、元组与区间》（待审核）并配套 `examples/cangjie/016-array-tuple-range.cj`
+- 文章 12《仓颉数组、元组与区间》（已发布）并配套 `examples/cangjie/016-array-tuple-range.cj`
 - 文章 13《仓颉字符串与字符处理》（待审核）并配套 `examples/cangjie/017-strings-and-characters.cj`
 - 文章 14《仓颉 Collection 集合类型》（待审核）并配套 `examples/cangjie/018-collection.cj`
 - 文章 15《仓颉包、模块与程序入口》（待审核）并配套 `examples/cangjie/019-package-module-entry.cj`
@@ -51,6 +51,7 @@
 - 2026-08-26：文章 9《仓颉接口、属性与子类型》完成用户审核并发布
 - 2026-08-26：文章 10《仓颉枚举类型 enum》完成用户审核并发布
 - 2026-08-26：文章 11《仓颉模式匹配》完成用户审核并发布
+- 2026-08-26：文章 12《仓颉数组、元组与区间》完成用户审核并发布
 
 ## [1.0.0] - 2024-01-XX
 
