@@ -600,3 +600,57 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
+
+---
+
+## 文章 18《仓颉泛型编程》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（23/23 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/023-generics.cj --output-type staticlib`
+- [x] 9 个官方 1.0.5 dev-guide generic 链接已实际访问核验（全部返回对应页面内容）
+
+**覆盖矩阵（官方 generic 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `generic/generic_overview.html` 类型形参/变元/实参/构造器术语 | 文章 1 节 |
+| `generic/generic_function.html` 全局/局部/成员/静态泛型函数、extend 泛型函数 | 文章 2 节 |
+| `generic/generic_constraint.html` 接口约束、class 约束、多 class 上界同链 | 文章 3 节 |
+| `generic/generic_class.html` 泛型类、静态成员不能引用类型形参 | 文章 4.1 节 |
+| `generic/generic_struct.html` 泛型结构体 | 文章 4.2 节 |
+| `generic/generic_enum.html` 泛型枚举、Option、safeDiv | 文章 4.3 节 |
+| `generic/generic_interface.html` 泛型接口 | 文章 4.4 节 |
+| `generic/generic_subtype.html` 不型变、元组协变、函数逆变/协变 | 文章 5 节 |
+| `generic/typealias.html` 类型别名规则、泛型别名 | 文章 6 节 |
+| `generic/generic_function.html` 中 extend 泛型成员函数细节 | 只带到，留给《扩展机制》专题（19） |
+
+**撰写过程 cjc 语义核验**
+
+正例（示例 023 整体编译通过 + CI 将执行）：
+
+- [x] 泛型函数 `id<T>`、`where T <: ToString` 接口约束、多形参 `compose<T1,T2,T3>`
+- [x] 泛型 struct `Pair<T,U>`、class `Stack<T>`、enum `MyOption<T>`、interface `Describable<T>`
+- [x] 泛型成员函数（Box 的 `mapInto<U>` 独立于类形参 `T`）
+- [x] 静态泛型函数（`Box<Int64>.singleton(100)`）
+- [x] 泛型不变性：只能构造 `Container<Animal>` 用 `Holder<Animal>` 传入
+- [x] 类型别名作变量类型 / 构造器名、泛型别名 `MyStack<T> = Stack<T>`
+- [x] 元组协变 `(D,D): (C,C)`；函数入参逆变 + 返回协变 `(C)->D` 可作 `(D)->C`
+
+负例（cjc 实测报错，与官方文档一致）：
+
+- [x] 泛型类静态成员引用类型形参 → `static member cannot depend on generic parameter 'Generics-T'`
+- [x] `I<D> <: I<C>` 违反不型变 → `mismatched types`
+- [x] `where T <: A & B` 两条独立继承链 → `cannot have two or more class upper bounds ... without subtype relation`
+- [x] 别名定义在 main 内 → `unexpected type alias declaration in main function body`
+- [x] 别名循环引用 `type A = (Int64, A)` → `undeclared type name 'A'`
+- [x] 别名作类型转换 `MyInt(0)` → `no matching function for operator '()' function call`
+- [x] 泛型别名带 `where` → `expected ';' or '<NL>', found keyword 'where'`
+- [x] 违反 `T <: ToString` 约束 → `generics type arguments do not match the constraint`
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。

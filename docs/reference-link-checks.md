@@ -148,3 +148,17 @@
 - 仓颉 1.0.5 LTS 操作符重载：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/operator_overloading.html
 - 仓颉 1.0.5 LTS 附录：操作符：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Appendix/operator.html
 - 仓颉 1.0.5 LTS 函数调用语法糖（变长参数与重载决议交互）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_call_desugar.html
+
+文章：`articles/18-generics.md`
+
+以下 9 条链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 泛型概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_overview.html
+- 仓颉 1.0.5 LTS 泛型函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_function.html
+- 仓颉 1.0.5 LTS 泛型接口：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_interface.html
+- 仓颉 1.0.5 LTS 泛型类：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_class.html
+- 仓颉 1.0.5 LTS 泛型结构体：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_struct.html
+- 仓颉 1.0.5 LTS 泛型枚举：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_enum.html
+- 仓颉 1.0.5 LTS 泛型类型的子类型关系：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_subtype.html
+- 仓颉 1.0.5 LTS 类型别名：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/typealias.html
+- 仓颉 1.0.5 LTS 泛型约束：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_constraint.html
