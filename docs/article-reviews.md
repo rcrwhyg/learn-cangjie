@@ -544,3 +544,59 @@
 **状态**
 
 🔄 初稿已完成（同步 + 本地编译通过），等待用户验收；真实运行输出将在 GitHub Actions（Linux）确认。
+
+---
+
+## 文章 17《仓颉函数重载与操作符重载》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（22/22 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/022-overloading.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 dev-guide function + Appendix 链接已实际访问核验（全部返回对应页面内容）
+
+**覆盖矩阵（官方 function 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `function/function_overloading.html` 重载定义、构造器重载、跨作用域/父子类重载、非重载情形、决议规则 | 文章 1-2 节 |
+| `function/operator_overloading.html` 五条限制、可重载操作符表、复合赋值、`[]` get/set、`()`、`extend` 定义 | 文章 3 节 |
+| `Appendix/operator.html` 完整操作符优先级/结合性表（用于对照） | 文章 3.2 节 |
+| `function/function_call_desugar.html` 变长参数与重载决议的交互 | 已并入文章 16 |
+
+**撰写过程 cjc 语义核验**
+
+正例（示例 022 整体编译通过 + CI 将执行验证）：
+
+- [x] 参数个数不同的函数重载
+- [x] 参数类型不同的函数重载
+- [x] 构造器重载（无参 / 一参 / 两参）
+- [x] 父类与子类同名不同参 → 构成重载
+- [x] 按实参类型选最匹配（`area(Sub())` vs `area(Base())`）
+- [x] 一元 `-`、二元 `+`/`*`、`==` 判等操作符重载
+- [x] 索引 `[]` 取值 / 赋值分离（`value!` 命名参数、struct 需 `mut`）
+- [x] 复合赋值 `+=` 自动获得（`+` 返回类型 = 左操作数类型）
+- [x] 函数调用 `()` 操作符重载
+
+负例（cjc 实测报错，与官方文档表述一致或更精确）：
+
+- [x] 静态与实例同名不同参 → `overloaded functions 'f' cannot mix static and non-static`
+- [x] 两个同名函数类型变量 → `redefinition of declaration 'f'`
+- [x] 变量与函数同名 → `functions and variables cannot have the same name`（官方文档说明）
+- [x] `public` 声明使用 `internal` 类型 → `'public' declaration uses 'internal' types`
+- [x] `static operator func` → `'operator' and 'static' modifiers conflict on function declaration`
+- [x] `operator func` 为泛型 → `generic is not allowed in operator overload function`
+- [x] `extend Int64` 重载同签名 `+` → `operator func +(Int64) of type Int64 is a built-in function and cannot be overridden`
+- [x] 二元操作符返回类型不匹配左操作数 → 复合赋值 `a += b` 报 `type incompatible in this compound assignment expression`
+- [x] 同等匹配两个候选 → `ambiguous match for function call`
+
+**与官方表述的小差异（更精确化）**
+
+- 官方文档对 `enum` 里 `X(Int64)` 构造器与 `operator func ()(p: Int64)` 同时匹配时优先构造器：文档明确写了这条规则，示例 022 未演示（避免混淆）
+- 官方文档示例里给"this() 调 `()` 操作符"标为 Error；1.0.5 SDK 实际报 `invalid calling 'this' outside the constructor`（措辞差异，语义一致：`this()` 属于构造器语法）
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。

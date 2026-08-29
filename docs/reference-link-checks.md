@@ -139,3 +139,12 @@
 - 仓颉 1.0.5 LTS Lambda 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/lambda.html
 - 仓颉 1.0.5 LTS 闭包：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/closure.html
 - 仓颉 1.0.5 LTS 函数调用语法糖：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_call_desugar.html
+
+文章：`articles/17-overloading.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 函数重载：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_overloading.html
+- 仓颉 1.0.5 LTS 操作符重载：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/operator_overloading.html
+- 仓颉 1.0.5 LTS 附录：操作符：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Appendix/operator.html
+- 仓颉 1.0.5 LTS 函数调用语法糖（变长参数与重载决议交互）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_call_desugar.html

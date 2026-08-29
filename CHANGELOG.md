@@ -25,6 +25,8 @@
 - 文章 14《仓颉 Collection 集合类型》（待审核）并配套 `examples/cangjie/018-collection.cj`
 - 文章 15《仓颉包、模块与程序入口》（待审核）并配套 `examples/cangjie/019-package-module-entry.cj`
 - 文章 16《仓颉函数类型、Lambda 与闭包》（初稿，待审核）并配套 `examples/cangjie/021-functions-lambda-closure.cj`，覆盖函数类型/一等公民、嵌套函数、Lambda、闭包与函数调用语法糖；函数重载与操作符重载按约定拆分为独立专题
+- 文章 17《仓颉函数重载与操作符重载》（初稿，待审核）并配套 `examples/cangjie/022-overloading.cj`，覆盖函数重载判定与决议、构造器重载、`operator func`（一元/二元/`[]`/`()`）、复合赋值与限制清单
+- 学习计划由 52 篇扩展为 53 篇：文章 16 与 17 拆分定稿后，Stage 2+ 全部编号顺延一位，覆盖矩阵、总览计数同步更新
 - 学习计划扩展为 52 篇，明确泛型、标准库与工具链的完整路线，并补充官方章节覆盖矩阵与小阶段复盘门禁
 - 文章代码块与规范示例的同步校验流程
 - `docs/article-reviews.md`：文章审核记录
