@@ -59,12 +59,12 @@ package demo
 
 ### 2.3 访问修饰符
 
-`package` 声明支持 `internal` / `protected` / `public` 三种修饰符，**默认是 public**：
+`package` 声明支持 `internal` / `protected` / `public` 三种修饰符（**不支持 `private`**），**默认是 `public`**。各修饰符控制的可见范围如下（下表同时列出 `private` 供对照，但 `package` 本身不能加 `private`）：
 
 | 修饰符 | 文件 | 包及子包 | 模块 | 所有包 |
 |---|---|---|---|---|
-| `private` | ✓ | ✗ | ✗ | ✗ |
-| `internal`（默认） | ✓ | ✓ | ✗ | ✗ |
+| `private`（package 不支持） | ✓ | ✗ | ✗ | ✗ |
+| `internal` | ✓ | ✓ | ✗ | ✗ |
 | `protected` | ✓ | ✓ | ✓ | ✗ |
 | `public`（package 默认） | ✓ | ✓ | ✓ | ✓ |
 
@@ -259,19 +259,20 @@ main(): Int64 {
 
 ### 3.2 cjpm.toml
 
-`cjpm.toml` 是模块的清单文件，描述模块名、版本、依赖、构建选项等。最小化的 `cjpm.toml`：
+`cjpm.toml` 是模块的清单文件，描述模块名、版本、依赖、构建选项等。`cjpm init` 生成的最小 `cjpm.toml` 只含 `[package]` 与（空的）`[dependencies]`：
 
 ```toml
 [package]
 name = "hello_cjpm"
-version = "0.1.0"
-description = "我的第一个仓颉模块"
+version = "1.0.0"
+description = "nothing here"
 cjc-version = "1.0.5"
+output-type = "executable"
 
-[target]              # 构建目标
-
-[dependencies]        # 依赖的其它模块
+[dependencies]        # 依赖的其它模块（初始为空）
 ```
+
+> 需要多构建目标时，可另加 `[target]` 段（`cjpm init` 默认不生成）。
 
 ### 3.3 常用 cjpm 命令
 
