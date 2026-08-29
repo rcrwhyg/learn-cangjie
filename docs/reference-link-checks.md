@@ -162,3 +162,12 @@
 - 仓颉 1.0.5 LTS 泛型类型的子类型关系：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_subtype.html
 - 仓颉 1.0.5 LTS 类型别名：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/typealias.html
 - 仓颉 1.0.5 LTS 泛型约束：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/generic/generic_constraint.html
+
+文章：`articles/19-extension.md`
+
+以下 4 条链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 扩展概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/extend_overview.html
+- 仓颉 1.0.5 LTS 直接扩展：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/direct_extension.html
+- 仓颉 1.0.5 LTS 接口扩展：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/interface_extension.html
+- 仓颉 1.0.5 LTS 访问规则：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/access_rules.html

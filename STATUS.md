@@ -75,7 +75,8 @@
 ### 阶段二：核心语言特性（0/12篇，16/17 初稿完成待发布）
 - [x] 文章16: 函数类型、Lambda与闭包（初稿完成，同步/编译/远程运行通过）
 - [ ] 文章17: 函数重载与操作符重载（初稿完成，CI 通过，等待发布审核）
-- [ ] 文章18: 泛型编程（初稿完成，等待审核）
+- [ ] 文章18: 泛型编程（初稿完成，CI 通过，等待发布审核）
+- [ ] 文章19: 扩展机制（初稿完成，等待审核）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option
@@ -266,6 +267,8 @@
 - 学习计划由 52 篇扩为 53 篇，Stage 2+ 全部编号 +1 平移（覆盖矩阵、汇总、状态表同步更新）
 - 文章 17《函数重载与操作符重载》完成 CI(Linux) 真实运行验证，输出与正文预期一致
 - 完成文章 18《仓颉泛型编程》初稿与 `examples/cangjie/023-generics.cj`，依据官方 generic 全部 9 个章节（overview/function/interface/class/struct/enum/subtype/typealias/constraint）逐条核验；负例（静态成员引用类型形参、`I<D><:I<C>` 违反不型变、多 class 上界不同链、别名循环引用、别名类型转换、泛型别名带 where）均以 cjc 实测报错确认
+- 文章 18 CI(Linux) 真实运行输出与正文预期逐行匹配（gh run view --log 抽样确认 13 行）
+- 完成文章 19《仓颉扩展机制》初稿与 `examples/cangjie/024-extension.cj`，依据官方 extension 全部 4 个章节（overview/direct/interface/access_rules）逐条核验；10 条负例（成员变量、`public extend`、`open` 修饰、private 访问、遮盖、`super`、扩展 interface、未实例化泛型、未用类型形参、约束不满足）均以 cjc 实测报错确认
 
 
 *本状态文档将定期更新，反映项目最新进展*

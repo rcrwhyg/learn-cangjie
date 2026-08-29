@@ -654,3 +654,60 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
+
+---
+
+## 文章 19《仓颉扩展机制》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（24/24 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/024-extension.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 dev-guide extension 链接已实际访问核验（全部返回对应页面内容）
+
+**覆盖矩阵（官方 extension 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `extension/extend_overview.html` 扩展四类能力、两类用法、四条限制 | 文章 1 节 |
+| `extension/direct_extension.html` 直接扩展、泛型扩展两种形式、条件能力 `where` | 文章 2、3 节 |
+| `extension/interface_extension.html` 接口扩展、多接口 `&`、默认实现解析顺序 | 文章 4 节 |
+| `extension/access_rules.html` 扩展修饰符、`this/super`、遮盖、同包互访、可见性、孤儿规则、导入导出 | 文章 5-8 节 |
+
+**撰写过程 cjc 语义核验**
+
+正例（示例 024 整体编译通过）：
+
+- [x] `extend String { shout }`（直接扩展成员函数）
+- [x] `extend Vec { prop lenSq }`（成员属性）
+- [x] `extend Vec { operator func + }`（操作符重载）
+- [x] `extend Vec { mut func scaleBy }`（struct 扩展 mut 函数）
+- [x] `extend<T> Array<T> <: PrintSizeable`（接口扩展 + 泛型）
+- [x] `extend EqInt <: Eq<EqInt>`（对自定义类接口扩展）
+- [x] `extend<T1, T2> Pair<T1,T2> where T1<:Eq<T1>, T2<:Eq<T2>`（泛型扩展 + 条件能力）
+- [x] 同包多次扩展互访非 private 成员（`bumpTwice` 调 `bump`）
+
+负例（cjc 实测报错，与官方文档表述一致）：
+
+- [x] `extend A { var x }` → `unexpected variable declaration in extend body`
+- [x] `public extend A {}` → `expected no modifier before extend declaration, found 'public'`
+- [x] `extend A { public open func g() }` → `unexpected modifier 'open' on function declaration in extend body`
+- [x] 扩展里访问被扩展类型的 private → `can not access field 'v'`
+- [x] 扩展同名成员遮盖被扩展类型成员 → `extend member 'f' is not allowed to shadow members of 'Class-A'`
+- [x] 扩展里用 `super` → `'super' is not allowed inside an extend declaration`
+- [x] 不能扩展 interface → `extending type 'Interface-I' is not allowed`
+- [x] `extend MyList {}`（未实例化）→ `generic type should be used with type argument`
+- [x] `extend<T,R> MyList<T> {}`（R 未使用）→ `type parameter 'R' must be used in extended type`
+- [x] `extend Foo<Bar> {}`（Bar 不满足 Foo 的 `T<:ToString`）→ `generics type arguments do not match the constraint`
+
+**未纳入示例但正文说明的官方规则**
+
+- 接口扩展父子接口默认实现"先父后子"、冲突时 `unable to decide which extension happens first` / `multiple default implementations`（示例 024 未演示）
+- 官方点名的泛型基类 + 扩展实现接口 + 默认实现调用"非预期行为"陷阱（正文以⚠️ 注意形式提示）
+- 孤儿规则、扩展导出/导入细则（正文以规则形式列出，跨包测试非单文件示例范畴）
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
