@@ -129,3 +129,13 @@
 - 仓颉 1.0.5 LTS 程序入口：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/entry.html
 - 仓颉 1.0.5 LTS 程序结构（顶层作用域、变量、作用域）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_programming_concepts/program_structure.html
 - 仓颉 1.0.5 LTS 运行第一个仓颉程序（cjpm init / cjpm run）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/first_understanding/hello_world.html
+
+文章：`articles/16-functions-lambda-closure.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 函数类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/first_class_citizen.html
+- 仓颉 1.0.5 LTS 嵌套函数：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/nested_functions.html
+- 仓颉 1.0.5 LTS Lambda 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/lambda.html
+- 仓颉 1.0.5 LTS 闭包：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/closure.html
+- 仓颉 1.0.5 LTS 函数调用语法糖：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_call_desugar.html

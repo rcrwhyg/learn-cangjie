@@ -505,3 +505,42 @@
 **状态**
 
 🔄 初稿已完成，等待用户验收后进入审核流程。
+
+---
+
+## 文章 16《仓颉函数类型、Lambda 与闭包》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（21/21 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/021-functions-lambda-closure.cj --output-type staticlib`
+- [x] 5 个官方 1.0.5 dev-guide function 链接已实际访问核验（全部返回对应页面内容）
+
+**覆盖矩阵（官方 function 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `function/first_class_citizen.html` 函数类型、类型参数名、作参数/返回值/变量、`->` 右结合 | 文章 1 节 |
+| `function/nested_functions.html` 嵌套函数作用域/返回 | 文章 2 节 |
+| `function/lambda.html` Lambda 定义、`=>`、参数与返回类型推断、立即调用 | 文章 3 节 |
+| `function/closure.html` 变量捕获定义、可见/初始化约束、捕获 var 不可一等公民、传递性 | 文章 4 节 |
+| `function/function_call_desugar.html` 尾随 lambda、pipeline、composition、变长参数 | 文章 5 节 |
+| `function/function_overloading.html` + `operator_overloading.html` | 拆分为独立专题篇（本次不写） |
+
+**撰写过程 cjc 语义核验（正例：示例 021 整体编译通过；负例：以下均以报错确认）**
+
+- [x] 函数类型 `(T1,T2)->R`、作参数/返回值/变量；`->` 右结合
+- [x] 函数类型类型参数名"全写或全不写"：混写报 `either all parameters must be named, or none of them`
+- [x] 重载函数名作表达式：`var f = add` 报 `ambiguous use of 'add'`；带目标类型 `var plus: (Int64,Int64)->Int64 = add` 通过
+- [x] Lambda 参数类型可由变量类型 / 形参类型推断
+- [x] 捕获 `var` 的闭包赋值给变量：报 `function capturing mutable variables needs to be called directly`
+- [x] 命名参数不能用变长语法：`length(1,2,3)` 报 `expected 1 argument, found 3`
+- [x] 尾随 lambda `myIf(true){100}`、唯一 lambda 实参省略圆括号 `callWithLambda { i => i*i }`
+- [x] pipeline `5 |> inc |> square`、composition `inc ~> double`
+- [x] 变长参数 `sum()` / `sum(1,2,3)`
+
+**状态**
+
+🔄 初稿已完成（同步 + 本地编译通过），等待用户验收；真实运行输出将在 GitHub Actions（Linux）确认。
