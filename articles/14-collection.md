@@ -377,13 +377,14 @@ println(map.contains("Alice"))   // true
 println(map.size)                // 2
 
 // 删除
-let old: Int64 = map.remove("Bob") ?? -1  // 不存在返回 null，?? 给出默认值
+let old: Int64 = map.remove("Bob") ?? -1  // remove 返回 Option<V>，不存在时为 None，?? 给出默认值
 println(map.size)                            // 1
 ```
 
 注意：
-- 读取键 `map["Alice"]` 时，如果键不存在会返回 `V` 类型的零值（`Int64` 是 0，引用类型是 `null`），**不会抛异常**。
-- `??` 是**elvis 运算符**（详见后续文章），如果左侧为 `null` 则返回右侧默认值。
+- 读取键 `map["Alice"]` 时，**如果键不存在会抛出运行时异常**，而不是返回零值。要安全地读取可能不存在的键，应使用 `map.get(key)`，它返回 `Option<V>`，可配合 `getOrDefault` 给出默认值。
+- `map.remove(key)` 返回 `Option<V>`（被删除的值），`map.add(key, value)` 返回 `Option<V>`（该键原来的旧值，若原本不存在则为 `None`）。
+- `??` 是**elvis 运算符**（详见后续文章），如果左侧为 `None` 则返回右侧默认值。
 
 ### 4.3 遍历
 
@@ -432,7 +433,7 @@ cangjie: 3
 
 | 场景 | 推荐类型 | 理由 |
 |---|---|---|
-| 长度固定、只读 | `Array<T>` | 最轻量、栈上分配（值类型场景） |
+| 长度固定、只读 | `Array<T>` | 最轻量，值类型、无额外封装开销（元素缓冲仍在堆上） |
 | 频繁在末尾追加 / 随机访问 | `ArrayList<T>` | 摊销 O(1) 追加，O(1) 随机访问 |
 | 频繁在中间插入 / 删除 | `ArrayList<T>` + `removeIf` | O(n) 但 API 简单 |
 | 需要去重 | `HashSet<T>` | O(1) `contains` |
@@ -462,13 +463,7 @@ cangjie: 3
 list.removeIf({x => x == target})
 ```
 
-如果希望保留所有不匹配的元素，常见的等价写法：
-
-```cangjie
-list.retain(all: ArrayList<Int64>([target]))  // 失败：retain 不接受元素
-```
-
-更好的写法是新建一个 `ArrayList`：
+如果希望保留所有匹配的元素，注意 `ArrayList` **并没有 `retain` 方法**（`retain(all:)` 是 `HashSet` 的方法，不能用在 `ArrayList` 上）。对 `ArrayList` 想按条件保留元素，更好的写法是新建一个 `ArrayList`：
 
 ```cangjie
 let kept: ArrayList<Int64> = ArrayList<Int64>()
@@ -482,7 +477,7 @@ for (x in list) {
 
 ### Q5: `HashMap` 的 `[]` 读取不存在的键会怎样？
 
-返回 `V` 类型的零值（`Int64` 是 0，引用类型是 `null`），**不会抛异常**。要严格判断键是否存在，请用 `contains(key)`。
+**会触发运行时异常**，不会返回零值。要安全访问可能不存在的键，请用 `map.get(key)`（返回 `Option<V>`）配合 `getOrDefault`，或先用 `contains(key)` 判断存在再取值。
 
 ### Q6: 集合运算后修改原集合会不会影响结果集？
 
@@ -505,7 +500,7 @@ for (x in list) {
 5. 选型：固定长度 → `Array`；动态数组 → `ArrayList`；去重 → `HashSet`；键值对 → `HashMap`。
 6. 集合运算（`| & -`）返回新集合，不修改原集合。
 7. `ArrayList.remove(value)` 不可用；用 `removeIf` 配合闭包按条件删除。
-8. `HashMap[k]` 读取不存在的键返回零值，不抛异常。
+8. `HashMap[k]` 读取不存在的键会**抛出运行时异常**；安全访问请用 `map.get(key)`（返回 `Option<V>`）或先 `contains(key)`。
 
 ## 参考资料
 
