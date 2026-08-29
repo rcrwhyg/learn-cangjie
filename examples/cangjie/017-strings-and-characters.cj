@@ -56,7 +56,7 @@ main() {
     // ========== 4) 字符串常用方法 ==========
 
     let text: String = "Hello, Cangjie Lang"
-    println("size: ${text.size}")                    // 20
+    println("size: ${text.size}")                    // 19
     println("isEmpty: ${text.isEmpty()}")            // false
     println("contains Cangjie: ${text.contains("Cangjie")}")  // true
     println("startsWith Hello: ${text.startsWith("Hello")}")  // true
@@ -105,7 +105,7 @@ main() {
     // toRuneArray：把字符串拆为 Rune 数组（按 Unicode 码点）
     let cn: String = "你好, Cangjie"
     let runes: Array<Rune> = cn.toRuneArray()
-    println("runes.size = ${runes.size}")  // 10
+    println("runes.size = ${runes.size}")  // 16
     println("runes[0] = ${runes[0]}")      // 你
     println("runes[2] = ${runes[2]}")      // ，
 
