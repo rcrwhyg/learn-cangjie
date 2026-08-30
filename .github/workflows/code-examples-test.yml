@@ -39,6 +39,7 @@ jobs:
           echo "/opt/cangjie/bin" >> "$GITHUB_PATH"
           echo "/opt/cangjie/tools/bin" >> "$GITHUB_PATH"
           echo "CANGJIE_HOME=/opt/cangjie" >> "$GITHUB_ENV"
+          echo "LD_LIBRARY_PATH=/opt/cangjie/runtime/lib/linux_x86_64_cjnative:/opt/cangjie/tools/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
 
       - name: Verify Cangjie installation
         run: |
