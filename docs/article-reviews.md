@@ -1035,4 +1035,4 @@
 - 属性宏、语法节点、宏诊断等更细节的宏 API（超出 dprint 案例范围的部分）在正文以官方定义/表格描述，未编写第二个 cjpm 项目示例；不声称"已运行验证"
 - 项目 Linux 真实运行输出（`x = 3` / `x + y = 5`）将在 GitHub Actions 验证
 
-**状态**：🔄 初稿完成（本地 `cjpm check` 通过 + sync 33/33）；真实 `cjpm build && cjpm run` 待 Linux CI 确认。
+**状态**：✅ CI(Linux) 已验证：`cjpm build success` + `cjpm run` 输出 `x = 3` / `x + y = 5` 与正文逐行匹配。CI 基础设施（`tools/test-local.sh` 支持 cjpm 项目 + workflow PATH/LD_LIBRARY_PATH 配齐 cjpm）已跑通。
