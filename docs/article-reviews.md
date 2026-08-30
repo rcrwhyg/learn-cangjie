@@ -960,3 +960,40 @@
 - 输出刻意单行、无内嵌换行：规避了官方 `StringWriter.write(Float64)` 会打印 `100.000000` 及 `writeln` 注入换行带来的多行/格式不确定，保证逐行可核
 
 **状态**：🔄 初稿完成（编译通过），等待用户验收；文件往返与缓冲/字符串流真实输出待 GitHub Actions(Linux) 确认。
+
+---
+
+## 文章 26《仓颉 Socket 网络编程（TCP 与 UDP）》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（31/31 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/031-socket.cj --output-type staticlib`
+- [x] 官方 `Net/net_overview.html`、`Net/net_socket.html` 链接已实际访问核验
+
+**范围决策（与用户确认）**
+
+- 官方 `Net` 章含 Socket / HTTP / WebSocket。经核：`std.net`（Socket）**在 1.0.5 SDK 内**，可本地编译 + CI 运行；`stdx.net.http` **不在 SDK**（官方 note："net、log 等库已从 SDK 移到 stdx，需下载并配 cjpm.toml"），本机 `can not find package 'stdx.net.http'`。
+- 用户选择：**文章26 只写 Socket 传输层(std.net)**，HTTP/WebSocket 拆为独立专题（编号待阶段二重排）。学习计划与覆盖矩阵已同步。
+
+**覆盖矩阵（官方 Socket → 文章承接）**
+
+| 官方内容 | 覆盖位置 |
+|---|---|
+| `Net/net_overview.html` StreamSocket/DatagramSocket、TCP/UDP/Unix domain、阻塞式(仅阻塞仓颉线程) | 文章 1 节 |
+| `Net/net_socket.html` TCP 六步模型(bind/accept/connect/read/write)、UDP(sendTo/receiveFrom)、可选手动绑定 | 文章 2-3 节 |
+
+**撰写过程 cjc 语义核验**（示例 031 编译通过；CI 将真实跑本机回环 socket）
+
+- [x] `import std.net.*`：`TcpServerSocket(bindAt: UInt16)`、`bind()`、`accept()`、`localAddress as IPSocketAddress)?.port`
+- [x] `TcpSocket(host, port)`、`connect()`、`read/write`；`UdpSocket(bindAt)`、`sendTo(IPSocketAddress, data)`、`receiveFrom(buf): (addr, count)`
+- [x] `bindAt: 0` 临时端口 + 回读真实端口（避免 CI 端口冲突）
+- [x] TCP 分片风险 → `readExactly` 读满定长；TCP/UDP 两阶段串行 + `Future.get()` 锁定打印顺序
+- [x] `IPSocketAddress(...).address.toString()` 得到 "127.0.0.1"（官方 UDP 示例印证）
+
+**确定性设计**：全 `127.0.0.1` 回环、端口 0 交系统分配、`readExactly` 补齐、串行阶段+join → 3 行输出确定：
+`tcp server recv: [1, 2, 3]` / `tcp client echo: [1, 2, 3]` / `udp server recv 3 from 127.0.0.1: [4, 5, 6]`
+
+**状态**：🔄 初稿完成（编译通过），等待用户验收；真实 socket 收发以 GitHub Actions(Linux) 为准。

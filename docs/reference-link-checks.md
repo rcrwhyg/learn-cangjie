@@ -220,3 +220,12 @@
 - 仓颉 1.0.5 LTS I/O 流概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_overview.html
 - 仓颉 1.0.5 LTS I/O 节点流：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_source_stream.html
 - 仓颉 1.0.5 LTS I/O 处理流：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_process_stream.html
+
+文章：`articles/26-socket.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 网络编程概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Net/net_overview.html
+- 仓颉 1.0.5 LTS Socket 编程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Net/net_socket.html
+
+（HTTP / WebSocket 页 net_http.html、net_websocket.html 因依赖未安装的 stdx.net、本环境无法编译验证，按用户决定拆到后续独立专题，暂不纳入本篇参考资料。）

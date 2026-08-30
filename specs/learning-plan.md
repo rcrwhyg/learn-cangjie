@@ -55,7 +55,8 @@
 23. **线程与协程使用**：创建、访问、终止、等待、睡眠和任务结果。
 24. **同步与并发原语**：锁、同步机制、条件协调、线程间通信和竞态处理。
 25. **基础 I/O**：流、节点流、处理流、文件读写和资源关闭。
-26. **网络编程**：网络模型、Socket、HTTP、WebSocket 和错误处理。
+26. **网络编程（传输层 Socket）**：网络模型（阻塞式/仅阻塞仓颉线程）、StreamSocket(TCP)/DatagramSocket(UDP)、`std.net` 的 TcpSocket/TcpServerSocket/UdpSocket 收发与 bind/accept/connect、地址与临时端口。
+    - **（拆出）HTTP 与 WebSocket**：属 `stdx.net` 包（需 `cjpm` 下载并在 `cjpm.toml` 配置），单独成篇；编号待阶段二重排时确定。
 27. **宏与编译时元编程**：词法宏、Tokens、quote、语法节点、宏包、诊断和调试。
 
 ### 阶段三：运行时、标准库、互操作与工具链（28-41）
@@ -129,7 +130,8 @@
 | 并发概述、线程、访问、终止、睡眠 | 22/23 | 46、51 |
 | 同步机制 | 24 | 46、51 |
 | 基础 I/O | 25 | 33、49、50 |
-| Socket、HTTP、WebSocket | 26 | 35、50 |
+| Socket（TCP/UDP，std.net） | 26 | 36、51 |
+| HTTP、WebSocket（stdx.net，需下载包） | 独立专题篇（由 26 拆出，编号待定） | 36、51 |
 | 宏、Tokens、quote、语法节点和宏包 | 27 | 44、48 |
 | 动态特性和注解 | 28 | 42、48 |
 | C/Python 互操作 | 29/30 | 52 |
