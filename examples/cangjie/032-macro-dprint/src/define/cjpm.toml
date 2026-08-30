@@ -1,0 +1,9 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "macro_dprint.define"
+  version = "0.1.0"
+  output-type = "static-impl"
+  dest-path = ""
+  compiler-options = ""
+
+[dependencies]

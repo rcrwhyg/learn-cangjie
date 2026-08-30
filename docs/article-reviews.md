@@ -997,3 +997,42 @@
 `tcp server recv: [1, 2, 3]` / `tcp client echo: [1, 2, 3]` / `udp server recv 3 from 127.0.0.1: [4, 5, 6]`
 
 **状态**：🔄 初稿完成（编译通过），等待用户验收；真实 socket 收发以 GitHub Actions(Linux) 为准。
+
+---
+
+## 文章 27《仓颉宏与编译时元编程》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**范围决策（与用户确认）**
+
+- 官方 Macro 章要求宏定义必须在**独立的 `macro package`** 中（cjc 实测：`macro declaration must be defined in macro package`），且 `cjpm.toml` 需 `[macro-dependencies]`。
+- 现有 CI/门禁只跑单文件 `examples/cangjie/*.cj`。用户选择：**先扩基础设施再写文章**——已修改 `tools/test-local.sh` 增加 `test_cangjie_projects`：
+  - macOS：`cjpm check` 校验结构（同 staticlib 语义，避开 macOS SDK 链接不兼容）
+  - Linux：`cjpm build` + 若为 executable 则 `cjpm run`
+- 未修改 `sync_examples.py`：它早已 `glob("**/*")` 支持任意子路径，marker 引用形如 `cangjie/<name>/src/xxx.cj`。
+
+**门禁校验**
+
+- [x] `python3 .github/scripts/sync_examples.py`：**33 canonical examples**（31 单文件 + 2 项目源文件，均带 marker）
+- [x] `bash tools/test-local.sh`：Passed: 32（31 单文件编译 + 1 cjpm 项目 `cjpm check` 成功），`[PROJECT] examples/cangjie/032-macro-dprint/` 步骤输出 `cjpm check success`
+
+**示例项目**：`examples/cangjie/032-macro-dprint/`（cjpm 项目）
+- `cjpm.toml`：主模块，`[macro-dependencies]` 指向 `./src/define`
+- `src/main.cj`：`package macro_dprint`，`import macro_dprint.define.*`，`@dprint(x)` 与 `@dprint(x + y)`
+- `src/define/cjpm.toml`：`output-type = "static-impl"`
+- `src/define/dprint.cj`：`macro package macro_dprint.define; public macro dprint(input: Tokens): Tokens { ... quote(...) ... }`
+- cjpm 依赖解析顺序：`macro_dprint.define -> macro_dprint`（cjpm check 输出）
+
+**正文事实来源（官方）**
+
+- `Macro/macro_introduction.html`：dprint 案例 + Tokens/quote/插值 + `macro package` 与目录布局 + 编译期执行
+- `Macro/implementation_of_macros.html`：非属性宏 vs 属性宏、定义与调用形态匹配、嵌套宏、`assertParentContext`/`setItem`/`getChildMessages`
+- `Macro/Tokens_types_and_quote_expressions.html`：`Token`/`TokenKind`/`Tokens`（`size`/`get`/`[]`/`+`/`dump`/`toString`）、`quote` 转义（`\$` `\(` `\)`）、`ToTokens` 覆盖类型
+
+**诚实标注**
+
+- 属性宏、语法节点、宏诊断等更细节的宏 API（超出 dprint 案例范围的部分）在正文以官方定义/表格描述，未编写第二个 cjpm 项目示例；不声称"已运行验证"
+- 项目 Linux 真实运行输出（`x = 3` / `x + y = 5`）将在 GitHub Actions 验证
+
+**状态**：🔄 初稿完成（本地 `cjpm check` 通过 + sync 33/33）；真实 `cjpm build && cjpm run` 待 Linux CI 确认。

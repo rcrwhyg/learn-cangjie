@@ -229,3 +229,11 @@
 - 仓颉 1.0.5 LTS Socket 编程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Net/net_socket.html
 
 （HTTP / WebSocket 页 net_http.html、net_websocket.html 因依赖未安装的 stdx.net、本环境无法编译验证，按用户决定拆到后续独立专题，暂不纳入本篇参考资料。）
+
+文章：`articles/27-macros.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 宏的简介：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Macro/macro_introduction.html
+- 仓颉 1.0.5 LTS 宏的实现：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Macro/implementation_of_macros.html
+- 仓颉 1.0.5 LTS Tokens 相关类型和 quote 表达式：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Macro/Tokens_types_and_quote_expressions.html

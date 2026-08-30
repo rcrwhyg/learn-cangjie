@@ -44,6 +44,33 @@ test_cangjie() {
     done
 }
 
+# Support cjpm multi-package projects (e.g. macro packages) under
+# examples/cangjie/<name>/cjpm.toml. On macOS we can only run `cjpm check`
+# because the SDK cannot link the 1.0.5 runtime (same reason single-file
+# examples fall back to staticlib). On Linux we do full build + run.
+test_cangjie_projects() {
+    local found=0
+    local dir
+    for dir in examples/cangjie/*/; do
+        [[ -f "$dir/cjpm.toml" ]] || continue
+        found=1
+        printf '[PROJECT] %s\n' "$dir"
+        if [[ "$(uname -s)" == "Darwin" ]]; then
+            (cd "$dir" && cjpm check)
+        else
+            (cd "$dir" && cjpm build)
+            if grep -q 'output-type = "executable"' "$dir/cjpm.toml"; then
+                (cd "$dir" && cjpm run)
+            fi
+        fi
+        passed=$((passed + 1))
+    done
+    if [[ $found -eq 0 ]]; then
+        printf '[SKIP] no Cangjie cjpm projects\n'
+        skipped=$((skipped + 1))
+    fi
+}
+
 test_language() {
     local language="$1"
     local extension="$2"
@@ -93,6 +120,7 @@ test_language() {
 }
 
 test_cangjie
+test_cangjie_projects
 test_language java java
 test_language go go
 test_language kotlin kt

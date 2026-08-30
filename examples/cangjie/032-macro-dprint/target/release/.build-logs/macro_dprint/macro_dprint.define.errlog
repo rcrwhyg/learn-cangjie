@@ -1,0 +1,55 @@
+ld64.lld: error: /Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk/usr/lib/libSystem.tbd(/usr/lib/libSystem.B.dylib) is incompatible with arm64 (macOS)
+ld64.lld: error: undefined symbol: ___stack_chk_fail
+>>> referenced by section.cpp:0 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:0)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x2fc)
+
+ld64.lld: error: undefined symbol: ___stack_chk_guard
+>>> referenced by section.cpp:181 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:181)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x2d8)
+>>> referenced by section.cpp:181 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:181)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x2d4)
+>>> referenced by section.cpp:134 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:134)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x18)
+>>> referenced 1 more times
+
+ld64.lld: error: undefined symbol: __dyld_get_image_header
+>>> referenced by section.cpp:154 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:154)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x90)
+
+ld64.lld: error: undefined symbol: ___assert_rtn
+>>> referenced by section.cpp:153 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:153)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x88)
+
+ld64.lld: error: undefined symbol: _strcmp
+>>> referenced by section.cpp:146 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:146)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x58)
+
+ld64.lld: error: undefined symbol: __dyld_get_image_name
+>>> referenced by section.cpp:145 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:145)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x50)
+
+ld64.lld: error: undefined symbol: __dyld_image_count
+>>> referenced by section.cpp:142 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:142)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x38)
+
+ld64.lld: error: undefined symbol: _dladdr
+>>> referenced by section.cpp:138 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:138)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol _InitData+0x30)
+
+ld64.lld: error: undefined symbol: _getsectiondata
+>>> referenced by section.cpp:130 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:130)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol __ZL22InitSectionInformationPK14mach_header_64+0x2dc)
+>>> referenced by section.cpp:129 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:129)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol __ZL22InitSectionInformationPK14mach_header_64+0x2b8)
+>>> referenced by section.cpp:128 (/opt/cangjieBuildWorkSpace/cangjie_runtime/runtime/src/os/Macos/section.cpp:128)
+>>>               /Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o:(symbol __ZL22InitSectionInformationPK14mach_header_64+0x294)
+>>> referenced 17 more times
+
+ld64.lld: error: undefined symbol: _memmove
+>>> referenced by /private/var/folders/jf/wdncljd96tb17q6bszflzzf80000gn/T/cangjie-tmp-285m7av2APS-7e7691fb/macro_dprint.define.o:(symbol __CN19macro_dprint.define6dprintHCNax6TokensE+0x1f8)
+>>> referenced by /private/var/folders/jf/wdncljd96tb17q6bszflzzf80000gn/T/cangjie-tmp-285m7av2APS-7e7691fb/macro_dprint.define.o:(symbol __CN19macro_dprint.define6dprintHCNax6TokensE+0xe4)
+
+ld64.lld: error: undefined symbol: _memset
+>>> referenced by /private/var/folders/jf/wdncljd96tb17q6bszflzzf80000gn/T/cangjie-tmp-285m7av2APS-7e7691fb/macro_dprint.define.o:(symbol _macroCall_c_dprint_macro_dprint_define$real+0x134)
+[31merror[0m: '/Users/alon/cangjiedev/cangjie/third_party/llvm/bin/ld64.lld' '-o' '/Users/alon/Desktop/github/cangjie/learn-cangjie/examples/cangjie/032-macro-dprint/target/release/macro_dprint/lib-macro_macro_dprint.define.dylib' '-dylib' '-arch' 'arm64' '-platform_version' 'macos' '12.0.0' '26.5' '-syslibroot' '/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk' '-L/Users/alon/cangjiedev/cangjie/runtime/lib/darwin_aarch64_cjnative' '-L/Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative' '/Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/section.o' '/Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/cjstart.o' '/private/var/folders/jf/wdncljd96tb17q6bszflzzf80000gn/T/cangjie-tmp-285m7av2APS-7e7691fb/macro_dprint.define.o' '-lcangjie-std-ast' '-lcangjie-std-math' '-lcangjie-std-collection' '-lcangjie-std-core' '-lcangjie-runtime' '-lboundscheck' '-lSystem' '/Users/alon/cangjiedev/cangjie/lib/darwin_aarch64_cjnative/libclang_rt.osx.a' : command failed (use -V to see invocation)
+Error: failed to compile package `macro_dprint.define`, return code is 1

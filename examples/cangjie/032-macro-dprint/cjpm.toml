@@ -1,0 +1,16 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "macro_dprint"
+  version = "0.1.0"
+  description = "宏入门示例：dprint 调试宏（非属性宏，基于 Tokens + quote）"
+  output-type = "executable"
+  compiler-options = ""
+  dest-path = ""
+  override-compile-option = ""
+  link-option = ""
+
+[dependencies]
+
+[macro-dependencies]
+  [macro-dependencies.define]
+    path = "./src/define"

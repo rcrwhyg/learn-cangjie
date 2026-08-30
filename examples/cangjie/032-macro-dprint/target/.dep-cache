@@ -1,0 +1,48 @@
+{
+  "bin": {},
+  "pkg-build": {
+    "/Users/alon/Desktop/github/cangjie/learn-cangjie/examples/cangjie/032-macro-dprint/src/define": {
+      "package": "macro_dprint.define",
+      "isMacro": true,
+      "accessLevel": "public",
+      "timeStamp": 1788065006,
+      "dependencies": [],
+      "std-dependencies": [
+        {
+          "orPackage": "",
+          "package": "std.ast",
+          "isStd": true,
+          "imports": [
+            {
+              "file": "/Users/alon/Desktop/github/cangjie/learn-cangjie/examples/cangjie/032-macro-dprint/src/define/dprint.cj"
+            }
+          ]
+        }
+      ],
+      "testUsed": false,
+      "mockUsed": false
+    },
+    "/Users/alon/Desktop/github/cangjie/learn-cangjie/examples/cangjie/032-macro-dprint/src": {
+      "package": "macro_dprint",
+      "isMacro": false,
+      "accessLevel": "public",
+      "timeStamp": 1788065006,
+      "dependencies": [
+        {
+          "orPackage": "",
+          "package": "macro_dprint.define",
+          "isStd": false,
+          "imports": [
+            {
+              "file": "/Users/alon/Desktop/github/cangjie/learn-cangjie/examples/cangjie/032-macro-dprint/src/main.cj"
+            }
+          ]
+        }
+      ],
+      "std-dependencies": [],
+      "testUsed": false,
+      "mockUsed": false
+    }
+  },
+  "pkg-test": {}
+}

@@ -1,0 +1,22 @@
+{
+  "packageInformation": {
+    "macro_dprint.define": {
+      "rootPackageName": "macro_dprint",
+      "fileNameHash": "2555339944432050734",
+      "timeStamp": 1788065006,
+      "isBuilt": false,
+      "exeName": "",
+      "hasSubPkgs": false
+    },
+    "macro_dprint": {
+      "rootPackageName": "macro_dprint",
+      "fileNameHash": "5412080425600847547",
+      "timeStamp": 1788065006,
+      "isBuilt": false,
+      "exeName": "main",
+      "hasSubPkgs": true
+    }
+  },
+  "jsonHash": "5130835046020525351",
+  "rootPackageName": "macro_dprint"
+}

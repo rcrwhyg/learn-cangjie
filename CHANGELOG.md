@@ -36,6 +36,8 @@
 - 文章 24《仓颉同步与并发原语》（初稿，待审核）并配套 `examples/cangjie/029-sync-primitives.cj`，覆盖 AtomicInt*/Bool/Reference、可重入 Mutex/tryLock、synchronized 语句与表达式、Condition 谓词循环、有界队列模式、ThreadLocal；示例六路输出全为确定值
 - 文章 25《仓颉基础 I/O》（初稿，待审核）并配套 `examples/cangjie/030-basic-io.cj`，覆盖流抽象(InputStream/OutputStream/flush)、节点流 vs 处理流、标准流 ConsoleReader/Writer、File 常规操作与文件流/OpenMode/try-with-resources、缓冲流、字符串流
 - 文章 26《仓颉 Socket 网络编程（TCP 与 UDP）》（初稿，待审核）并配套 `examples/cangjie/031-socket.cj`，覆盖 StreamSocket/DatagramSocket、TCP bind/accept/connect 与 UDP sendTo/receiveFrom、阻塞式仅阻塞仓颉线程、bindAt:0 临时端口、readExactly 应对分片；HTTP/WebSocket（stdx.net）拆出另篇
+- 扩 `tools/test-local.sh`：新增 `test_cangjie_projects`，扫描 `examples/cangjie/*/cjpm.toml` 目录，macOS 走 `cjpm check`、Linux 走 `cjpm build + cjpm run`；配合既有 `sync_examples.py` 的递归 glob，解锁 cjpm 多包（含宏）示例
+- 文章 27《仓颉宏与编译时元编程》（初稿，待审核）：以 `examples/cangjie/032-macro-dprint/`（cjpm 项目，含 `macro package`）为可运行示例，讲 `macro package` / `Tokens` / `quote` / 非属性 vs 属性宏 / 嵌套宏
 - 学习计划由 52 篇扩展为 53 篇：文章 16 与 17 拆分定稿后，Stage 2+ 全部编号顺延一位，覆盖矩阵、总览计数同步更新
 - 学习计划扩展为 52 篇，明确泛型、标准库与工具链的完整路线，并补充官方章节覆盖矩阵与小阶段复盘门禁
 - 文章代码块与规范示例的同步校验流程
