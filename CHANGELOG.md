@@ -30,6 +30,7 @@
 - 文章 19《仓颉扩展机制》（初稿，待审核）并配套 `examples/cangjie/024-extension.cj`，覆盖直接扩展、泛型扩展、条件能力、接口扩展、访问/遮盖/修饰符规则、孤儿规则、导入导出
 - 文章 20《仓颉错误处理与 Option》（初稿，待审核）并配套 `examples/cangjie/025-error-option.cj`，覆盖 Error/Exception、自定义异常、try-catch-finally、try 作表达式、CatchPattern 三形态、try-with-resources、内置运行时异常、Option 定义/糖/自动装箱、四种解构（match/`??`/`?.`/getOrThrow）与错误传播；明确 1.0.5 无 Result 类型
 - 文章 21《仓颉资源管理》（初稿，待审核）并配套 `examples/cangjie/026-resource-management.cj`，覆盖手动 close / try-with-resources / 终结器 ~init 三条路径、Resource 契约、终结器 12 条限制、std.runtime.gc 与取舍建议
+- 文章 22《仓颉并发模型概述》（初稿，待审核）并配套 `examples/cangjie/027-concurrency-overview.cj`，覆盖语言线程 vs native 线程、1:1 vs M:N 抢占式模型、阻塞再调度、foreign 阻塞注意、`spawn`/`Future.get()` 任务生命周期最小用法（详细线程 API 留给 23）
 - 学习计划由 52 篇扩展为 53 篇：文章 16 与 17 拆分定稿后，Stage 2+ 全部编号顺延一位，覆盖矩阵、总览计数同步更新
 - 学习计划扩展为 52 篇，明确泛型、标准库与工具链的完整路线，并补充官方章节覆盖矩阵与小阶段复盘门禁
 - 文章代码块与规范示例的同步校验流程

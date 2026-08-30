@@ -809,3 +809,40 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
+
+---
+
+## 文章 22《仓颉并发模型概述》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（27/27 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/027-concurrency-overview.cj --output-type staticlib`
+- [x] 3 个官方 1.0.5 dev-guide concurrency 链接已实际访问核验（concurrency_overview / create_thread / use_thread）
+
+**覆盖矩阵（官方 concurrency 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `concurrency/concurrency_overview.html` 语言线程 vs native 线程、1:1 vs M:N、抢占、阻塞再调度、foreign 注意事项 | 文章 1-4 节 |
+| `concurrency/create_thread.html` `spawn { }` 创建任务 | 文章 5 节（只带到，API 细节给 23） |
+| `concurrency/use_thread.html` `Future<T>`、`get()` 阻塞取结果 | 文章 5-6 节（仅用 get() 收敛确定性输出） |
+| 线程访问/终止/睡眠、同步原语 | 明确留给《线程与协程使用》《同步与并发原语》（23/24） |
+
+**撰写过程 cjc 语义核验**
+
+- [x] `spawn { ... }` 返回 `Future<Int64>`；`get()` 阻塞并返回结果
+- [x] 示例 027 用两个任务（求和 5050 / 阶乘 3628800）+ `get()` 收敛，输出确定，不依赖调度顺序
+- [x] `import std.concurrent` 不存在（报 can not find package），确认 spawn/Future/Thread 属 core，无需 import
+- [x] `sleep`/`ThisThread.current()` 等具体 API 未用于本篇示例（属 23 篇），未臆测其签名
+
+**与官方一致的边界声明（诚实）**
+
+- 本篇是"模型概述"，可运行示例刻意只做最小 spawn+get；线程终止/睡眠/锁等明确划归后续文章，不越界写未核验 API
+- foreign 阻塞占住 native 线程、新线程随主线程结束等，均为官方 concurrency_overview/create_thread 原文要点
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。

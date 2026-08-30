@@ -188,3 +188,11 @@
 
 - 仓颉 1.0.5 LTS class 定义（含 class 终结器小节）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/class.html
 - 仓颉 1.0.5 LTS throw 和处理异常（含 try-with-resources 与 Resource）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/handle.html
+
+文章：`articles/22-concurrency-overview.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 并发概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/concurrency_overview.html
+- 仓颉 1.0.5 LTS 创建线程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/create_thread.html
+- 仓颉 1.0.5 LTS 访问线程（Future/get 出处，正文引用其 get() 语义）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/use_thread.html
