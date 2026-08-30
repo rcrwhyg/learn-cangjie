@@ -181,3 +181,10 @@
 - 仓颉 1.0.5 LTS 常见运行时异常：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/common_runtime_exceptions.html
 - 仓颉 1.0.5 LTS Option 类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/option_type.html
 - 仓颉 1.0.5 LTS 使用 Option：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/use_option.html
+
+文章：`articles/21-resource-management.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS class 定义（含 class 终结器小节）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/class.html
+- 仓颉 1.0.5 LTS throw 和处理异常（含 try-with-resources 与 Resource）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/handle.html

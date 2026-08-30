@@ -77,7 +77,8 @@
 - [ ] 文章17: 函数重载与操作符重载（初稿完成，CI 通过，等待发布审核）
 - [ ] 文章18: 泛型编程（初稿完成，CI 通过，等待发布审核）
 - [ ] 文章19: 扩展机制（初稿完成，CI 通过，等待发布审核）
-- [ ] 文章20: 错误处理与 Option（初稿完成，等待审核）
+- [ ] 文章20: 错误处理与 Option（初稿完成，CI 通过，等待发布审核）
+- [ ] 文章21: 资源管理（初稿完成，等待审核）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option
@@ -272,6 +273,8 @@
 - 完成文章 19《仓颉扩展机制》初稿与 `examples/cangjie/024-extension.cj`，依据官方 extension 全部 4 个章节（overview/direct/interface/access_rules）逐条核验；10 条负例（成员变量、`public extend`、`open` 修饰、private 访问、遮盖、`super`、扩展 interface、未实例化泛型、未用类型形参、约束不满足）均以 cjc 实测报错确认
 - 文章 19 CI(Linux) 真实运行输出与正文预期逐行匹配（7 行 shout/lenSq/v3/scaled/pair equals/counter 全部一致）
 - 完成文章 20《仓颉错误处理与 Option》初稿与 `examples/cangjie/025-error-option.cj`，依据官方 error_handle 全 4 页 + Option 类型页逐条核验；SDK 实测确认 1.0.5 **不存在** `Result<T,E>`（`Result`/`Ok` 未定义）
+- 文章 20 CI(Linux) 真实运行 19 行输出与正文预期逐行匹配
+- 完成文章 21《仓颉资源管理》初稿与 `examples/cangjie/026-resource-management.cj`；终结器 12 条限制以 class.html 为准，其中规则 1/2/4 通过 cjc 实测报错确认（open 类禁止终结器、不能显式调用、不能定义在扩展中、不能有修饰符），未承诺的多资源关闭顺序与不确定的终结器时机在正文与示例中做了诚实标注
 
 
 *本状态文档将定期更新，反映项目最新进展*

@@ -761,3 +761,51 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
+
+---
+
+## 文章 21《仓颉资源管理》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（26/26 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/026-resource-management.cj --output-type staticlib`
+- [x] 2 个官方 1.0.5 dev-guide 链接已实际访问核验（class.html 含终结器小节 + error_handle/handle.html 含 try-with-resources）
+
+**覆盖矩阵（官方 资源管理相关章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `class_and_interface/class.html` §class 终结器：`~init` 定义 + 12 条限制 | 文章 4 节 |
+| `error_handle/handle.html` §try-with-resources：`Resource` 接口、多资源、类型 Unit | 文章 2-3 节 |
+| `std.runtime.gc`（class 终结器官方示例中引用的 API） | 文章 5 节 |
+| 内存模型 / GC 算法原理 | 明确延后到《值类型、引用类型与内存管理》专题 |
+
+**撰写过程 cjc 语义核验**
+
+正例（示例 026 整体编译通过 + CI 将执行验证）：
+
+- [x] `class Conn <: Resource` 实现 isClosed/close，`try (c = Conn(..))` 自动关闭
+- [x] 多资源 `try (r1 = .., r2 = ..)`
+- [x] 手动 close 对照
+- [x] 非 open class 带 `~init()`（内部计数，不打印，避免依赖时机）
+- [x] `import std.runtime.gc` + `gc(heavy: true)` 编译通过（`gc()` 也通过）
+
+负例（cjc 实测报错，逐条对应官方规则）：
+
+- [x] 规则2：`open class C { ~init() {} }` → `finalizer is forbidden in class 'C' that is open`
+- [x] 规则1：显式调用 `c.~init()` → `expected a member name after '.'`（语法不允许）
+- [x] 规则4：`extend C { ~init() {} }` → `unexpected finalizer in extend body`
+- [x] 规则1：`private ~init()` → `unexpected modifier 'private' on finalizer in class body`
+
+**关键取舍（诚实标注，不臆测）**
+
+- 官方**未承诺**多资源关闭顺序 → 正文与 Q7 明确"不要依赖关闭顺序"，示例注释也删去了"逆序"字样
+- 终结器时机/线程/顺序不确定（规则5/6/7/12）→ 示例把可观察输出放在 try-with-resources，终结器不打印，避免 CI 输出不确定
+- 未在正文声称具体 GC 触发后终结器一定运行（规则12 禁止同步依赖）
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
