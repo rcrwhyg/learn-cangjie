@@ -711,3 +711,53 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
+
+---
+
+## 文章 20《仓颉错误处理与 Option》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（25/25 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/025-error-option.cj --output-type staticlib`
+- [x] 5 个官方 1.0.5 dev-guide 链接已实际访问核验（error_handle 3 页 + enum_and_pattern_match/option_type + error_handle/use_option）
+
+**覆盖矩阵（官方 error_handle 与 Option 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `error_handle/exception_overview.html` Error/Exception 分支、自定义异常、`getClassName` | 文章 1 节 |
+| `error_handle/handle.html` throw/try-catch-finally/CatchPattern/try-with-resources | 文章 2-4 节 |
+| `error_handle/common_runtime_exceptions.html` 5 个内置运行时异常 | 文章 5 节 |
+| `enum_and_pattern_match/option_type.html` Option 定义、`?T` 语法糖、自动装箱、`None<T>` | 文章 6.1 节 |
+| `error_handle/use_option.html` match / `??` / `?.` / `getOrThrow` | 文章 6.2-7 节 |
+
+**撰写过程 cjc 语义核验**
+
+正例（示例 025 整体编译通过 + CI 将执行验证）：
+
+- [x] 自定义 `AppException <: Exception` 且重写 `getClassName`
+- [x] `throw` + `try-catch-finally`（含 finally 必执行）
+- [x] `catch (e: A | B)` 联合类型模式，`e.message` 走公共父类
+- [x] `catch (_)` 通配符模式
+- [x] try 作表达式：类型 = finally 外各分支的最小公共父类型
+- [x] try-with-resources：`try (w = Worker)` 自动 close
+- [x] `?Int64` = `Option<Int64>`；`let c: Option<Int64> = 300` 自动 Some 装箱
+- [x] `match` / `??` / `?.` / `getOrThrow` 四种 Option 解构
+- [x] `safeDiv(a, b): ?Int64` 用 Option 传播"可预期失败"
+
+负例（cjc 实测报错，与官方一致）：
+
+- [x] 不能继承 Error 自定义异常（文档明确规则；本文档未生成具体报错文本以避免臆测）
+- [x] 1.0.5 SDK **不存在** `Result<T,E>`：`let x: Result<Int64,String>` → `undeclared type name 'Result'`、`undeclared identifier 'Ok'`
+- [x] 联合模式最小公共父类：官方文档示例 `e is Father` → `true`
+
+**关键差异提示**
+
+- 与 Rust/Kotlin 迁移读者明确说明：仓颉 1.0.5 **没有 `Result`**，**`?` 只做类型糖/安全访问**（不是早返回运算符）。
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。

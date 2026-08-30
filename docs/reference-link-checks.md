@@ -171,3 +171,13 @@
 - 仓颉 1.0.5 LTS 直接扩展：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/direct_extension.html
 - 仓颉 1.0.5 LTS 接口扩展：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/interface_extension.html
 - 仓颉 1.0.5 LTS 访问规则：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/extension/access_rules.html
+
+文章：`articles/20-error-option.md`
+
+以下 5 条链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 定义异常：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/exception_overview.html
+- 仓颉 1.0.5 LTS throw 和处理异常：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/handle.html
+- 仓颉 1.0.5 LTS 常见运行时异常：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/common_runtime_exceptions.html
+- 仓颉 1.0.5 LTS Option 类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/option_type.html
+- 仓颉 1.0.5 LTS 使用 Option：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/error_handle/use_option.html
