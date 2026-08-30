@@ -846,3 +846,47 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认。
+
+---
+
+## 文章 23《仓颉线程与协程使用》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（28/28 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/028-thread-usage.cj --output-type staticlib`
+- [x] 4 个官方 1.0.5 dev-guide concurrency 链接已实际访问核验（create_thread / use_thread / terminal_thread / sleep）
+
+**覆盖矩阵（官方 concurrency 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `concurrency/create_thread.html` `spawn{=>...}`、主线程结束带走子线程、`sleep` 预告 | 文章 1 节 |
+| `concurrency/use_thread.html` `Future<T>`：`get/get(timeout)/tryGet` 原型、`Thread`（currentThread/id/hasPendingCancellation）、`fut.thread` | 文章 2-3 节 |
+| `concurrency/terminal_thread.html` `cancel()` + `hasPendingCancellation` 协作式终止、`SyncCounter` 门控示例 | 文章 4 节 |
+| `concurrency/sleep.html` `sleep(Duration)`、`<=Zero` 仅让出、`Duration.second/millisecond` | 文章 5 节 |
+| `concurrency/sync.html`（锁/通道等同步原语） | 明确留给《同步与并发原语》（24） |
+
+**撰写过程 cjc 语义核验**
+
+正例（示例 028 整体编译通过 + CI 将执行验证）：
+
+- [x] `Future<Int64>.get()` 阻塞取值；`tryGet(): Option<T>` 完成后 Some
+- [x] `Thread.currentThread.id`、任务内返回自身 `id`、比较不同线程
+- [x] `fut.get(Duration.millisecond)` 对睡 1s 任务 → 必定 TimeoutException
+- [x] `fut.cancel()` + `hasPendingCancellation`（SyncCounter 门控）→ "cancelled"
+- [x] `sleep(Duration.millisecond)`、`Duration.second`、`100 * Duration.millisecond` 语法
+- [x] `import std.sync.SyncCounter` + `waitUntilZero()/dec()` 编译通过
+
+**确定性设计（诚实标注，不靠运气）**
+
+- 不打印易变 id 数值，仅打印 `mainId != taskId` 布尔（官方明确"id 会变化"）
+- 取消用 `SyncCounter(1)` 门控：先 `cancel()` 再 `dec()` 放行，保证 `hasPendingCancellation` 醒来时已为 true → 确定输出 `cancelled`
+- 超时用 1s 睡眠 vs 1ms 等待，时序差 1000 倍，稳定触发 TimeoutException
+- 残留 1s 睡眠任务 `f3`：主线程 return 时按官方"子线程随主线程终止"一并结束，不影响退出
+
+**状态**
+
+🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认（重点验证协作式取消与超时两条的确定性）。

@@ -79,7 +79,8 @@
 - [ ] 文章19: 扩展机制（初稿完成，CI 通过，等待发布审核）
 - [ ] 文章20: 错误处理与 Option（初稿完成，CI 通过，等待发布审核）
 - [ ] 文章21: 资源管理（初稿完成，CI 通过 + 修正多资源逆序输出，等待发布审核）
-- [ ] 文章22: 并发模型概述（初稿完成，等待审核）
+- [ ] 文章22: 并发模型概述（初稿完成，CI 通过，等待发布审核）
+- [ ] 文章23: 线程与协程使用（初稿完成，等待审核）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option
@@ -278,6 +279,8 @@
 - 完成文章 21《仓颉资源管理》初稿与 `examples/cangjie/026-resource-management.cj`；终结器 12 条限制以 class.html 为准，其中规则 1/2/4 通过 cjc 实测报错确认（open 类禁止终结器、不能显式调用、不能定义在扩展中、不能有修饰符），未承诺的多资源关闭顺序与不确定的终结器时机在正文与示例中做了诚实标注
 - 文章 21 CI(Linux) 运行确认多资源为逆序(LIFO)关闭，据此修正正文"预期输出"并保留"勿依赖顺序"警示
 - 完成文章 22《仓颉并发模型概述》初稿与 `examples/cangjie/027-concurrency-overview.cj`；依据 concurrency_overview/create_thread/use_thread 三页；`Future.get()` 阻塞语义经官方 use_thread + SDK 探针双重确认；`std.concurrent` 不存在（属 core）已实测
+- 文章 22 CI(Linux) 运行 2 行输出与正文逐行匹配
+- 完成文章 23《仓颉线程与协程使用》初稿与 `examples/cangjie/028-thread-usage.cj`；依据 create_thread/use_thread/terminal_thread/sleep 四页；Future.get/get(timeout)/tryGet、Thread、cancel+hasPendingCancellation、sleep(Duration) 全部 SDK 探针确认，并用 SyncCounter 门控 + 超时窗把并发示例做成完全确定输出
 
 
 *本状态文档将定期更新，反映项目最新进展*
