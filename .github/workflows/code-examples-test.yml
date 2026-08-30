@@ -37,9 +37,13 @@ jobs:
           tar -xzf cangjie-sdk-linux-x64-1.0.5.tar.gz
           sudo mv cangjie /opt/cangjie
           echo "/opt/cangjie/bin" >> "$GITHUB_PATH"
+          echo "/opt/cangjie/tools/bin" >> "$GITHUB_PATH"
+          echo "CANGJIE_HOME=/opt/cangjie" >> "$GITHUB_ENV"
 
       - name: Verify Cangjie installation
-        run: cjc --version
+        run: |
+          cjc --version
+          cjpm --version 2>&1 | head -1 || cjpm --help | head -1
 
       - name: Compile and run canonical examples
         run: bash tools/test-local.sh
