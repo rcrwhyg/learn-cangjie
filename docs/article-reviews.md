@@ -1036,3 +1036,34 @@
 - 项目 Linux 真实运行输出（`x = 3` / `x + y = 5`）将在 GitHub Actions 验证
 
 **状态**：✅ CI(Linux) 已验证：`cjpm build success` + `cjpm run` 输出 `x = 3` / `x + y = 5` 与正文逐行匹配。CI 基础设施（`tools/test-local.sh` 支持 cjpm 项目 + workflow PATH/LD_LIBRARY_PATH 配齐 cjpm）已跑通。
+
+---
+
+## 文章 28《仓颉反射、注解与动态特性》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**SDK 可用性调查（本会话专门核实）**
+
+- 用户质疑"标准库到底有没有 reflect"。对照实验（同一 shell、同一条 `cjc staticlib`）：`std.net`✅、`std.sync`✅、`std.reflect`❌`can not find package`。
+- 产物核查：本地 mac 1.0.5 SDK `modules/.../std/` 有 44 个 .cjo，含 `std.ref`（弱引用）但**无 `std.reflect.cjo`**；lib/ 下也无 reflect 库。
+- **CI(Linux) 官方 1.0.5 SDK 探针**：`std.reflect.cjo` + `libstd.reflect.bc` 均在，且逐字照抄官方 `TypeInfo.of<Int64>()` 例子编译并运行输出 `Int64`。
+- 结论：**std.reflect 是 1.0.5 标准库正式成员**；本地 macOS SDK 因系统升级(26.5.2)+老包时间戳(2023-01-02)不完整。基线维持 LTS 1.0.5，反射示例以 Linux CI 为验证权威。
+- 配套 `tools/test-local.sh` 增加 `[SKIP-DARWIN]`：macOS 上含 `import std.reflect` 的示例跳过本地静态编译（避免不完整 SDK 误报），Linux CI 仍完整 build+run。
+
+**门禁校验**
+
+- [x] `sync_examples.py`：**34 canonical examples**（033 被本文两处 marker 引用）
+- [x] `test-local.sh`：macOS 下 `[SKIP-DARWIN] 033...` + 其余 Passed: 32；Linux CI 将实际编译运行 033
+- [x] 官方 `reflect_and_annotation/dynamic_feature.html`、`reflect_and_annotation/anno.html` 两页已实际访问（200，正文完整）
+
+**覆盖矩阵（官方 reflect_and_annotation → 文章承接）**
+
+| 官方内容 | 覆盖位置 |
+|---|---|
+| `dynamic_feature.html` TypeInfo.of(Any/Object)/of<T>()/get(名字)、InfoNotFoundException、未实例化泛型取不到、静态/实例成员读写、属性、getStaticFunction+apply、只能反射 public | 文章 1-3 节 |
+| `anno.html` @OverflowThrowing/Wrapping/Saturating 三策略+默认+编译期检出+运算符溢出表、@EnsurePreparedToMock、@Annotation+const init+[]参数+不可重复+不被继承+target:AnnotationKind、findAnnotation | 文章 4-7 节 |
+
+**示例 033 覆盖**：`TypeInfo.of(A())`→`default.A`；`findAnnotation<Version>()`→1.0/1.1；`getInstanceVariable("balance")` getValue/setValue→100/250；`@OverflowWrapping Int8 105+105`→-46。
+
+**状态**：🔄 初稿完成（本地按策略跳过 reflect 静态检查，sync 全绿）；033 的真实编译+运行 6 行输出待 Linux CI 确认。

@@ -32,6 +32,15 @@ test_cangjie() {
         output="$TMP_DIR/$(basename "${file%.cj}")"
         printf '[TEST] %s\n' "$file"
         if [[ "$(uname -s)" == "Darwin" ]]; then
+            # The locally installed macOS 1.0.5 SDK is known to be incomplete
+            # (missing std.reflect after a macOS system upgrade). Such examples
+            # are still compiled AND run on the Linux CI runner, which is the
+            # authoritative source of runnability. Skip them locally only.
+            if grep -qE 'import[[:space:]]+std\.reflect' "$file"; then
+                printf '[SKIP-DARWIN] %s (local macOS SDK lacks std.reflect; verified on Linux CI)\n' "$file"
+                skipped=$((skipped + 1))
+                continue
+            fi
             # The current macOS SDK cannot link the 1.0.5 native runtime.
             cjc "$file" --output-type staticlib -o "$output"
         else
