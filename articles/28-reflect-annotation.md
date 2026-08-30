@@ -58,6 +58,10 @@ public class TypeInfo {
 - 运行时查不到对应类型实例 → 抛 `InfoNotFoundException`。
 - **无法获取未实例化的泛型类型**：`TypeInfo.get("default.A<Int64>")` 只有当 `A<Int64>` 已被实例化（程序里真正用过）才查得到，否则抛 `InfoNotFoundException`。
 
+### 2.2 `of` 的弃用提示（SDK 与文档的差异）
+
+> **⚠️ 注意（诚实标注）**：本文与官方 1.0.5 文档都使用 `TypeInfo.of(...)`——它在 1.0.5 上**能正常编译运行**。但 1.0.5 **编译器**会对 `TypeInfo.of(Object)` 发出弃用告警，提示改用 `ClassTypeInfo.of(Object)`。即"官方文档写法"与"SDK 最新推荐写法"此处略有出入：文档仍以 `TypeInfo.of` 为示例，SDK 已开始引导 `ClassTypeInfo.of`。学习本文以 `TypeInfo.of` 为准即可读懂；写新代码若不想吃 deprecation 告警，可按编译器提示换 `ClassTypeInfo.of`。
+
 ## 3. 用反射访问成员
 
 拿到 `TypeInfo` 后就能访问对应类的实例/静态成员。子类 `ClassTypeInfo` 还提供访问公开构造函数、成员变量、属性、函数的接口。
@@ -313,6 +317,10 @@ wrap 105+105(Int8) = -46
 ### Q8: 我在 mac 上 `import std.reflect` 报找不到包？
 
 那是你本地 mac 的 1.0.5 SDK 不完整（本教程环境即如此）。`std.reflect` 是 1.0.5 标准库正式成员；在完整的官方 SDK（含 CI 的 Linux 版）里可正常编译运行。
+
+### Q9: `TypeInfo.of` 编译时有 deprecation 警告，要不要紧？
+
+不要紧、能正常运行。这是 1.0.5 **SDK** 把 `TypeInfo.of(Object)` 标为弃用、推荐 `ClassTypeInfo.of(Object)`；而**官方文档**示例仍写 `TypeInfo.of`。本文为与文档一致、且代码在 CI 实测可跑，保留 `TypeInfo.of`；你在自己新项目里可按编译器提示改用 `ClassTypeInfo.of` 消除告警。
 
 ## 11. 总结
 

@@ -1067,3 +1067,8 @@
 **示例 033 覆盖**：`TypeInfo.of(A())`→`default.A`；`findAnnotation<Version>()`→1.0/1.1；`getInstanceVariable("balance")` getValue/setValue→100/250；`@OverflowWrapping Int8 105+105`→-46。
 
 **状态**：🔄 初稿完成（本地按策略跳过 reflect 静态检查，sync 全绿）；033 的真实编译+运行 6 行输出待 Linux CI 确认。
+
+**CI(Linux) 实测 + SDK/文档差异记录**
+
+- ✅ CI 编译运行 033，6 行输出与正文逐行匹配：`type of A = default.A` / `version = 1.0` / `version = 1.1` / `balance = 100` / `balance after = 250` / `wrap 105+105(Int8) = -46`
+- ⚠️ SDK 弃用告警：1.0.5 编译器对 `TypeInfo.of(Object)` 报 `function 'of' is deprecated. Use 'ClassTypeInfo.of(Object)' instead.`；但官方 1.0.5 文档示例仍用 `TypeInfo.of`。本文保留 `TypeInfo.of`（与文档一致、CI 实测可跑），在 2.2 节与 FAQ Q9 诚实标注该差异，并说明新代码可改用 `ClassTypeInfo.of`。→ 更新：文章 28 增补 2.2 节 + Q9。
