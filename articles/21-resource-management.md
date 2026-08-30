@@ -58,7 +58,7 @@ main() {
 - `try (...)` 引入的名字与块内变量**同作用域级别**，块内再同名会重定义报错。
 - `catch`、`finally` 在 try-with-resources 里都**可选**；整个表达式类型为 `Unit`。
 - 一般**没必要**再配 `catch`/`finally`，也不建议再手动 `close`（逻辑冗余）；需要处理资源使用/释放过程中的异常时才可加。
-- **资源释放顺序**官方未对"多资源"明确承诺，因此**不要依赖关闭顺序**写关键逻辑。
+- **资源释放顺序**官方未对"多资源"作承诺；实测为按声明**逆序（LIFO）**关闭，但**不要依赖**这个顺序写关键逻辑。
 
 > **✅ 推荐**：只要资源有清晰的作用域边界（函数内打开、用完就关），一律用 `try-with-resources`——它把"忘记 close"从高频 bug 变成不可能。
 
@@ -234,7 +234,7 @@ main(): Int64 {
 }
 ```
 
-预期输出（"多个资源"块中 `close a`/`close b` 的先后不固定，见第 2 节说明）：
+预期输出（"多个资源"块中先关 `b` 再关 `a`，即按声明**逆序**关闭；实测如此，但**官方并未承诺该顺序**，关键逻辑不要依赖它）：
 
 ```text
 --- try-with-resources ---
@@ -246,8 +246,8 @@ open a
 open b
 query on a
 query on b
-close a
 close b
+close a
 --- manual close ---
 open manual
 query on manual
