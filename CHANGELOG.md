@@ -34,6 +34,7 @@
 - 文章 22《仓颉并发模型概述》（初稿，待审核）并配套 `examples/cangjie/027-concurrency-overview.cj`，覆盖语言线程 vs native 线程、1:1 vs M:N 抢占式模型、阻塞再调度、foreign 阻塞注意、`spawn`/`Future.get()` 任务生命周期最小用法（详细线程 API 留给 23）
 - 文章 23《仓颉线程与协程使用》（初稿，待审核）并配套 `examples/cangjie/028-thread-usage.cj`，覆盖 spawn/主线程带走子线程、Future 的 get/get(timeout)/tryGet、Thread 访问与 id、cancel + hasPendingCancellation 协作式终止、sleep(Duration)；同步原语留给 24
 - 文章 24《仓颉同步与并发原语》（初稿，待审核）并配套 `examples/cangjie/029-sync-primitives.cj`，覆盖 AtomicInt*/Bool/Reference、可重入 Mutex/tryLock、synchronized 语句与表达式、Condition 谓词循环、有界队列模式、ThreadLocal；示例六路输出全为确定值
+- 文章 25《仓颉基础 I/O》（初稿，待审核）并配套 `examples/cangjie/030-basic-io.cj`，覆盖流抽象(InputStream/OutputStream/flush)、节点流 vs 处理流、标准流 ConsoleReader/Writer、File 常规操作与文件流/OpenMode/try-with-resources、缓冲流、字符串流
 - 学习计划由 52 篇扩展为 53 篇：文章 16 与 17 拆分定稿后，Stage 2+ 全部编号顺延一位，覆盖矩阵、总览计数同步更新
 - 学习计划扩展为 52 篇，明确泛型、标准库与工具链的完整路线，并补充官方章节覆盖矩阵与小阶段复盘门禁
 - 文章代码块与规范示例的同步校验流程

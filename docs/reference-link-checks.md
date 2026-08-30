@@ -212,3 +212,11 @@
 
 - 仓颉 1.0.5 LTS 同步机制：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sync.html
 - 仓颉 1.0.5 LTS 终止线程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/terminal_thread.html
+
+文章：`articles/25-basic-io.md`
+
+以下 3 条链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS I/O 流概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_overview.html
+- 仓颉 1.0.5 LTS I/O 节点流：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_source_stream.html
+- 仓颉 1.0.5 LTS I/O 处理流：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_process_stream.html

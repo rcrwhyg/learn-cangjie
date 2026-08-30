@@ -924,3 +924,39 @@
 **确定性设计**：所有计数统一 `Future.get()` join 后再打印；Condition 用 `while(!ready)` 谓词使顺序无关；输出 6 行确定值。
 
 **状态**：🔄 初稿完成，等待用户验收；并发密集，push 后将多次运行 CI 验证稳定性。
+
+---
+
+## 文章 25《仓颉基础 I/O》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（30/30 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/030-basic-io.cj --output-type staticlib`
+- [x] 3 个官方 1.0.5 dev-guide Basic_IO 链接已实际访问核验（overview / source_stream / process_stream）
+
+**覆盖矩阵（官方 Basic_IO 章节 → 文章承接）**
+
+| 官方章节 | 覆盖位置 |
+|---|---|
+| `Basic_IO/basic_IO_overview.html` 流的抽象、InputStream/OutputStream、flush、节点流 vs 处理流 | 文章 1-2 节 |
+| `Basic_IO/basic_IO_source_stream.html` 标准流(getStdIn/Out/Err, ConsoleReader/Writer)、File 常规操作与文件流、OpenMode、try-with-resources | 文章 3-4 节 |
+| `Basic_IO/basic_IO_process_stream.html` BufferedInput/OutputStream、StringReader/StringWriter | 文章 5-6 节 |
+
+**撰写过程 cjc 语义核验**（示例 030 编译通过 + CI 将真实跑文件读写）
+
+- [x] `import std.io.{ByteBuffer, BufferedInputStream, BufferedOutputStream, StringReader, StringWriter, readToEnd}` 全部可导入
+- [x] `import std.fs.{File, exists, remove}`；`File.create(path)`→`f.write(Array<Byte>)`→自动 close；`File.readFrom(path)`
+- [x] `StringWriter(buf).write(str)`+flush → `String.fromUtf8(readToEnd(buf))` 往返
+- [x] `StringReader.readln(): ?String`；`"s".toArray()`、`String.fromUtf8`
+- [x] `BufferedOutputStream.flush()` 后 `BufferedInputStream.read` 往返
+- [x] 网络流(Socket)、Path/Directory 等属后续《网络编程》《标准库》专题，本篇不展开
+
+**运行时注意（诚实）**
+
+- 示例在 cwd 写 `./cj_io_tmp.txt` 再 `remove`，真实文件读写结果以 Linux CI 为准；本地 macOS 只能 staticlib 编译
+- 输出刻意单行、无内嵌换行：规避了官方 `StringWriter.write(Float64)` 会打印 `100.000000` 及 `writeln` 注入换行带来的多行/格式不确定，保证逐行可核
+
+**状态**：🔄 初稿完成（编译通过），等待用户验收；文件往返与缓冲/字符串流真实输出待 GitHub Actions(Linux) 确认。
