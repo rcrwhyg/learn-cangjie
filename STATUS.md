@@ -289,3 +289,8 @@
 
 
 *本状态文档将定期更新，反映项目最新进展*
+
+### 2026-08-31（版本决策）
+- 核实：本地 macOS 26.5.2 的 1.0.5 SDK 缺 `std.reflect.cjo` + native runtime 链接失败，属本地环境残缺；同版本 Linux CI 有 std.reflect 且能编译运行
+- 决定：**教学基线锁定 1.0.5 LTS，不切 STS**（详见 specs/version-strategy.md「版本决策记录」）；已发布/初稿文章无需返工
+- 手段：test-local.sh 的 [SKIP-DARWIN] 消化本地残缺；Linux CI 为运行事实来源
