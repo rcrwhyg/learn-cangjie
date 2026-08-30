@@ -890,3 +890,37 @@
 **状态**
 
 🔄 初稿完成（本地静态库编译通过），等待用户验收；真实运行输出待 GitHub Actions 确认（重点验证协作式取消与超时两条的确定性）。
+
+---
+
+## 文章 24《仓颉同步与并发原语》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`python3 .github/scripts/sync_examples.py`（29/29 示例一致）
+- [x] 本地静态库编译通过：`cjc examples/cangjie/029-sync-primitives.cj --output-type staticlib`
+- [x] 官方 `concurrency/sync.html`、`terminal_thread.html` 链接已实际访问核验
+
+**覆盖矩阵（官方 sync.html → 文章承接）**
+
+| 官方内容 | 覆盖位置 |
+|---|---|
+| 原子操作 AtomicInt*/UInt*/Bool/Reference、load/store/swap/CAS/fetchAdd... 返回旧值、内存排序仅 seq_cst | 文章 2 节 |
+| 可重入 Mutex lock/unlock/tryLock/condition、可重入需 lock/unlock 配对、三种错误示例 | 文章 3 节 |
+| synchronized 语句 + 表达式、控制转移自动解锁 | 文章 4 节 |
+| Condition wait/notify/notifyAll/waitUntil、必须持锁+同锁+谓词循环、有界队列 | 文章 5 节 |
+| ThreadLocal get():Option/set | 文章 6 节 |
+
+**撰写过程 cjc 语义核验**
+
+- [x] `import std.sync.{AtomicInt64, AtomicBool, AtomicReference, Mutex, Condition}` 全部可导入
+- [x] `synchronized(m){}` 语句 + `synchronized(m){ m.condition() }` 表达式
+- [x] 关键发现：把**局部 var** 闭包进 `spawn` 报 `lambda capturing mutable variables needs to be called directly`；官方示例用**全局 var** 配 Mutex/Atomic → 正文与示例据此采用全局共享变量
+- [x] `AtomicReference.compareAndSwap` 按引用同一性判定
+- [x] 可重入锁 foo→bar 同锁不死锁，220；谓词循环 Condition 输出确定
+
+**确定性设计**：所有计数统一 `Future.get()` join 后再打印；Condition 用 `while(!ready)` 谓词使顺序无关；输出 6 行确定值。
+
+**状态**：🔄 初稿完成，等待用户验收；并发密集，push 后将多次运行 CI 验证稳定性。

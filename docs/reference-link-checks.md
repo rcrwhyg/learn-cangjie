@@ -205,3 +205,10 @@
 - 仓颉 1.0.5 LTS 访问线程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/use_thread.html
 - 仓颉 1.0.5 LTS 终止线程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/terminal_thread.html
 - 仓颉 1.0.5 LTS 线程睡眠指定时长：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sleep.html
+
+文章：`articles/24-sync-primitives.md`
+
+以下链接于 2026-08-30 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
+
+- 仓颉 1.0.5 LTS 同步机制：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sync.html
+- 仓颉 1.0.5 LTS 终止线程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/terminal_thread.html
