@@ -46,5 +46,14 @@ jobs:
           cjc --version
           cjpm --version 2>&1 | head -1 || cjpm --help | head -1
 
+      - name: PROBE std.reflect on Linux SDK (temporary)
+        continue-on-error: true
+        run: |
+          echo "---- std 模块里有没有 reflect/net/sync ----"
+          ls /opt/cangjie/modules/linux_x86_64_cjnative/std/ | grep -iE "reflect|std.net|std.sync" || echo "(none matched)"
+          echo "---- 逐字照抄官方反射最简例子编译 ----"
+          printf 'import std.reflect.*\nmain(): Int64 { let i = TypeInfo.of<Int64>(); println(i); return 0 }\n' > /tmp/rp.cj
+          cjc /tmp/rp.cj --set-runtime-rpath -o /tmp/rp 2>&1 && /tmp/rp 2>&1 || echo "PROBE_RESULT: std.reflect 在 Linux 1.0.5 SDK 里不可用/失败"
+
       - name: Compile and run canonical examples
         run: bash tools/test-local.sh
