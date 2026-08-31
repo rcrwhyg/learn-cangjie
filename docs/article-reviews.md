@@ -1112,3 +1112,28 @@
 **状态**：🔄 初稿完成（本地编译通过），等待用户验收；Linux CI 将实际运行 034，核对 4 行输出。
 
 **CI 复核修正**：文章29 示例首次 CI 运行揭示 `"hello cangjie"` 实际长度 **13**（含空格），我文档初稿误记为 11。已同步修正 example 034 注释 + 文章内嵌示例注释 + 预期输出块为 `len = 13`；sync 35/35 仍通过。
+
+---
+
+## 文章 30《仓颉标准库总览与使用方法》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**范围说明**：本篇是"方法论/导航"章（学习计划：标准库分层、模块导入、API 文档、版本匹配、示例阅读方法），不新增语言 API；一切"包是否存在/属 std 还是 stdx"的判断以**本机 1.0.5 SDK 实测**为准。
+
+**门禁校验**
+
+- [x] `sync_examples.py`：36 canonical examples（035 被 marker 引用）
+- [x] 本地 macOS staticlib 编译通过：`examples/cangjie/035-std-overview.cj`
+- [x] 4 条参考链接已 curl 访问核验（200）
+
+**事实来源（实测，非记忆）**
+
+- std 包清单：来自 1.0.5 SDK `ls modules/*/std/*.cjo` 的 44 个实际包（core/collection/sort/math/sync/io/fs/net/ast/reflect/deriving/unittest/time/env/...）；纠正了"std.ref（弱引用）≠ std.reflect（反射）"易混点。
+- 分层模型（core 隐式 / std.* / stdx.*）：`stdx.net.http` 本机 `can not find package`（前文 HTTP 篇已证）；`std.reflect` 在 Linux CI 存在、本机 mac 缺失（反射篇已证）。
+- 文档两种视图：叙事 `docs.cangjie-lang.cn/...dev-guide...` 可 curl；库 API `cangjie-lang.cn/docs?url=...` 为 SPA（curl 只得壳）——本项目 std.collection/HTTP 篇已反复验证。
+- 版本现状：官方下载/文档版本下拉显示**最新 LTS=1.0.5、最新 STS=1.1.3**（本文据此建议锁 LTS）。
+
+**示例 035（3 个 base SDK 包协同，输出确定）**：collection `sum=14,map.size=2` / math `sqrt(16)=4.000000`（沿用 Float64 六位小数实测格式）/ sync `count=10`。
+
+**状态**：🔄 初稿完成（本地编译 + 链接核验通过），等待用户验收；Linux CI 复核 035 三行输出。

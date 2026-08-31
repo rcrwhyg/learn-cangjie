@@ -243,3 +243,12 @@
 以下链接于 2026-08-31 已逐条访问并返回对应的官方 1.0.5 dev-guide 页面内容：
 
 - 仓颉 1.0.5 LTS 仓颉-C 互操作：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/FFI/cangjie-c.html
+
+文章：`articles/30-std-overview.md`
+
+以下链接于 2026-08-31 已逐条 curl 访问核验（HTTP 200）：
+
+- 包概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/package_overview.html
+- 包的导入：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/import.html
+- 1.0.5 文档根：https://docs.cangjie-lang.cn/docs/1.0.5/
+- 1.0.5 下载中心：https://cangjie-lang.cn/download/1.0.5
