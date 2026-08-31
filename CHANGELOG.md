@@ -55,6 +55,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 33《仓颉标准库：数学、时间与随机数》（初稿，待审核）并配套 `examples/cangjie/038-math-time-random.cj`：std.math/std.time(Duration·DateTime.UnixEpoch)/std.random(种子可复现)；JSON 属 stdx 明确不覆盖；π 常量名未臆造
 - 文章 32《仓颉标准库：编码、转换、正则与内存流》（初稿，待审核）并配套 `examples/cangjie/037-io-text.cj`：String↔UTF-8 字节、`std.convert`(parse/tryParse/toString(radix)/StringBuilder)、`std.regex`(find/findAll/raw string)、`std.io`(ByteBuffer+readToEnd)；API 全部 cjc 实测
 
 ### 变更

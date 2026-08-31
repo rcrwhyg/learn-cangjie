@@ -262,3 +262,8 @@
 文章：`articles/32-io-text.md`
 - I/O 处理流：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_process_stream.html （curl 200）
 （编码 API 承接文章13/官方 strings/characters；查库 API 方法承接文章30——同系列内部引用，非新外链）
+
+文章：`articles/33-math-time-random.md`（curl 200）
+- 线程睡眠：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sleep.html
+- 下载中心：https://cangjie-lang.cn/download/1.0.5
+（std.math/time/random 完整签名走库 API，查法承文章 30；JSON 属 stdx 未纳入，避免不可验证链接）

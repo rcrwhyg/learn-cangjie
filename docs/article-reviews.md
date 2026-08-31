@@ -1192,3 +1192,27 @@
 **示例 037 输出**（本地编译过，CI 复核）：encode 2 bytes/round-trip=hi / convert parse=42, 255_binary=11111111 / regex find=true, count=3 / io readToEnd=buf / builder a=1
 
 **状态**：🔄 初稿完成（本地编译+链接+sync 全绿），待 CI 运行核对。
+
+---
+
+## 文章 33《仓颉标准库：数学、时间与随机数》核验记录
+
+**版本基线**：1.0.5 LTS
+
+**范围裁定（诚实）**：计划 33 原文含"JSON/编码"。**base SDK 无 `std.json`**（`ls`+`import` 实测确认），JSON/序列化属 stdx（同 HTTP/WebSocket），本篇**明确不覆盖**并在 Q6 说明——不臆造 JSON API。
+
+**门禁**
+- [x] sync 39/39（038 被 marker 引用；曾漂移，逐字重嵌后通过）
+- [x] 本地 staticlib 编译通过 examples/cangjie/038-math-time-random.cj
+- [x] sleep + download 链接 curl 200
+
+**API 全部 cjc 本地实测（不确定的一律不写死）**
+- std.math：pow/sqrt/atan2 通过；**π/e 常量名未确定**（pi/e/PI/M_PI/Float64.PI 全部 undeclared）→ 正文不臆造，给 atan(1)*4 备选
+- std.time：`Duration` 算术 + `toMilliseconds/toSeconds`；`DateTime.UnixEpoch`（大写U常量）+`addDays`+`year/month/dayOfMonth`（**不是 `day`**，实测）；不打印 now 保确定
+- std.random：`Random(种子)` 同种子同序列（`nextInt64`），可复现
+
+**确定性设计**：数学用 `==1024.0/3.0` 布尔判定（避开 6 位小数/浮点误差）；日期从 UnixEpoch.addDays(1) 派生；随机用双 42 种子相等性断言。
+
+**示例 038 输出（待 CI 逐行核对）**：math pow/sqrt/atan2 + cmp=true / time 3500,3 / date 1970-1-2 / random same_seed_eq=true
+
+**状态**：🔄 初稿完成（本地编译+sync 通过），待 CI 运行核对。
