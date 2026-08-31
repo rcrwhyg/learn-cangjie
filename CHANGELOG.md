@@ -53,7 +53,7 @@
 ### 新增
 - 文章 30《仓颉标准库总览与使用方法》（初稿，待审核）并配套 `examples/cangjie/035-std-overview.cj`：三层结构（core 隐式/std.* base/stdx.* 下载）、import 四写法、叙事 vs 库API 两种文档视图、版本匹配(锁 LTS)、跨 3 包协同示例
 
-- 文章 31《仓颉标准库数据结构：迭代器、双端队列与集合算法》（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
+- 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
 ### 变更
 - 学习计划：删除并不存在的"仓颉-Python 互操作"篇（用户核实 1.0.5 无此能力），53 篇→52 篇；阶段三末尾与阶段四、五编号 -1；跨语言实战篇改为"C 互操作"

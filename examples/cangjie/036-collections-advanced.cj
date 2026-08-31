@@ -1,10 +1,11 @@
-// 标准库数据结构示例：迭代器协议 + ArrayDeque + 集合算法（管道写法）
-// 覆盖文章 18 之外的部分：自定义 Iterable/Iterator、for-in 脱糖、while-let 手动驱动、
-// ArrayDeque 双端队列、以及 filter/map/reduce/any/all 组合。
+// 标准库数据结构示例：三大容器进阶 + 迭代器协议 + ArrayDeque + 集合算法（管道写法）
+// 覆盖文章 18 之外的部分：ArrayList/HashMap/HashSet 进阶 API、自定义 Iterable/Iterator、
+// for-in 脱糖、while-let 手动驱动、ArrayDeque 双端队列、以及 filter/map/reduce/any/all 组合。
 //
 // 全部为 1.0.5 base SDK 自带（std.collection），本地可 staticlib 编译。
 
 import std.collection.*
+import std.sort.sort   // ArrayList.sort() 已弃用，排序走 std.sort 全局函数
 
 // ===== 自定义可迭代类型：实现 Iterable<T>，提供 iterator() =====
 class Countdown <: Iterable<Int64> {
@@ -52,7 +53,26 @@ main(): Int64 {
     println("deque size=${dq.size} head=${head} first=${dq.first.getOrThrow()} last=${dq.last.getOrThrow()}")
     // deque size=2 head=1 first=2 last=3
 
-    // 4) 集合算法（管道 `|>` 写法）：filter 与 map 返回 Iterator，用 for-in 落地
+    // 4) 三大容器进阶（承接文章 18 基础 CRUD 之外的常用能力）
+    //    ArrayList：原地排序 + 容量；HashMap：[] 读写、get/remove 返回 Option、keys() 视图；HashSet：subsetOf
+    let v = ArrayList<Int64>([5, 3, 1])
+    sort(v)                          // 升序 [1, 3, 5]
+    println("sorted first=${v[0]}, capacity>=size=${v.capacity >= v.size}")   // sorted first=1, capacity>=size=true
+
+    let hm = HashMap<String, Int64>()
+    hm["a"] = 1                      // 下标赋值写入
+    hm["b"] = 2
+    println("hm get=${hm.get("a") ?? -1}, removed=${hm.remove("a") ?? -1}, size=${hm.size}")
+    // hm get=1, removed=1, size=1
+    var keyCnt = 0
+    for (k in hm.keys()) { keyCnt += 1 }   // keys() 返回视图，可迭代
+    println("keys left=${keyCnt}")         // keys left=1
+
+    let hs = HashSet<Int64>([1, 2])
+    let superSet = HashSet<Int64>([1, 2, 3])
+    println("subsetOf=${hs.subsetOf(superSet)}")   // subsetOf=true
+
+    // 5) 集合算法（管道 `|>` 写法）：filter 与 map 返回 Iterator，用 for-in 落地
     let nums = ArrayList<Int64>([1, 2, 3, 4, 5, 6])
     var evenSum = 0
     for (x in (nums |> filter { v => v % 2 == 0 } |> map { v => v * 10 })) {

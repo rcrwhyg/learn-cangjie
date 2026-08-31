@@ -1,6 +1,6 @@
-# 仓颉标准库数据结构：迭代器、双端队列与集合算法
+# 仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法
 
-> **摘要**: 文章 18 已经讲过 `ArrayList`/`HashSet`/`HashMap`；本篇补齐标准库数据结构剩下的三块硬骨头：**一、迭代器协议**——`Iterable<T>`/`Iterator<T>` 两个接口是 `for-in` 的底层机制，`for-in` 其实就是"取迭代器 + 反复 `next()` 直到 `None`"的语法糖，自定义类型只要实现 `Iterable` 就能被 `for-in`；**二、`ArrayDeque`**——支持 `addFirst`/`addLast`/`removeFirst`/`removeLast` 的双端队列，可当队列/栈用；**三、集合算法**——`std.collection` 提供 `filter`/`map`/`reduce`/`any`/`all` 等，配合管道 `|>` 组合使用（`filter`/`map` 返回 `Iterator`，用 `for-in` 落地；`reduce`/`any`/`all` 直接产出结果）。本文依据 1.0.5 LTS 官方文档 + SDK 实测。
+> **摘要**: 文章 18 已经讲过 `ArrayList`/`HashSet`/`HashMap` 的基础 CRUD；本篇按"标准库数据结构"完整覆盖，**深化**这三个容器的进阶 API（排序/容量、`Option` 返回值、视图/子集），再补齐三块 18 没讲的硬骨头：**一、迭代器协议**——`Iterable<T>`/`Iterator<T>` 两个接口是 `for-in` 的底层机制，`for-in` 其实就是"取迭代器 + 反复 `next()` 直到 `None`"的语法糖，自定义类型只要实现 `Iterable` 就能被 `for-in`；**二、`ArrayDeque`**——支持 `addFirst`/`addLast`/`removeFirst`/`removeLast` 的双端队列，可当队列/栈用；**三、集合算法**——`std.collection` 提供 `filter`/`map`/`reduce`/`any`/`all` 等，配合管道 `|>` 组合使用（`filter`/`map` 返回 `Iterator`，用 `for-in` 落地；`reduce`/`any`/`all` 直接产出结果）。本文依据 1.0.5 LTS 官方文档 + SDK 实测。
 
 ## 前置知识
 
@@ -94,7 +94,69 @@ main() {
 
 `for (x in Countdown(5))` 能被编译器展开成"`Countdown(5).iterator()` + 反复 `next()`"——这就是协议的威力：**只要实现 `Iterable`，你的类型立刻能进 `for-in`、也能进集合算法管道**。
 
-## 3. `ArrayDeque`：双端队列
+## 3. 三大容器进阶（承接文章 18）
+
+文章 18 已过 `ArrayList`/`HashMap`/`HashSet` 的基础增删改查；这里补三个**日常一定会碰到、但 18 没展开**的点——全部 1.0.5 实测。
+
+### 3.1 ArrayList：排序、容量与批量删除
+
+- **`capacity`**：底层缓冲区当前容量（`>= size`）；日常只关心 `size`，性能调优才看 `capacity`。
+- **原地排序**：**`l.sort()` 已被弃用**（1.0.5 SDK 明确警告），改走 `std.sort.sort` 全局函数：
+
+  ```cangjie
+  import std.sort.sort
+  sort(l)                                    // 升序；`sort(l, descending: true)` 降序
+  ```
+
+- **`removeIf { 谓词 }`**：按条件批量删除，比手写 `for + remove(at:)` 更快且安全。
+
+  ```cangjie
+  l.removeIf { x => x > 100 }
+  ```
+
+- **复杂度**：随机下标 `l[i]` O(1)、尾部 `add` 摊还 O(1)、**中间 `add(el, at:)` 与 `remove(at:)` 是 O(n)**（要挪后续元素）。
+
+### 3.2 HashMap：`[]` 读写、Option 返回值与视图
+
+- **写用 `[]`、读回是 `Option<V>`**（这是最容易踩的点）：
+
+  ```cangjie
+  let m = HashMap<String, Int64>()
+  m["a"] = 1
+  let v: Int64 = m["a"] ?? -1        // Some → 1；不存在 → -1
+  ```
+
+- **`get(k) / remove(k)` 都返回 `Option<V>`**：`get` 只查不删；`remove` 返回**被删的旧值**：
+
+  ```cangjie
+  let old = m.remove("a") ?? -1
+  ```
+
+- **视图 `keys()` / `values()` 是方法（要带 `()`）**，返回可迭代视图：
+
+  ```cangjie
+  for (k in m.keys())   { println(k) }
+  for (v in m.values()) { println(v) }
+  ```
+
+- **遍历无序**——别依赖 `keys()`/`values()` 的输出顺序。
+
+### 3.3 HashSet：子集判断与批量删除
+
+文章 18 已讲运算符 `|`（并）/`&`（交）/`-`（差）；这里补两点：
+
+- **`subsetOf(other): Bool`**：判自己是不是 `other` 的子集。
+- **`removeIf { 谓词 }`**：条件删除（同 ArrayList）。
+
+```cangjie
+let small = HashSet<Int64>([1, 2])
+let big   = HashSet<Int64>([1, 2, 3])
+println(small.subsetOf(big))   // true
+```
+
+> **⚠️ 别乱猜方法名（本会话实测清单）**：以下**都不是** 1.0.5 `std.collection` 的成员：`ArrayList.insert / removeFirst / removeLast / ensureTotalCapacity`、`HashMap.put / getOrPut / computeIfAbsent`、`HashSet.union / intersect / containsAll / removeAll`。用**运算符**（`| & -`）、**`[]`**、**`add / remove / contains / subsetOf / removeIf`** 这套既有能力即可。
+
+## 4. `ArrayDeque`：双端队列
 
 `Deque`（双端队列）是接口，base SDK 里的具体实现是 **`ArrayDeque`**（`Deque<Int64>()` 会报"interface 不能实例化"，要用 `ArrayDeque`）。它在**两端**都能增删，因此既能当队列（FIFO）又能当栈（LIFO）：
 
@@ -115,7 +177,7 @@ println(dq.size)                                // 2
 
 > **✅ 选择**：需要"两端进出"（滑动窗口、BFS 队列、表达式求值栈）用 `ArrayDeque`；只在尾部追加、要下标随机访问用 `ArrayList`；要唯一性用 `HashSet`。
 
-## 4. 集合算法：`filter` / `map` / `reduce` / `any` / `all`
+## 5. 集合算法：`filter` / `map` / `reduce` / `any` / `all`
 
 `std.collection` 提供一批作用于 `Iterable` 的**全局算法函数**，配合**管道 `|>`**（见《函数类型、Lambda 与闭包》）串联最自然。关键区分两类返回：
 
@@ -145,19 +207,20 @@ let allPos = nums |> all { v => v > 0 }     // true
 
 > **⚠️ 注意**：这些算法是 **`std.collection` 里的全局函数**，不是集合类型的成员方法——写 `nums.filter{...}` 会报 `'filter' is not a member`，正确是 `nums |> filter {...}` 或 `filter` 配合 `|>`。
 
-## 5. 完整可运行示例
+## 6. 完整可运行示例
 
 把三块拼在一起：自定义 `Iterable`（`Countdown`）+ `while-let` 手动迭代 + `ArrayDeque` 双端队列 + 集合算法管道。输出完全确定。
 
 <!-- example: cangjie/036-collections-advanced.cj -->
 ```cangjie
-// 标准库数据结构示例：迭代器协议 + ArrayDeque + 集合算法（管道写法）
-// 覆盖文章 18 之外的部分：自定义 Iterable/Iterator、for-in 脱糖、while-let 手动驱动、
-// ArrayDeque 双端队列、以及 filter/map/reduce/any/all 组合。
+// 标准库数据结构示例：三大容器进阶 + 迭代器协议 + ArrayDeque + 集合算法（管道写法）
+// 覆盖文章 18 之外的部分：ArrayList/HashMap/HashSet 进阶 API、自定义 Iterable/Iterator、
+// for-in 脱糖、while-let 手动驱动、ArrayDeque 双端队列、以及 filter/map/reduce/any/all 组合。
 //
 // 全部为 1.0.5 base SDK 自带（std.collection），本地可 staticlib 编译。
 
 import std.collection.*
+import std.sort.sort   // ArrayList.sort() 已弃用，排序走 std.sort 全局函数
 
 // ===== 自定义可迭代类型：实现 Iterable<T>，提供 iterator() =====
 class Countdown <: Iterable<Int64> {
@@ -205,7 +268,26 @@ main(): Int64 {
     println("deque size=${dq.size} head=${head} first=${dq.first.getOrThrow()} last=${dq.last.getOrThrow()}")
     // deque size=2 head=1 first=2 last=3
 
-    // 4) 集合算法（管道 `|>` 写法）：filter 与 map 返回 Iterator，用 for-in 落地
+    // 4) 三大容器进阶（承接文章 18 基础 CRUD 之外的常用能力）
+    //    ArrayList：原地排序 + 容量；HashMap：[] 读写、get/remove 返回 Option、keys() 视图；HashSet：subsetOf
+    let v = ArrayList<Int64>([5, 3, 1])
+    sort(v)                          // 升序 [1, 3, 5]
+    println("sorted first=${v[0]}, capacity>=size=${v.capacity >= v.size}")   // sorted first=1, capacity>=size=true
+
+    let hm = HashMap<String, Int64>()
+    hm["a"] = 1                      // 下标赋值写入
+    hm["b"] = 2
+    println("hm get=${hm.get("a") ?? -1}, removed=${hm.remove("a") ?? -1}, size=${hm.size}")
+    // hm get=1, removed=1, size=1
+    var keyCnt = 0
+    for (k in hm.keys()) { keyCnt += 1 }   // keys() 返回视图，可迭代
+    println("keys left=${keyCnt}")         // keys left=1
+
+    let hs = HashSet<Int64>([1, 2])
+    let superSet = HashSet<Int64>([1, 2, 3])
+    println("subsetOf=${hs.subsetOf(superSet)}")   // subsetOf=true
+
+    // 5) 集合算法（管道 `|>` 写法）：filter 与 map 返回 Iterator，用 for-in 落地
     let nums = ArrayList<Int64>([1, 2, 3, 4, 5, 6])
     var evenSum = 0
     for (x in (nums |> filter { v => v % 2 == 0 } |> map { v => v * 10 })) {
@@ -228,13 +310,17 @@ main(): Int64 {
 countdown sum = 15
 manual iterator = 321
 deque size=2 head=1 first=2 last=3
+sorted first=1, capacity>=size=true
+hm get=1, removed=1, size=1
+keys left=1
+subsetOf=true
 even*10 sum = 120
 reduce = 21
 any>5 = true
 all>0 = true
 ```
 
-## 6. 语言对比
+## 7. 语言对比
 
 | 概念 | 仓颉 | Rust | Java | Go |
 |---|---|---|---|---|
@@ -248,7 +334,7 @@ all>0 = true
 **从 Rust 迁移**：`Iterable`≈`IntoIterator`、`Iterator::next()->Option<T>` 与 Rust 几乎一字不差，`|> filter |> map |> reduce` 对应 Rust 的 `.filter().map().fold()` 链式；差别是仓颉用管道 `|>` 把函数"外置"。
 **从 Java 迁移**：`Iterable`/`Iterator` 同名同意，但仓颉的 `next()` 返回 `Option<T>` 而不是"抛 `NoSuchElementException` + 先 `hasNext()`"，更符合函数式习惯。
 
-## 7. 常见问题（FAQ）
+## 8. 常见问题（FAQ）
 
 ### Q1: 我的类型想被 `for-in`，要做什么？
 
@@ -278,13 +364,14 @@ all>0 = true
 
 两端都要增删（队列/栈/滑窗）→ `ArrayDeque`；只需尾部增删 + 随机下标访问 → `ArrayList`。
 
-## 8. 总结
+## 9. 总结
 
-1. `for-in` 的底层是 **`Iterable`/`Iterator` 协议**；`for-in` = 取 `iterator()` + 反复 `next()` 到 `None`（官方给出等价脱糖，含 `while-let` 写法）。
-2. 自定义类型实现 `Iterable`（+ 一个 `Iterator`）即可进 `for-in`/管道；`class` 实现的 `next()` 不写 `mut`，`struct` 才写。
-3. **`ArrayDeque`** 是 `Deque` 的具体实现，两端增删（`addFirst/addLast/removeFirst/removeLast/first/last/size`），可当队列/栈，也能 `for-in`。
-4. **集合算法** `filter`/`map` 返回惰性 `Iterator`（用 `for-in` 落地），`reduce`/`any`/`all` 直接出值；它们是 `std.collection` 的**全局函数**，配合 `|>` 使用，不是成员方法。
-5. 这些全在 1.0.5 base SDK 的 `std.collection` 里，本地可编译、CI 可运行。
+1. **三大容器进阶**：`ArrayList` 排序走 `std.sort.sort`（`l.sort()` 已弃用）、有 `capacity`/`removeIf`；`HashMap` 读写用 `[]` 且 `get/remove/[]` 读回**都是 `Option`**、`keys()`/`values()` 是方法视图；`HashSet` 有 `subsetOf`/`removeIf`，并/交/差仍是 `|&-` 运算符。**别猜不存在的 `put/union/containsAll/insert` 等**。
+2. `for-in` 的底层是 **`Iterable`/`Iterator` 协议**；`for-in` = 取 `iterator()` + 反复 `next()` 到 `None`（官方给出等价脱糖，含 `while-let` 写法）。
+3. 自定义类型实现 `Iterable`（+ 一个 `Iterator`）即可进 `for-in`/管道；`class` 实现的 `next()` 不写 `mut`，`struct` 才写。
+4. **`ArrayDeque`** 是 `Deque` 的具体实现，两端增删（`addFirst/addLast/removeFirst/removeLast/first/last/size`），可当队列/栈，也能 `for-in`。
+5. **集合算法** `filter`/`map` 返回惰性 `Iterator`（用 `for-in` 落地），`reduce`/`any`/`all` 直接出值；它们是 `std.collection` 的**全局函数**，配合 `|>` 使用，不是成员方法。
+6. 这些全在 1.0.5 base SDK 的 `std.collection` 里，本地可编译、CI 可运行。
 
 ## 参考资料
 

@@ -1159,3 +1159,13 @@
 **示例 036 输出（本地编译验证 + 数学核对，待 CI 运行核对）**：countdown sum=15 / manual iterator=321 / deque size=2 head=1 first=2 last=3 / even*10 sum=120 / reduce=21 / any>5=true / all>0=true
 
 **状态**：🔄 初稿完成（本地编译 + 链接核验通过），等待用户验收；Linux CI 复核 7 行输出。
+
+**复盘补充：31 篇漏项修订**（用户指出"上次怕重复砍内容是错的"后回查）
+
+- **发现遗漏**：学习计划 31 的官方项是"ArrayList、HashMap、HashSet、Deque、迭代器、集合算法"。初稿只写了迭代器/ArrayDeque/算法三块，**没给 ArrayList/HashMap/HashSet 的"阶段三进阶"专章**。这是我上次用"避免与 18 重复"当理由过度收窄，动机错误。
+- **cjc 逐条实测**（不猜签名）：
+  - ArrayList：`sort()` **已弃用**（SDK 警告荐 std.sort.sort 全局函数）、`capacity`、`removeIf` 通过；`insert`/`removeFirst`/`removeLast`/`ensureTotalCapacity` **不存在**
+  - HashMap：`[]` 索引读写、`get/remove` 返回 **`Option<V>`**、`keys()`/`values()` **是方法（带括号）**；`put`/`getOrPut`/`computeIfAbsent` **不存在**
+  - HashSet：`subsetOf` 存在；`union/intersect/containsAll/removeAll` **不存在**（`| & -` 运算符 18 已讲）
+- **修订**：新增 §3"三大容器进阶（承接 18）"，重编号 §4=ArrayDeque / §5=算法 / §6=示例 / §7=对比 / §8=FAQ / §9=总结；示例 036 加入"容器进阶"块（5 行新输出）；摘要与总结同步补记。
+- **教训入则**：判"重不重复"只看该阶段目标下有无新 API/视角，不只看标题像不像；阶段三是"补全标准库目录"，只要一个 API/视角 18 没讲透就应写。
