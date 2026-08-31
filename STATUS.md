@@ -295,3 +295,8 @@
 - 核实：本地 macOS 26.5.2 的 1.0.5 SDK 缺 `std.reflect.cjo` + native runtime 链接失败，属本地环境残缺；同版本 Linux CI 有 std.reflect 且能编译运行
 - 决定：**教学基线锁定 1.0.5 LTS，不切 STS**（详见 specs/version-strategy.md「版本决策记录」）；已发布/初稿文章无需返工
 - 手段：test-local.sh 的 [SKIP-DARWIN] 消化本地残缺；Linux CI 为运行事实来源
+
+### 2026-08-31（学习计划调整：删除并不存在的 Python 互操作篇）
+- 用户核实：1.0.5 官方 FFI 章**只有 C 互操作**、base SDK 无 std.python、且无对应 stdx 官方包——原计划的"仓颉-Python 互操作"系**虚构任务**，予以删除。
+- 学习计划由 53 篇 → 52 篇；阶段三末尾与阶段四、五全部编号 -1；跨语言实战篇改为"C 互操作"；覆盖矩阵同步修正。
+- 下一篇文章：文章 30《标准库总览与使用方法》。
