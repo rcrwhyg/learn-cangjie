@@ -21,7 +21,7 @@ main(): Int64 {
     // time: d_ms=3500, d_s=3
     let epochPlusOneDay = DateTime.UnixEpoch.addDays(1)
     println("date: ${epochPlusOneDay.year}-${epochPlusOneDay.month}-${epochPlusOneDay.dayOfMonth}")
-    // date: 1970-1-2
+    // date: 1970-January-2  （month 是枚举月份名，非数字）
 
     // 3) 随机：同种子 → 同序列（可复现）
     var r1 = Random(42)

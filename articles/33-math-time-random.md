@@ -58,7 +58,7 @@ println(d.toSeconds())        // 3
 ```cangjie
 import std.time.*
 let d = DateTime.UnixEpoch.addDays(1)
-println("${d.year}-${d.month}-${d.dayOfMonth}")   // 1970-1-2
+println("${d.year}-${d.month}-${d.dayOfMonth}")   // 1970-January-2（month 是枚举名，非数字）
 ```
 
 > **⚠️ 确定性**：`DateTime` 也有"取当前时间"的入口（如 `now` 一类），但**当前时刻随运行而变**——教程与 CI 断言要用 `UnixEpoch.addDays(n)` 这类**纯函数式构造**，别打印 `now()`。时区/本地化相关字段跨机器会变，本文示例只用 UTC 固定的 epoch 派生值。`DateTime` 的完整构造（年月日入参）与格式化 `DateTimeFormat`（含 `RFC1123` 等）细节以库 API 为准，本文不逐一罗列未实测的签名。
@@ -107,7 +107,7 @@ main(): Int64 {
     // time: d_ms=3500, d_s=3
     let epochPlusOneDay = DateTime.UnixEpoch.addDays(1)
     println("date: ${epochPlusOneDay.year}-${epochPlusOneDay.month}-${epochPlusOneDay.dayOfMonth}")
-    // date: 1970-1-2
+    // date: 1970-January-2  （month 是枚举月份名，非数字）
 
     // 3) 随机：同种子 → 同序列（可复现）
     var r1 = Random(42)
@@ -125,7 +125,7 @@ main(): Int64 {
 math: pow=1024.000000, sqrt=3.000000, atan2(0,1)=0.000000
 math: cmp=true
 time: d_ms=3500, d_s=3
-date: 1970-1-2
+date: 1970-January-2
 random: same_seed_eq=true
 ```
 
@@ -152,9 +152,9 @@ random: same_seed_eq=true
 
 浮点表示误差。做等值判断要用能精确表示的组合（如 `pow(2.0,10.0)`），或对浮点比较用容差。
 
-### Q3: `DateTime` 有 `day` 字段吗？
+### Q3: `DateTime` 的日期字段有哪些？分别是什么类型？
 
-没有，是 `dayOfMonth`（实测 `day` 报 not a member）；还有 `dayOfWeek`/`dayOfYear`。
+`year`（数字）、**`month`（枚举，打印是 `January` 这类月份名，不是数字 1）**、`dayOfMonth`（数字）、`dayOfWeek`、`dayOfYear`。实测**没有 `day`**（会报 not a member）。要"1-2"这种数字月请自行映射 `month` 枚举。
 
 ### Q4: 教程/测试里怎么让"当前时间"确定？
 
