@@ -1072,3 +1072,41 @@
 
 - ✅ CI 编译运行 033，6 行输出与正文逐行匹配：`type of A = default.A` / `version = 1.0` / `version = 1.1` / `balance = 100` / `balance after = 250` / `wrap 105+105(Int8) = -46`
 - ⚠️ SDK 弃用告警：1.0.5 编译器对 `TypeInfo.of(Object)` 报 `function 'of' is deprecated. Use 'ClassTypeInfo.of(Object)' instead.`；但官方 1.0.5 文档示例仍用 `TypeInfo.of`。本文保留 `TypeInfo.of`（与文档一致、CI 实测可跑），在 2.2 节与 FAQ Q9 诚实标注该差异，并说明新代码可改用 `ClassTypeInfo.of`。→ 更新：文章 28 增补 2.2 节 + Q9。
+
+---
+
+## 文章 29《仓颉-C 互操作》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative
+
+**门禁校验**
+
+- [x] 同步检查通过：`sync_examples.py`（35 canonical examples）
+- [x] **本地 macOS staticlib 编译通过**：`examples/cangjie/034-c-interop.cj`（C 互操作不依赖缺失的 std.reflect，本地即可编译预检；仅 main-unused 警告）
+- [x] 官方 `FFI/cangjie-c.html` 链接已实际访问核验（正文完整）
+
+**覆盖矩阵（官方 FFI cangjie-c → 文章承接）**
+
+| 官方内容 | 覆盖位置 |
+|---|---|
+| foreign 声明调 C + 6 条规则（无实现/类型映射/unsafe/@C 限定/无命名参数默认值支持变长/栈溢出注意） | 文章 2 节 |
+| CFunc 三形式 + CPointer→CFunc 危险 + 不捕获 | 文章 3 节 |
+| inout 引用传参约束（不能 class 成员/let/字面量/CString） | 文章 4 节 |
+| unsafe（lambda 不传递 unsafe 陷阱） | 文章 5 节 |
+| @CallingConv CDECL/STDCALL | 文章 6 节 |
+| 类型映射：基础类型表/@C struct/CPointer/VArray/CString/sizeOf-alignOf/CType | 文章 7 节 |
+| C 调仓颉（CFunc 回调 + CJ_ 前缀告警）+ 编译链接 -L/-l | 文章 8-9 节 |
+| 线程局部/fork/长阻塞/进程退出等副作用 | 文章 10 节 |
+
+**撰写过程 cjc 语义核验（本地即通过）**
+
+- [x] `foreign func strlen(s: CString): UIntNative`（返回对应 size_t，用 UIntNative；曾误写 Int64 被本地编译抓出）
+- [x] `@C struct Point` + `sizeOf<Point>()=16`
+- [x] `LibC.mallocCString` → `CString.toString()` → `LibC.free`
+- [x] `@C func` + `CPointer<Point>` read/write + `inout pt`（局部 var 允许）
+- [x] `inout value`（Int64 局部变量）传给 `@C func(CPointer<Int64>)`
+- 本地编译一度报错：`LibC.malloc` 需命名参数 `count:`、`strlen` 返回类型不匹配——均据实修正，体现 C 互操作在本地可完整编译验证
+
+**与 reflect 篇的区别**：C 互操作只用系统 libc + 内置 LibC，**本地 macOS 能编译**（不需 SKIP-DARWIN），只是本地不能运行（macOS 链接老问题），故运行以 Linux CI 为准。
+
+**状态**：🔄 初稿完成（本地编译通过），等待用户验收；Linux CI 将实际运行 034，核对 4 行输出。

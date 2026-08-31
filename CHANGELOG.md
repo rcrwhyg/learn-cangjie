@@ -39,6 +39,7 @@
 - 扩 `tools/test-local.sh`：新增 `test_cangjie_projects`，扫描 `examples/cangjie/*/cjpm.toml` 目录，macOS 走 `cjpm check`、Linux 走 `cjpm build + cjpm run`；配合既有 `sync_examples.py` 的递归 glob，解锁 cjpm 多包（含宏）示例
 - 文章 27《仓颉宏与编译时元编程》（初稿，待审核）：以 `examples/cangjie/032-macro-dprint/`（cjpm 项目，含 `macro package`）为可运行示例，讲 `macro package` / `Tokens` / `quote` / 非属性 vs 属性宏 / 嵌套宏
 - 文章 28《仓颉反射、注解与动态特性》（初稿，待审核）并配套 `examples/cangjie/033-reflect-annotation.cj`：`TypeInfo`（of/get）、反射读写成员、`@Annotation`+`const init`+`findAnnotation`、`@Overflow*` 三策略；经 Linux CI 核实 `std.reflect` 属 1.0.5 标准库，本地 macOS SDK 不完整故 `test-local.sh` 增加 `[SKIP-DARWIN]` 分支（macOS 跳过含 std.reflect 的示例，Linux CI 权威验证）
+- 文章 29《仓颉-C 互操作》（初稿，待审核）并配套 `examples/cangjie/034-c-interop.cj`：foreign/@C/CFunc/inout/unsafe/@CallingConv/类型映射(@C struct·CPointer·CString·VArray·sizeOf)/链接(-L -l)/跨语言副作用；本地 staticlib 编译通过
 - 学习计划由 52 篇扩展为 53 篇：文章 16 与 17 拆分定稿后，Stage 2+ 全部编号顺延一位，覆盖矩阵、总览计数同步更新
 - 学习计划扩展为 52 篇，明确泛型、标准库与工具链的完整路线，并补充官方章节覆盖矩阵与小阶段复盘门禁
 - 文章代码块与规范示例的同步校验流程
