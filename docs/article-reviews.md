@@ -1215,4 +1215,4 @@
 
 **示例 038 输出（待 CI 逐行核对）**：math pow/sqrt/atan2 + cmp=true / time 3500,3 / date 1970-1-2 / random same_seed_eq=true
 
-**状态**：🔄 初稿完成（本地编译+sync 通过），待 CI 运行核对。
+**状态**：✅ CI(Linux) 通过，5 行输出逐行匹配；CI 抓出 `DateTime.month` 是枚举(`January`)非数字——已订正示例/正文/预期输出/FAQ Q3。
