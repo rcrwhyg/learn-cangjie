@@ -35,7 +35,7 @@ main(): Int64 {
     // ---- 1) CString：mallocCString 造串、strlen 取长、toString 转回仓颉 String、free 释放 ----
     let cs = unsafe { LibC.mallocCString("hello cangjie") }
     let n: UIntNative = unsafe { strlen(cs) }
-    println("cstr = ${cs.toString()}, len = ${n}")   // cstr = hello cangjie, len = 11
+    println("cstr = ${cs.toString()}, len = ${n}")   // cstr = hello cangjie, len = 13
     unsafe { LibC.free(cs) }
 
     // ---- 2) @C struct + CPointer + inout：把本地结构体地址传给 @C 函数并读回 ----
