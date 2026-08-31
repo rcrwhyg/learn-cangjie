@@ -1169,3 +1169,26 @@
   - HashSet：`subsetOf` 存在；`union/intersect/containsAll/removeAll` **不存在**（`| & -` 运算符 18 已讲）
 - **修订**：新增 §3"三大容器进阶（承接 18）"，重编号 §4=ArrayDeque / §5=算法 / §6=示例 / §7=对比 / §8=FAQ / §9=总结；示例 036 加入"容器进阶"块（5 行新输出）；摘要与总结同步补记。
 - **教训入则**：判"重不重复"只看该阶段目标下有无新 API/视角，不只看标题像不像；阶段三是"补全标准库目录"，只要一个 API/视角 18 没讲透就应写。
+
+---
+
+## 文章 32《仓颉标准库：编码、转换、正则与内存流》核验记录
+
+**版本基线**：1.0.5 LTS；定位：文章 25 的阶段三补全篇（25 讲流模型，本篇补编码/转换/正则/内存流的完整 std API）
+
+**门禁**
+- [x] sync 38/38（037 被 marker 引用；曾出现"嵌入块与文件不符"，已用函数式替换逐字重嵌）
+- [x] 本地 macOS staticlib 编译通过 examples/cangjie/037-io-text.cj
+- [x] 参考链接 process_stream 200
+
+**API 全部本地 cjc 实测（本会话踩过的坑都写进正文/FAQ）**
+- 编码：`String.toArray()` / `String.fromUtf8` / `toRuneArray`（承接 13；中文 UTF-8 字节≠字符数）
+- convert：`Int64.parse` / `Int64.tryParse`→`Option`（在**目标类型**上，非 String 方法）、`toString(radix:)`、`StringBuilder`（**append 不可链式**、逐条调用）；`Int64("42")` 数值转换不接受字符串→须走 parse
+- 正则：`Regex(#".."#)` raw string（`r".."` 会 unrecognized escape）；**`find`→Option / `findAll`→可迭代**；**`match` 是关键字、Regex 上无 `match` 方法**
+- io：`ByteBuffer.write` + `readToEnd`
+
+**诚实标注**：十六进制字母大小写不确定→示例刻意用 `radix: 2`（纯数字）保确定；未验证的 `format`/`parseFloat` 等不写进正文（只写实测存在的）。
+
+**示例 037 输出**（本地编译过，CI 复核）：encode 2 bytes/round-trip=hi / convert parse=42, 255_binary=11111111 / regex find=true, count=3 / io readToEnd=buf / builder a=1
+
+**状态**：🔄 初稿完成（本地编译+链接+sync 全绿），待 CI 运行核对。

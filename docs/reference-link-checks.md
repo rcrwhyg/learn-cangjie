@@ -258,3 +258,7 @@
 - Iterable 与 Collections：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/collections/collection_iterable_collections.html
 - 基础 Collection 类型概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/collections/collection_overview.html
 - 函数调用语法糖（管道）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_call_desugar.html
+
+文章：`articles/32-io-text.md`
+- I/O 处理流：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Basic_IO/basic_IO_process_stream.html （curl 200）
+（编码 API 承接文章13/官方 strings/characters；查库 API 方法承接文章30——同系列内部引用，非新外链）
