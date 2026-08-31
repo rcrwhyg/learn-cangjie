@@ -252,3 +252,9 @@
 - 包的导入：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/import.html
 - 1.0.5 文档根：https://docs.cangjie-lang.cn/docs/1.0.5/
 - 1.0.5 下载中心：https://cangjie-lang.cn/download/1.0.5
+
+文章：`articles/31-collections-advanced.md`
+以下 3 条链接于 2026-08-31 curl 访问核验（200）：
+- Iterable 与 Collections：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/collections/collection_iterable_collections.html
+- 基础 Collection 类型概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/collections/collection_overview.html
+- 函数调用语法糖（管道）：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/function_call_desugar.html

@@ -1137,3 +1137,25 @@
 **示例 035（3 个 base SDK 包协同，输出确定）**：collection `sum=14,map.size=2` / math `sqrt(16)=4.000000`（沿用 Float64 六位小数实测格式）/ sync `count=10`。
 
 **状态**：🔄 初稿完成（本地编译 + 链接核验通过），等待用户验收；Linux CI 复核 035 三行输出。
+
+---
+
+## 文章 31《仓颉标准库数据结构：迭代器、双端队列与集合算法》核验记录
+
+**版本基线**：仓颉 1.0.5 LTS / CJNative；定位：文章 18 续集（只补迭代器协议/ArrayDeque/集合算法，不重复 ArrayList/HashMap 基础）
+
+**门禁校验**
+- [x] sync_examples.py：37 canonical examples（036 被 marker 引用）
+- [x] 本地 macOS staticlib 编译通过 examples/cangjie/036-collections-advanced.cj（仅 main-unused）
+- [x] 3 条参考链接 curl 200（collection_iterable_collections / collection_overview / function_call_desugar）
+
+**API 通过本地 cjc 逐条实证（关键：不猜签名）**
+- [x] Iterable<T>{iterator(): Iterator<T>}、Iterator<T>{next(): Option<T>}（官方 iterable 页原文）
+- [x] for-in 脱糖 + while-let（官方原文 + 示例实测）
+- [x] 自定义 Iterable/Iterator：class 实现 next() 不需 mut（曾误加 mut 报 unexpected modifier，改正后可编译）
+- [x] ArrayDeque 可实例化；Deque 接口不可（`Deque<Int64>()` 报 interface cannot be instantiated）；addFirst/addLast/removeFirst/removeLast/first/last/size + for-in 通过
+- [x] 集合算法为全局函数非成员：`nums.filter{}` 报 'filter' is not a member；`nums |> filter{}/map{}/reduce{x,y=>x+y}/any{}/all{}` 通过；filter/map 返回 Iterator 无 .size，用 for-in 落地；reduce 无初值折叠
+
+**示例 036 输出（本地编译验证 + 数学核对，待 CI 运行核对）**：countdown sum=15 / manual iterator=321 / deque size=2 head=1 first=2 last=3 / even*10 sum=120 / reduce=21 / any>5=true / all>0=true
+
+**状态**：🔄 初稿完成（本地编译 + 链接核验通过），等待用户验收；Linux CI 复核 7 行输出。
