@@ -101,7 +101,7 @@ main() {
 | 操作 | 作用 |
 |---|---|
 | `addLast(v)` / `addFirst(v)` | 从尾/头入 |
-| `removeFirst()` / `removeLast()` | 从头/尾出，返回被删元素 |
+| `removeFirst()` / `removeLast()` | 从头/尾出，返回 `Option<T>`（空则 `None`） |
 | `first` / `last` | 头/尾元素（`Option<T>`，可能为空） |
 | `size` | 元素数 |
 | 支持 `Iterable` | 可直接 `for-in` |
@@ -120,7 +120,7 @@ println(dq.size)                                // 2
 `std.collection` 提供一批作用于 `Iterable` 的**全局算法函数**，配合**管道 `|>`**（见《函数类型、Lambda 与闭包》）串联最自然。关键区分两类返回：
 
 - **返回 `Iterator`（惰性、可继续串）**：`filter`、`map`；
-- **返回结果值（终止操作）**：`reduce`、`any`、`all`。
+- **返回结果值（终止操作）**：`reduce` 返回 `Option<T>`（空序列则 `None`）、`any`/`all` 返回 `Bool`。
 
 ```cangjie
 import std.collection.*
@@ -132,7 +132,7 @@ for (x in (nums |> filter { v => v % 2 == 0 } |> map { v => v * 10 })) {
 }
 
 // reduce/any/all 直接出值
-let s = nums |> reduce { x, y => x + y }   // 21（无初值折叠）
+let s = (nums |> reduce { x, y => x + y }).getOrThrow()   // 21（reduce 返回 Option）
 let hasBig = nums |> any { v => v > 5 }     // true
 let allPos = nums |> all { v => v > 0 }     // true
 ```
@@ -201,7 +201,7 @@ main(): Int64 {
     dq.addLast(2)
     dq.addLast(3)
     dq.addFirst(1)                 // 队列为 [1, 2, 3]
-    let head = dq.removeFirst()    // 取出 1，剩 [2, 3]
+    let head = dq.removeFirst().getOrThrow()   // removeFirst 返回 Option，取出 1
     println("deque size=${dq.size} head=${head} first=${dq.first.getOrThrow()} last=${dq.last.getOrThrow()}")
     // deque size=2 head=1 first=2 last=3
 
@@ -214,7 +214,7 @@ main(): Int64 {
     println("even*10 sum = ${evenSum}")   // even*10 sum = 120
 
     // reduce / any / all 直接产生结果值
-    println("reduce = ${nums |> reduce { x, y => x + y }}")   // reduce = 21
+    println("reduce = ${(nums |> reduce { x, y => x + y }).getOrThrow()}")   // reduce = 21
     println("any>5 = ${nums |> any { v => v > 5 }}")          // any>5 = true
     println("all>0 = ${nums |> all { v => v > 0 }}")          // all>0 = true
 
@@ -242,7 +242,7 @@ all>0 = true
 | 迭代器协议 | `Iterator<T>::next(): Option<T>` | `Iterator::next(): Option<Item>` | `Iterator::hasNext/next` | — |
 | for-in 脱糖 | iterator + next 到 None | `for` = `IntoIterator` | `for(:)` = `Iterable` | `for range` |
 | 惰性→拉取 | `filter/map` 返回 Iterator | 迭代器惰性 | Stream 惰性 | 手写 |
-| 归约 | `\|> reduce {x,y=>…}` | `.fold`/`.reduce` | `Stream.reduce` | 手写 |
+| 归约 | `\|> reduce {x,y=>…}` → Option | | `.fold`/`.reduce` | `Stream.reduce` | 手写 |
 | 双端队列 | `ArrayDeque` | `VecDeque` | `ArrayDeque` | 切片模拟 |
 
 **从 Rust 迁移**：`Iterable`≈`IntoIterator`、`Iterator::next()->Option<T>` 与 Rust 几乎一字不差，`|> filter |> map |> reduce` 对应 Rust 的 `.filter().map().fold()` 链式；差别是仓颉用管道 `|>` 把函数"外置"。

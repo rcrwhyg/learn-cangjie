@@ -48,7 +48,7 @@ main(): Int64 {
     dq.addLast(2)
     dq.addLast(3)
     dq.addFirst(1)                 // 队列为 [1, 2, 3]
-    let head = dq.removeFirst()    // 取出 1，剩 [2, 3]
+    let head = dq.removeFirst().getOrThrow()   // removeFirst 返回 Option，取出 1
     println("deque size=${dq.size} head=${head} first=${dq.first.getOrThrow()} last=${dq.last.getOrThrow()}")
     // deque size=2 head=1 first=2 last=3
 
@@ -61,7 +61,7 @@ main(): Int64 {
     println("even*10 sum = ${evenSum}")   // even*10 sum = 120
 
     // reduce / any / all 直接产生结果值
-    println("reduce = ${nums |> reduce { x, y => x + y }}")   // reduce = 21
+    println("reduce = ${(nums |> reduce { x, y => x + y }).getOrThrow()}")   // reduce = 21
     println("any>5 = ${nums |> any { v => v > 5 }}")          // any>5 = true
     println("all>0 = ${nums |> all { v => v > 0 }}")          // all>0 = true
 
