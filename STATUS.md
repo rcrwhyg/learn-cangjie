@@ -95,6 +95,7 @@
 - [ ] 文章35: cjc 编译器（流程/产物/参数/诊断/链接/交叉编译；CI 通过——040 三行输出与预期逐行一致）
 - [ ] 文章36: cjpm 包管理器（init/toml/依赖/构建/运行；两包示例 041；CI 通过——Linux cjpm build+run 输出逐行一致；无 fetch 已纠正）
 - [ ] 文章37: IDE 与语言服务（VS Code 插件；**文档来源、无 CI 运行示例**，经作者确认；调试不支持 macOS / 静态检查仅 src 等边界如实摘出；7 工具链接 200）
+- [ ] 文章38: 单元测试与覆盖率（@Test/@TestCase/@Assert/@Expect/生命周期 + cjpm test + cjcov；断言宏本地实测、异常/Ignore/Tag 不臆造；CI harness 新增 cjpm test 分支；待 CI）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option

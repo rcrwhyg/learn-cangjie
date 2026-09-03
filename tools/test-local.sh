@@ -71,6 +71,11 @@ test_cangjie_projects() {
             if grep -q 'output-type = "executable"' "$dir/cjpm.toml"; then
                 (cd "$dir" && cjpm run)
             fi
+            # Run unit tests for modules that contain *_test.cj files
+            # (cjpm auto-detects *_test.cj and compiles them in --test mode).
+            if find "$dir" -name '*_test.cj' | grep -q .; then
+                (cd "$dir" && cjpm test)
+            fi
         fi
         passed=$((passed + 1))
     done

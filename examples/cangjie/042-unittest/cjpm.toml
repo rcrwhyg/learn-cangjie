@@ -1,0 +1,8 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "utdemo"
+  description = "cjpm 单元测试示例：adder.cj + adder_test.cj"
+  version = "1.0.0"
+  output-type = "static"
+
+[dependencies]

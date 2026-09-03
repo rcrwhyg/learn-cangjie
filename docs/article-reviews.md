@@ -1315,3 +1315,31 @@
 **链接**：7 条工具手册链接（IDE/cjdb/cjfmt/cjlint/cjcov/cjdoc/tools 总览）全部 curl 200。
 
 **状态**：✅ 文档来源核验完成（本类无 CI 运行环节）。
+
+---
+
+## 文章 38《仓颉单元测试与覆盖率》核验记录
+
+**版本基线**：1.0.5 LTS
+
+**取材方式**：CLI/框架类。本地 `cjpm --help`/`cjpm test --help`/`cjcov --help` 实测；`std.unittest` 在本地 macOS SDK **存在**（unittest.cjo/testmacro 齐全，不同于 std.reflect），故断言宏用 `cjc --output-type staticlib` 逐一实测。
+
+**本地实测确认存在的宏（0 error）**
+- @Test（顶层函数 + class 两种）、@TestCase、@BeforeEach、@AfterEach、@BeforeAll(static)、@AfterAll
+- @Assert(a,b) / @Assert(bool,true)（fail-fast）、@Expect(a,b)（继续）、@Fail、@FailExpect
+- 断言是**宏不是函数**：`assertEquals/assertTrue` 等 **不存在**（实测 undeclared），一度按直觉误写，纠正为 @Expect/@Assert
+- 语法坑：Option 是 `Option<T>`/`Some(x)`，非 `Int64?`
+
+**诚实未纳入示例（1.0.5 本地试写报宏展开错，不臆造）**
+- @AssertThrows/@ExpectThrows 的确切入参形式（多次括号/lambda 试写均 "macro evaluation failed"）
+- @Ignore（"macro evaluation has failed for macro call Test"）、@Tag（"expect a plain macro"）——正文标注"以官方手册为准"，示例只用实测通过的子集
+
+**cjpm test 输出格式**（官方快速入门实测样例）：TP/TCS/CASE/Summary，计时非确定，判绿看 `PASSED: N, FAILED: 0`
+
+**覆盖率**：cjpm test --coverage（gcno/gcda）+ cjcov（-r/-o/--html-details/-x/-j/-b/-e/-i 本地 help 实测）；--coverage 须 -O0
+
+**harness 扩展**：test-local.sh 的 test_cangjie_projects 增加分支——Linux 下项目含 *_test.cj 则跑 `cjpm test`（macOS 仍 cjpm check）。CI 将首次实跑 042 的 cjpm test。
+
+**示例 042（cjpm static 工程）**：adder.cj + adder_test.cj（1 顶层 @Test 函数 + 1 @Test 类含 2 @TestCase + BeforeEach/AfterEach），共 3 用例；预期 cjpm test 全 PASSED。sync 计 45（两文件均 marker 引用）。
+
+**状态**：🔄 初稿完成，本地 cjpm check + sync 通过，待 CI 实跑 cjpm test。

@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 38《仓颉单元测试与覆盖率》（初稿，待审核）并配套 cjpm 工程 `examples/cangjie/042-unittest/`：@Test/@TestCase/@Assert(fail-fast)/@Expect(继续)/@BeforeEach 等断言与生命周期宏本地实测，cjpm test + cjcov 覆盖率；test-local 增加 Linux cjpm test 分支
 - 文章 37《仓颉 IDE 与语言服务》（文档来源，**本系列唯一无 CI 运行示例**篇，经作者确认）：VS Code 插件安装/SDK 路径/语言服务/工程管理/构建(背后 cjpm)/三方库导入/调试(cjdb，macOS 不支持)/格式化/静态检查/覆盖率；能力边界直引官方文档
 - 文章 36《仓颉包管理器 cjpm：项目初始化、cjpm.toml、依赖、构建与运行》（初稿，待审核）并配套两包工程 `examples/cangjie/041-cjpm-demo/`：cjpm init/toml 字段/内外依赖/check 编译顺序/build/run/test；纠正 1.0.5 无 cjpm fetch
 - 文章 35《仓颉编译器 cjc：编译流程、产物、参数、诊断与链接》（初稿，待审核）并配套 `examples/cangjie/040-cjc-compile.cj`：cjc 前后端流程、--output-type 产物名、-O 优化、--int-overflow、诊断 json 结构、链接/运行时四环境变量、--target 交叉编译；选项与产物名本地实测

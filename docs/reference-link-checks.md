@@ -290,3 +290,9 @@
 - 调试 cjdb：.../tools/cjdb_manual_cjnative.html ｜ 格式化 cjfmt：.../cjfmt_manual.html
 - 静态检查 cjlint：.../cjlint_manual_community.html ｜ 覆盖率 cjcov：.../cjcov_manual_cjnative.html
 - API文档 cjdoc：.../cjdoc_manual.html
+
+文章：`articles/38-unittest.md`（curl 200）
+- Unittest 快速入门：https://docs.cangjie-lang.cn/docs/1.0.5/libs/std/unittest/unittest_samples/unittest_getting_started.html
+- Unittest 基础：.../unittest_samples/unittest_basics.html
+- std.unittest 包总览：.../unittest_package_overview.html
+- cjcov：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjcov_manual_cjnative.html
