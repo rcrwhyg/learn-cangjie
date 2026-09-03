@@ -272,3 +272,9 @@
 - 程序入口：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/entry.html
 - Socket 编程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Net/net_socket.html
 （std.env/process/binary/posix 完整签名走库 API，查法承文章 30；HTTP/WS 属 stdx 未纳入）
+
+文章：`articles/35-cjc-compiler.md`（curl 200；均为 /cjnative/ latest，编译器 manual 无 1.0.5 版本化存档）
+- cjc 使用：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Compile-And-Build/cjc_usage.html
+- cjc 编译选项：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
+- runtime 环境变量：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/runtime_env.html
+- 条件编译：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Compile-And-Build/conditional_compilation.html

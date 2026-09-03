@@ -1244,3 +1244,27 @@
 **CI 复核修正（execute 签名）**：首版示例写 `execute("echo cangjie")`，CI(Linux) 运行抛 `ProcessException: Created process failed, No such file or directory`——因为 `execute` 第一参是**可执行文件路径**、非整条 shell 命令。改为 `execute("/bin/echo", ["cangjie"])`（exe + 参数数组），并订正正文 §2.1/§2.2/FAQ Q4 与"整串当路径"踩坑提示。本地 staticlib 能过、只有真跑才暴露——正是 CI 价值。
 
 **CI 二次复核**：修正后 CI success；实际输出比"预期两行"多一行 `cangjie`（`execute` 继承子进程 stdout，`/bin/echo` 直接打屏）——已把预期输出块更新为 3 行，与正文"execute 继承 stdout"叙述一致。
+
+---
+
+## 文章 35《仓颉编译器 cjc：编译流程、产物、参数、诊断与链接》核验记录
+
+**版本基线**：1.0.5 LTS（`Cangjie Compiler: 1.0.5 (cjnative)`）
+
+**取材方式**：CLI 工具类文章。用本地 `cjc --help` + `cjc --version` 实测选项与产物名；官方文档 compile_options/cjc_usage 页面核对语义。诊断 JSON 用真实错误文件 `bad.cj` 跑出实测结构。
+
+**本地 cjc 实测（1.0.5）**
+- 默认产物：`cjc hello.cj` → exe 名 **`main`**（从 ld64 `-o .../main` 确认；本机 macOS SDK 链接失败但**名字规则**可辨）
+- 库名：`--output-type=staticlib hello.cj` → **`libhello.a`**（实测生成，6072B）；dylib → `libhello.dylib`（mac）/`.so`（Linux，文档）
+- `--int-overflow=throwing|wrapping|saturating`：三值前端均接受（staticlib 编译 0 error）；默认 throwing（文档）
+- `--diagnostic-format=json` 实测结构：`{"Diags":[{"DiagKind":"sema_mismatched_types","Severity":"error","Message":"mismatched types","Location":{File,Line,Column},"MainHint":{Content}}]}`
+- 类型错误文本实测：`mismatched types ... expected 'Int64', found 'Struct-String'`
+- `-Woff unused` 实测消除 unused 警告；`-O` 级别 O0(默认)/O1/O2/Os/Oz（文档+help）
+
+**诚实声明**：macOS 本机 `-o exe` 链接失败（SDK↔lld 不兼容，非代码问题），staticlib 前端编译可过；**运行输出以 Linux CI 为准**（正文第 6 节明说）。
+
+**链接**：4 条 `/cjnative/user_manual/...` 全部 curl 200。注：编译器 user_manual 官方无 `/docs/1.0.5/` 版本化路径，只有 `/cjnative/`（latest）——正文版本信息注明。
+
+**示例 040**：无溢出、结果与优化级别无关的确定性程序；预期 3 行 `sum=55 / 6*7=42 / cjc demo ok`。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对。
