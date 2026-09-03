@@ -1216,3 +1216,27 @@
 **示例 038 输出（待 CI 逐行核对）**：math pow/sqrt/atan2 + cmp=true / time 3500,3 / date 1970-1-2 / random same_seed_eq=true
 
 **状态**：✅ CI(Linux) 通过，5 行输出逐行匹配；CI 抓出 `DateTime.month` 是枚举(`January`)非数字——已订正示例/正文/预期输出/FAQ Q3。
+
+---
+
+## 文章 34《仓颉标准库：系统能力（环境/进程/端序/POSIX）》核验记录
+
+**版本基线**：1.0.5 LTS
+
+**范围裁定（诚实）**：计划 34 = "标准库网络与系统能力：Socket/HTTP/WebSocket/进程/环境/平台API"。
+- Socket 已在**文章 26** 覆盖，本篇承接引用不重讲。
+- **HTTP/WebSocket 属 stdx.net**（本机/CI base SDK 无），按前面拆分原则**本篇不覆盖**。
+- 本篇聚焦**可验证的 base SDK 系统能力**：`std.env`/`std.process`；`std.binary`/`std.posix` 只写实测到存在/接口/常量的部分，具体函数签名不臆造（指向库 API）。
+
+**门禁**
+- [x] sync 40/40（039 被 marker 引用）；[x] 本地 staticlib 编译通过 039；[x] 2 条链接 200
+
+**API cjc 实测（纠正多个直觉误名）**
+- std.env：`getProcessId()`、`getHomeDirectory(): Path`（**不是 String**、`.toString()` 才有 size）；`getEnvirments`（历史拼写）；`getVar`/`args` **不存在**
+- std.process：`execute(String): Int64` 返回**退出码**（起初误以为返回 Array<String>，`for` 报 "type Int64 does not implement Iterator" → 确认是退出码）；`executeWithOutput(String): Array<String>` 拿输出行；`SubProcess` 走管道
+- std.posix：`O_RDONLY` 等常量编译通过
+- std.binary：BigEndianOrder/LittleEndianOrder 是**接口**（不能实例化），读写函数签名未在本文臆造
+
+**示例 039（输出稳定）**：has_pid=true / has_home=true / execute(echo) exit=0（不打印 pid/路径等易变值）
+
+**状态**：🔄 初稿完成，待 CI 运行核对。

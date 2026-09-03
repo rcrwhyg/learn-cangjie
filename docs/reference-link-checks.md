@@ -267,3 +267,8 @@
 - 线程睡眠：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sleep.html
 - 下载中心：https://cangjie-lang.cn/download/1.0.5
 （std.math/time/random 完整签名走库 API，查法承文章 30；JSON 属 stdx 未纳入，避免不可验证链接）
+
+文章：`articles/34-system.md`（curl 200）
+- 程序入口：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/entry.html
+- Socket 编程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Net/net_socket.html
+（std.env/process/binary/posix 完整签名走库 API，查法承文章 30；HTTP/WS 属 stdx 未纳入）
