@@ -1290,3 +1290,28 @@
 **示例 041（两包工程）**：main.cj（package mpdemo）+ src/greet/greeter.cj（package mpdemo.greet）；cjpm.toml output-type=executable。预期 run 输出 2 行 `hello, cangjie` / `add(2, 3) = 5`。sync 计 43（两源文件均被 marker 引用）。
 
 **状态**：✅ 已核验。CI(Linux) success：`cjpm build success` → run 输出 `hello, cangjie` / `add(2, 3) = 5` → `cjpm run finished`，与预期逐行一致。
+
+---
+
+## 文章 37《仓颉 IDE 与语言服务》核验记录（文档来源，无运行示例）
+
+**版本基线**：1.0.5 LTS
+
+**核验方式（与全项目不同——经作者确认）**：IDE 是 GUI，补全弹窗/断点/调试面板**无法用 cjc/CI 逐行核对**。本篇按用户决策"文档来源写、明确标注无运行示例"处理：
+- 内容整篇取材官方《IDE 插件使用指南》(/cjnative/tools/.../IDE/user_manual_community.html)
+- **不附 examples/ 代码、无 marker、无"预期输出"**（sync 计数保持 43，本篇不新增规范示例）
+- 文中所有"能力边界/平台支持"结论直引官方文档
+
+**从官方文档如实摘出、易被忽略的限制**（本篇重点价值）
+- 调试服务**仅 Windows/Linux 版 VS Code 支持，macOS 不支持**；依赖 SDK 内 liblldb
+- 静态检查(cjlint) **只扫 src/ 下**文件
+- 语言服务只覆盖"打开的文件夹内"，**PROJECTROOT 之外的外部源码不支持**；未指定模块名时**用目录名当模块名**
+- 非 src 目录每个文件夹是一个包、但**不能被别的包 import**
+- 可视化构建依赖 cjpm + 规范 cjpm.toml；产物 target/release/bin（与文章36终端一致）
+- 链接动态库运行期仍需自设 LD_LIBRARY_PATH
+
+**本地旁证**（能证的配置片段）：cjpm_build_args/target 目录结构由文章36本地 cjpm build 实测过（target/release/bin/main）；诊断文本与文章35 cjc 同一套。IDE 二进制本体无法无头运行（本地无独立 cjls CLI，语言服务器随插件分发）。
+
+**链接**：7 条工具手册链接（IDE/cjdb/cjfmt/cjlint/cjcov/cjdoc/tools 总览）全部 curl 200。
+
+**状态**：✅ 文档来源核验完成（本类无 CI 运行环节）。

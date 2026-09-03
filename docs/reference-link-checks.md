@@ -283,3 +283,10 @@
 - cjpm 介绍：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Compile-And-Build/cjpm_usage_OHOS.html
 - 包管理工具手册：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjpm_manual_cjnative_community.html
 - cjc 编译选项：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
+
+文章：`articles/37-ide.md`（curl 200；文档来源篇，无运行示例）
+- IDE 插件使用指南：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/IDE/user_manual_community.html
+- 命令行工具总览：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/user_manual_cjnative.html
+- 调试 cjdb：.../tools/cjdb_manual_cjnative.html ｜ 格式化 cjfmt：.../cjfmt_manual.html
+- 静态检查 cjlint：.../cjlint_manual_community.html ｜ 覆盖率 cjcov：.../cjcov_manual_cjnative.html
+- API文档 cjdoc：.../cjdoc_manual.html
