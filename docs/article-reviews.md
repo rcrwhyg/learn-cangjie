@@ -1342,4 +1342,4 @@
 
 **示例 042（cjpm static 工程）**：adder.cj + adder_test.cj（1 顶层 @Test 函数 + 1 @Test 类含 2 @TestCase + BeforeEach/AfterEach），共 3 用例；预期 cjpm test 全 PASSED。sync 计 45（两文件均 marker 引用）。
 
-**状态**：🔄 初稿完成，本地 cjpm check + sync 通过，待 CI 实跑 cjpm test。
+**状态**：✅ 已核验。CI(Linux) success：新增的 cjpm test 分支实跑 042，`[ PASSED ] CASE: addIdentity / addPositives / addNegatives`，`Summary: TOTAL: 3` + `cjpm test success`。harness 扩展生效。
