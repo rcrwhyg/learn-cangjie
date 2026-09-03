@@ -1343,3 +1343,33 @@
 **示例 042（cjpm static 工程）**：adder.cj + adder_test.cj（1 顶层 @Test 函数 + 1 @Test 类含 2 @TestCase + BeforeEach/AfterEach），共 3 用例；预期 cjpm test 全 PASSED。sync 计 45（两文件均 marker 引用）。
 
 **状态**：✅ 已核验。CI(Linux) success：新增的 cjpm test 分支实跑 042，`[ PASSED ] CASE: addIdentity / addPositives / addNegatives`，`Summary: TOTAL: 3` + `cjpm test success`。harness 扩展生效。
+
+---
+
+## 文章 39《cjfmt / cjlint / cjdoc 质量工具链》核验记录
+
+**版本基线**：1.0.5 LTS（cjlint: Cangjie Lint 1.0.5；cjfmt/cjlint 本机 tools/bin 有）
+
+**分工与可验证性（诚实）**
+- cjfmt / cjlint：**本机 macOS 可跑，全部实测**
+- cjdoc：**本机 macOS SDK 未提供 cjdoc 可执行**（find 全盘无、command -v 空，同 std.reflect 缺失）→ 第 4 节命令与 Doxyfile 用法**取自官方手册、标注未本地实测**
+
+**cjfmt 本地实测**
+- 短选项帮助：`cjfmt -h`（`--help` 报 illegal option，实测踩过）；`-v` 版本
+- 选项：-f 文件 / -d 目录 / -o 输出 / -c 配置(cangjie-format.toml) / -l 行区间
+- 前后对比实测：`package   fmt`+挤压空格+无缩进 → 规范（4 空格、声明间空行、`a: Int64, b: Int64` 空格、`{` 前空格）
+- 幂等：对已规范文件再跑 diff 为空
+
+**cjlint 本地实测**
+- `cjlint -h` 选项：-f/-e/-o/-r csv|json(默认json)/-c/-m/--import-path
+- 配置坑：手传 -c/-m 反而报 Can not find modules / open json file failed；**配好 CANGJIE_HOME 直接 cjlint -f <dir> 最省事**
+- 报告字段：file/line/column/analyzerName=cangjieCodeCheck/description/defectLevel/defectType；csv 表头 SourceFile,Line,Column,Description,DefectType,DefectLevel
+- 实测缺陷：`G.NAM.04 Function name 'ADD_numbers' recommend lower camel case` (SUGGESTIONS)
+- **在自家 043 上跑出真实发现**：`G.NAM.02 Filename '043-quality-tools.cj' ... digits/lowercase/underscore`（连字符文件名→建议级）——正文当作活教材
+- 级别：SUGGESTIONS 告警 / "要求"级拦构建（cjpm build -l / IDE Build With CodeCheck），要求级细节引 IDE 手册
+
+**cjdoc 手册要点（未本地实测，标注）**：Doxygen 血统；/** */ 块文档注释；cjdoc -g 生成 Doxyfile、cjdoc [config] 生成；Doxyfile INPUT/EXCLUDE/PROJECT_NAME/GENERATE_LATEX；输出 HTML
+
+**示例 043**：cjfmt-canonical + 代码 cjlint 内容零告警(仅文件名 G.NAM.02) + /** */ 文档注释；main 输出确定 `0C -> 32F` / `100C -> 212F`。sync 计 46。
+
+**状态**：🔄 初稿完成，本地 cjfmt/cjlint 实测+编译+sync 通过，待 CI 运行核对 043 输出。

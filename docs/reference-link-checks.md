@@ -296,3 +296,8 @@
 - Unittest 基础：.../unittest_samples/unittest_basics.html
 - std.unittest 包总览：.../unittest_package_overview.html
 - cjcov：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjcov_manual_cjnative.html
+
+文章：`articles/39-quality-tools.md`（curl 200）
+- cjfmt：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjfmt_manual.html
+- cjlint：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjlint_manual_community.html
+- cjdoc：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjdoc_manual.html（本机未含 cjdoc，正文标注未实测）
