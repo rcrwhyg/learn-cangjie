@@ -1372,4 +1372,4 @@
 
 **示例 043**：cjfmt-canonical + 代码 cjlint 内容零告警(仅文件名 G.NAM.02) + /** */ 文档注释；main 输出确定 `0C -> 32F` / `100C -> 212F`。sync 计 46。
 
-**状态**：🔄 初稿完成，本地 cjfmt/cjlint 实测+编译+sync 通过，待 CI 运行核对 043 输出。
+**状态**：✅ 已核验。CI(Linux) success：043 运行输出 `0C -> 32F` / `100C -> 212F`，与预期逐行一致。cjfmt/cjlint 本地实测、cjdoc 本机缺失已如实标注。
