@@ -1242,3 +1242,5 @@
 **状态**：🔄 初稿完成，待 CI 运行核对。
 
 **CI 复核修正（execute 签名）**：首版示例写 `execute("echo cangjie")`，CI(Linux) 运行抛 `ProcessException: Created process failed, No such file or directory`——因为 `execute` 第一参是**可执行文件路径**、非整条 shell 命令。改为 `execute("/bin/echo", ["cangjie"])`（exe + 参数数组），并订正正文 §2.1/§2.2/FAQ Q4 与"整串当路径"踩坑提示。本地 staticlib 能过、只有真跑才暴露——正是 CI 价值。
+
+**CI 二次复核**：修正后 CI success；实际输出比"预期两行"多一行 `cangjie`（`execute` 继承子进程 stdout，`/bin/echo` 直接打屏）——已把预期输出块更新为 3 行，与正文"execute 继承 stdout"叙述一致。

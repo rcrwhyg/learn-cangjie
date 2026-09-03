@@ -106,10 +106,11 @@ main(): Int64 {
 }
 ```
 
-预期输出：
+预期输出（`execute` 让子进程**继承** stdout，所以 `/bin/echo cangjie` 的 `cangjie` 会先直接打屏，再回到我们自己的两行）：
 
 ```text
 env: has_pid=true, has_home=true
+cangjie
 process: execute(echo) exit=0
 ```
 
