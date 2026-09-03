@@ -1268,3 +1268,25 @@
 **示例 040**：无溢出、结果与优化级别无关的确定性程序；预期 3 行 `sum=55 / 6*7=42 / cjc demo ok`。
 
 **状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对。
+
+---
+
+## 文章 36《仓颉包管理器 cjpm》核验记录
+
+**版本基线**：1.0.5 LTS（`Cangjie Package Manager: 1.0.5`）
+
+**取材方式**：CLI 工具类。本地 `cjpm --help` + 各子命令 `--help` 实测；`cjpm init --name cjpmdemo --path cjpmdemo` 取真实模板；新建两包工程实测 `cjpm check` 串行编译顺序、`cjpm build` 产物路径。
+
+**本地 cjpm 实测（1.0.5）**
+- 子命令集：init/check/update/tree/build/run/test/bench/clean/install/uninstall（**无 fetch**——纠正"cjpm fetch"的旧印象，拉依赖实为 `cjpm check`）
+- `cjpm init` 模板：`[package]` 含 cjc-version/name/description/version/target-dir/output-type/compile-option/override-compile-option/link-option/package-configuration + 空 `[dependencies]`；src/main.cj 打 "hello world"
+- `cjpm check` 多包工程实测打印 "The valid serial compilation order is: mpdemo.greet -> mpdemo"（先编被依赖包再编 main）
+- `cjpm build` 链接到 `target/release/bin/main`（-g→target/debug/）
+- cjpm.lock 无外部依赖时 = `version = 0` + `[requires]`
+- 包路径规则：`package <模块name>.<相对src目录>`
+
+**诚实声明**：外部 git/远端依赖的确切 TOML 键形态未在本地验证，正文**只给已实测的 path 依赖嵌套表形式**、其余指向手册不臆造。macOS `cjpm build` 链接失败（同文章35 SDK 坑），`cjpm check` 本地可过、运行以 Linux CI 为准。
+
+**示例 041（两包工程）**：main.cj（package mpdemo）+ src/greet/greeter.cj（package mpdemo.greet）；cjpm.toml output-type=executable。预期 run 输出 2 行 `hello, cangjie` / `add(2, 3) = 5`。sync 计 43（两源文件均被 marker 引用）。
+
+**状态**：🔄 初稿完成，sync+本地 cjpm check 通过，待 CI 运行核对。

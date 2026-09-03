@@ -1,0 +1,8 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "mpdemo"
+  description = "cjpm 多包工程示例：main 依赖同模块内的 greet 包"
+  version = "1.0.0"
+  output-type = "executable"
+
+[dependencies]

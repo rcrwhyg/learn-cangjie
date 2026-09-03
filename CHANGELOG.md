@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 36《仓颉包管理器 cjpm：项目初始化、cjpm.toml、依赖、构建与运行》（初稿，待审核）并配套两包工程 `examples/cangjie/041-cjpm-demo/`：cjpm init/toml 字段/内外依赖/check 编译顺序/build/run/test；纠正 1.0.5 无 cjpm fetch
 - 文章 35《仓颉编译器 cjc：编译流程、产物、参数、诊断与链接》（初稿，待审核）并配套 `examples/cangjie/040-cjc-compile.cj`：cjc 前后端流程、--output-type 产物名、-O 优化、--int-overflow、诊断 json 结构、链接/运行时四环境变量、--target 交叉编译；选项与产物名本地实测
 - 文章 34《仓颉标准库：系统能力（环境/进程/端序/POSIX）》（初稿，待审核）并配套 `examples/cangjie/039-system.cj`：std.env(getProcessId/getHomeDirectory:Path)、std.process(execute→退出码/executeWithOutput/SubProcess)、std.posix 常量；HTTP/WS 属 stdx 不覆盖
 - 文章 33《仓颉标准库：数学、时间与随机数》（初稿，待审核）并配套 `examples/cangjie/038-math-time-random.cj`：std.math/std.time(Duration·DateTime.UnixEpoch)/std.random(种子可复现)；JSON 属 stdx 明确不覆盖；π 常量名未臆造

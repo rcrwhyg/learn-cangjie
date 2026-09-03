@@ -278,3 +278,8 @@
 - cjc 编译选项：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
 - runtime 环境变量：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/runtime_env.html
 - 条件编译：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Compile-And-Build/conditional_compilation.html
+
+文章：`articles/36-cjpm.md`（curl 200；/cjnative/ latest）
+- cjpm 介绍：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Compile-And-Build/cjpm_usage_OHOS.html
+- 包管理工具手册：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjpm_manual_cjnative_community.html
+- cjc 编译选项：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
