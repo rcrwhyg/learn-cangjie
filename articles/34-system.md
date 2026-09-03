@@ -32,17 +32,17 @@
 
 ```cangjie
 import std.process.*
-let exitCode: Int64 = execute("echo cangjie")
+let exitCode: Int64 = execute("/bin/echo", ["cangjie"])   // 可执行文件 + 参数数组
 ```
 
-**`execute(String): Int64`**——同步执行外部命令、继承当前进程标准流、**返回退出码**（0 表成功）。想拿子进程 stdout 内容，用 **`executeWithOutput(String): Array<String>`** 拿每行输出。
+**`execute(可执行文件, 参数数组, ...): Int64`**——同步执行外部命令、继承当前进程标准流、**返回退出码**（0 表成功）。注意第一个参数是**可执行文件路径本身**（如 `/bin/echo`），命令与参数**分开传**；把 `"echo cangjie"` 整串当一个路径会报 `No such file or directory`（本文实测踩坑）。想拿子进程 stdout 内容，用 **`executeWithOutput`**。
 
 > **💡 与"退出码"有关的心智**：`execute` 是 fire-and-forget 版（输出直连父进程 stdout）；`executeWithOutput` 是"我要看结果"版。要完全掌控 stdin/stdout/stderr/参数分开传，用下面的 `SubProcess`。
 
 ### 2.2 `SubProcess`：细粒度管道控制
 
 ```cangjie
-let proc = SubProcess(command = "sh", arguments: ["-c", "echo hi"])
+let proc = SubProcess(command = "/bin/sh", arguments: ["-c", "echo hi"])
 proc.useStdInPipe(); proc.useStdOutPipe()
 proc.spawn()
 let out = proc.waitOutput()        // 等子进程结束、拿 stdout
@@ -84,7 +84,7 @@ proc.close()
 ```cangjie
 // 标准库系统能力示例（1.0.5 base SDK：std.env + std.process）
 // 演示：读当前进程信息（getProcessId / getHomeDirectory）、用 std.process.execute 跑一条
-// 外部命令并拿回退出码。全部本地可 staticlib 编译；输出确定（echo 的退出码恒为 0）。
+// 外部命令（可执行文件 + 参数数组）并拿回退出码。本地可 staticlib 编译；输出确定。
 //
 // 说明：HTTP/WebSocket 属 stdx.net、序列化端序 std.binary 的完整签名以库 API 为准；
 // Socket 见文章 26《Socket 网络编程》。本篇聚焦"系统/进程/环境"。
@@ -99,8 +99,8 @@ main(): Int64 {
     println("env: has_pid=${hasPid}, has_home=${hasHome}")   // env: has_pid=true, has_home=true
 
     // 2) 起子进程：execute 跑一条命令，返回其退出码（Int64）
-    let code = execute("echo cangjie")
-    println("process: execute(echo) exit=${code}")           // process: execute(echo) exit=0
+    let code = execute("/bin/echo", ["cangjie"])   // execute(可执行文件, 参数数组)
+    println("process: execute(echo) exit=${code}")   // process: execute(echo) exit=0
 
     return 0
 }
@@ -141,9 +141,8 @@ process: execute(echo) exit=0
 
 `execute` 让子进程**继承**你的 stdout（直接打到屏幕）。想把内容读进变量，用 `executeWithOutput` 或 `SubProcess` + `waitOutput()`。
 
-### Q4: Windows 上能跑 `execute("echo cangjie")` 吗？
-
-不一定——Windows cmd 的 `echo` 语法与输出略有不同。跨平台要测，或走 `SubProcess` 明确指定可执行文件。
+### Q4: `execute` 第一个参数能写整条命令吗？
+不能。第一个参数是**可执行文件路径**（如 `/bin/echo`），参数要放数组里。跨平台还要考虑路径差异（Windows 上 `echo` 是 cmd 内建、无 `/bin/echo`）。
 
 ### Q5: `std.posix` 与 `std.fs` 用哪个？
 

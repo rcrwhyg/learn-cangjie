@@ -1240,3 +1240,5 @@
 **示例 039（输出稳定）**：has_pid=true / has_home=true / execute(echo) exit=0（不打印 pid/路径等易变值）
 
 **状态**：🔄 初稿完成，待 CI 运行核对。
+
+**CI 复核修正（execute 签名）**：首版示例写 `execute("echo cangjie")`，CI(Linux) 运行抛 `ProcessException: Created process failed, No such file or directory`——因为 `execute` 第一参是**可执行文件路径**、非整条 shell 命令。改为 `execute("/bin/echo", ["cangjie"])`（exe + 参数数组），并订正正文 §2.1/§2.2/FAQ Q4 与"整串当路径"踩坑提示。本地 staticlib 能过、只有真跑才暴露——正是 CI 价值。
