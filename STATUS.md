@@ -93,7 +93,7 @@
 - [ ] 文章33: 标准库数学/时间/随机数（CI 通过；month 是枚举名由 CI 抓出并订正；JSON 属 stdx 不覆盖）
 - [ ] 文章34: 标准库系统能力（env/process/端序/POSIX；HTTP/WS 属 stdx 不覆盖；CI 通过——execute 签名与"子进程继承stdout"两处由 CI 抓出并订正）
 - [ ] 文章35: cjc 编译器（流程/产物/参数/诊断/链接/交叉编译；CI 通过——040 三行输出与预期逐行一致）
-- [ ] 文章36: cjpm 包管理器（init/toml/依赖/构建/运行；两包示例 041；无 fetch 已纠正；本地 cjpm check 过、待 CI run）
+- [ ] 文章36: cjpm 包管理器（init/toml/依赖/构建/运行；两包示例 041；CI 通过——Linux cjpm build+run 输出逐行一致；无 fetch 已纠正）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option

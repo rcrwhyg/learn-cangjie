@@ -1289,4 +1289,4 @@
 
 **示例 041（两包工程）**：main.cj（package mpdemo）+ src/greet/greeter.cj（package mpdemo.greet）；cjpm.toml output-type=executable。预期 run 输出 2 行 `hello, cangjie` / `add(2, 3) = 5`。sync 计 43（两源文件均被 marker 引用）。
 
-**状态**：🔄 初稿完成，sync+本地 cjpm check 通过，待 CI 运行核对。
+**状态**：✅ 已核验。CI(Linux) success：`cjpm build success` → run 输出 `hello, cangjie` / `add(2, 3) = 5` → `cjpm run finished`，与预期逐行一致。
