@@ -97,6 +97,7 @@
 - [ ] 文章37: IDE 与语言服务（VS Code 插件；**文档来源、无 CI 运行示例**，经作者确认；调试不支持 macOS / 静态检查仅 src 等边界如实摘出；7 工具链接 200）
 - [ ] 文章38: 单元测试与覆盖率（@Test/@TestCase/@Assert/@Expect/生命周期 + cjpm test + cjcov；CI 通过——042 cjpm test 3 用例全 PASSED、TOTAL:3；harness 新增 cjpm test 分支已生效）
 - [ ] 文章39: 质量工具链 cjfmt/cjlint/cjdoc（cjfmt/cjlint 本地实测、cjdoc 本机 SDK 未含标注未实测；CI 通过——043 输出 0C->32F/100C->212F 一致）
+- [ ] 文章40: cjdb/cjprof/构建产物/运行时/打包发布（cjdb=lldb15 内核实测、cjprof 本机未含 Linux-only；调试不支持 macOS；**无运行示例**、会话取自手册；无 cjpm publish）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option

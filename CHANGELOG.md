@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 40《仓颉工具链补全：cjdb 调试、cjprof 性能分析与构建发布》（**无 CI 运行示例**的工具链篇，同文章37）：cjdb=LLDB15 内核本地实测、cjprof(本机未含/Linux-only)与调试会话取自手册、target 结构、四运行时环境变量、打包发布(cjpm install；无 cjpm publish)
 - 文章 39《仓颉质量工具链：cjfmt/cjlint/cjdoc》（初稿，待审核）并配套 `examples/cangjie/043-quality-tools.cj`：cjfmt 前后对比/幂等、cjlint 规则码 G.NAM.* 与级别、cjdoc(Doxygen 风 Doxyfile，本机未含标注未实测)；在自家示例复现 G.NAM.02 文件名建议
 - 文章 38《仓颉单元测试与覆盖率》（初稿，待审核）并配套 cjpm 工程 `examples/cangjie/042-unittest/`：@Test/@TestCase/@Assert(fail-fast)/@Expect(继续)/@BeforeEach 等断言与生命周期宏本地实测，cjpm test + cjcov 覆盖率；test-local 增加 Linux cjpm test 分支
 - 文章 37《仓颉 IDE 与语言服务》（文档来源，**本系列唯一无 CI 运行示例**篇，经作者确认）：VS Code 插件安装/SDK 路径/语言服务/工程管理/构建(背后 cjpm)/三方库导入/调试(cjdb，macOS 不支持)/格式化/静态检查/覆盖率；能力边界直引官方文档

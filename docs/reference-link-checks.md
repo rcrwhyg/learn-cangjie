@@ -301,3 +301,9 @@
 - cjfmt：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjfmt_manual.html
 - cjlint：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjlint_manual_community.html
 - cjdoc：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjdoc_manual.html（本机未含 cjdoc，正文标注未实测）
+
+文章：`articles/40-debug-perf-build.md`（curl 200；无运行示例）
+- cjdb：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjdb_manual_cjnative.html
+- cjprof：.../cjprof_manual_cjnative.html（本机未含，正文标注未实测）
+- cjpm：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjpm_manual_cjnative_community.html
+- runtime 环境变量：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/runtime_env.html

@@ -1373,3 +1373,26 @@
 **示例 043**：cjfmt-canonical + 代码 cjlint 内容零告警(仅文件名 G.NAM.02) + /** */ 文档注释；main 输出确定 `0C -> 32F` / `100C -> 212F`。sync 计 46。
 
 **状态**：✅ 已核验。CI(Linux) success：043 运行输出 `0C -> 32F` / `100C -> 212F`，与预期逐行一致。cjfmt/cjlint 本地实测、cjdoc 本机缺失已如实标注。
+
+---
+
+## 文章 40《cjdb 调试 / cjprof 性能 / 构建产物 / 运行时 / 打包发布》核验记录（无运行示例，CLI 面实测 + 会话手册来源）
+
+**版本基线**：1.0.5 LTS
+
+**核验分级（诚实三档）**
+- ① 本地实测：`cjdb -v` → **lldb version 15.0.4**（cjdb 是 LLDB 封装，`cjdb -h` OVERVIEW: LLDB + 标准 lldb 选项 --batch/-b、--attach-pid/-p、-o、--source 等，实测）；`cjpm install -h` 选项（--root/--path/-g/-m）实测；`cjpm` 无 publish（grep 确认，同"无 fetch"）
+- ② 官方手册：cjdb 调试会话（launch/attach/break/run/bt/print/expr/**cjthread**）；cjprof 全量（record/report/heap、-f/-o/-p、-F 火焰图、perf 权限、**仅 Linux**）——本机 SDK **未含 cjprof**（command not found）
+- ③ 承前文：target/ 结构（文章36）、四环境变量（文章35）
+
+**为什么无运行示例**：调试需可链接的目标二进制 + cjdb 调试仅 Win/Linux（macOS 本机连 exe 都链不出，ld64 坑）；cjprof Linux-only + perf 权限。均无法在本 SDK 逐行核对 → 同文章 37 处理，明确标注、不附 examples/、sync 计数不变(46)。
+
+**关键结论摘录**
+- cjdb 命令词=lldb（break/run/bt/print/expr），仓颉特有仅 cjthread + 源码映射（手册栈帧 test`default.main() at test.cj:7:9）
+- 调试不支持 macOS（直引官方/文章37）；cjprof 不支持 macOS/Windows
+- 1.0.5 发布三腿：库(.a/.so+.cjo)经 --import-path/CANGJIE_PATH 分发 / git 依赖 / cjpm install --root 装可执行；无 cjpm publish
+- 发布前质量门：cjpm build -l + cjpm test + cjfmt + cjcov
+
+**链接**：cjdb/cjprof/cjpm/runtime_env 四手册链接 curl 200（/cjnative/ latest）
+
+**状态**：✅ 文档来源 + 本地 CLI 面核验完成（本类无 CI 运行环节）。
