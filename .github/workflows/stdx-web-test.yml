@@ -46,7 +46,7 @@ jobs:
         run: |
           cjpm build 2>&1 | tail -40
 
-      - name: Run it (expects: Hello Cangjie!)
+      - name: Run it (expects "Hello Cangjie!")
         working-directory: examples/cangjie-stdx/051-web-service
         run: |
           export LD_LIBRARY_PATH="/opt/cangjie/runtime/lib/linux_x86_64_cjnative:$(pwd)/target/release:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
