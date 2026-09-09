@@ -1475,3 +1475,28 @@
 **状态**：✅ 已核验。CI(Linux) success：046 输出 `TRIPLE=42 / HYP=25 / fact5=120 / MAGIC=7 / runtime_sq_1_to_4=14`（初稿误写 30，被 CI 抓出 `1..n` 上界不含订正）。
 
 **CI 复核修正**：CI(Linux) success 但 `runtimeSquares(4)` 实际输出 **14**（非我原注的 30）——`for (i in 1..n)` 是**上界不含**，n=4 时 i∈{1,2,3}，1+4+9=14。已把 046 注释与文章"预期输出"块、§8 说明都订正到 14；重嵌后 sync 49/49 一致。这类范围语义在文章 05/11 已讲，本篇因**注释写口算太快**踩到，CI 又抓出来了——正是本工作流的价值。
+
+---
+
+## 文章 44《值类型、引用类型与内存管理》核验记录（阶段四·原理层）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：07/08 教"怎么写 struct/class"；本篇讲"赋值到底拷了什么"。所有语义均由 1.0.5 本地实测 + 官方数组页/class 页直引双向核对。
+
+**本地 cjc 实测（原理级）**
+- struct 值类型：`var p2 = p1; p2.x = 99` → p1 不受影响（示例 A）
+- class 引用：`let c2 = c1; c2.v = 42` → c1.v 也变（示例 B）
+- **struct 里嵌 class 字段 = 浅拷贝穿透**：`var w2 = w1; w2.cfg.v = 7` → w1/c1 都变（示例 C，本文关键发现）
+- **Array 名义 struct 实际共享 backing**（官方 array.html 原话"内部持有的只是元素的引用，赋值时不会拷贝副本"）→ 示例 D `let a=[1,2,3]; var b=a; b[0]=99` 期望 a[0] 也变
+- **VArray<T,$N> 真值数组**（同一页官方定义）→ 示例 E `var vb=va; vb[0]=99` va 不变；长度 \$N 必须字面量、元素禁引用/枚举/lambda/未实例化泛型
+- `~init` 在 `open class` 里禁止：实测 `error: finalizer is forbidden in class 'Cfg' that is open`
+- `~init` 语法在类体里直接 `~init() { }`（非 `public func ~init`）
+- `std.runtime.gc` 存在：`import std.runtime.*; gc()` / `gc(heavy: true)` 都编译过
+- struct 构造**只能 positional**：`Point(x: 1)` named 参数报 "invalid named arguments prefix"；`Point(1)` 通过（新发现，写进 FAQ）
+
+**未使用/未验证项（诚实）**：`--enable-borrows` 实验性选项；`Array.clone()` 具体签名（本篇只提"存在，走手册"）；`~init` 触发时机的具体观测（官方 class 页示例用 `gc(heavy: true)` 强制，本文示例**故意**不打印 ~init 保输出确定性）
+
+**示例 047**：单文件 5 段演示；预期 5 行输出（见文章 §12）。sync 计 50。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 5 行输出——特别 D 行（Array 是否真别名）与 E 行（VArray 是否真深拷）是**唯一还没运行时证据**的两条。

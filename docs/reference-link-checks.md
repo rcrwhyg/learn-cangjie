@@ -327,3 +327,9 @@
 文章：`articles/43-const-eval.md`（curl 200）
 - const 函数和常量求值：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/const_func_and_eval.html
 - 整数类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/integer.html
+
+文章：`articles/44-value-ref-memory.md`（curl 200）
+- 类：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/class.html
+- 结构体创建：.../struct/create_instance.html
+- 数组类型（Array 内部只持元素引用 + VArray）：.../basic_data_type/array.html
+- 泛型子类型：.../generic/generic_subtype.html
