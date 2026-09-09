@@ -338,3 +338,8 @@
 - 并发概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/concurrency_overview.html
 - 同步机制：.../concurrency/sync.html
 - 创建线程：.../concurrency/create_thread.html
+
+文章：`articles/46-performance.md`（curl 200）
+- cjc 编译选项：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
+- cjprof：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjprof_manual_cjnative.html
+- 数组类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/array.html

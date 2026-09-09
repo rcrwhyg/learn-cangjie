@@ -1526,3 +1526,25 @@
 **状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 3 行输出。
 
 **CI 复核修正（重大：MemoryOrder 已弃用）**：首版示例用 `a.store(7, memoryOrder: MemoryOrder.SeqCst)`，CI(Linux) 报 4 条 **deprecation 警告**：`function 'store' is deprecated. Use store(val) instead` + `enum 'MemoryOrder' is deprecated`。结论订正——**1.0.5 不公开内存序**，推荐 `store(v)`/`load()` 不带 memoryOrder；`MemoryOrder` 枚举弃用中。已把 048 改为非弃用 API（本地复查只剩 unused-main、无弃用告警），并改写正文 §2（"只有 SeqCst"→"不公开内存序/枚举已弃用"）/§3/§6.3/对照表/总结/FAQ Q1。重嵌后 sync 51。运行值不变。**CI 二次复核**：改非弃用 API 后 CI(Linux) success、048 无 deprecated 告警、输出 seqcst=7/mutex_hb=2/clq_sum=60 一致。
+
+---
+
+## 文章 46《性能分析与优化》核验记录（阶段四·原理/方法论层）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：35 = 编译优化参数清单、40 = cjprof 工具用法；本篇 = **拿到 profile 后的决策 + 减少分配的写法**。零参数罗列，全部指向 35/40。
+
+**本地 cjc 实测（少分配写法）**
+- Array 预分配：`Array<Int64>(n, { i => i })`（size + 初始化器）与 `Array<T>(n, repeat: x)` 均编译通过；`for (x in a)` 可用
+- VArray：`VArray<Int64,$4>` 编译通过；**不实现 for-in**（实测报 does not implement Iterator）→ 只能 `for (i in 0..v.size){ v[i] }` 索引；有 size/get/concat/reserve/repeat
+- StringBuilder：`import std.convert.*; StringBuilder().append(..).toString()` 编译通过
+- std.objectpool.ObjectPool：模块存在（cjo strings 有 ObjectPool），本篇只提"借出/归还"用法方向、不贴未验证签名
+
+**纪律（方法论层，本篇反复强调）**：示例 049 只证"写法正确"、**不给加速比**；真实性能须 cjprof（40）实测。避免 35/40 已覆盖的"参数清单/工具命令"重复。
+
+**诚实边界**：objectpool 完整 API、VArray 与 Array 混合细节、GC 调优参数等未逐一实测 → 只写方向 + 指向手册/前篇。
+
+**示例 049**：prealloc_sum=10 / varray_sum=10 / label=xxx，3 行确定输出。sync 计 52。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 3 行输出。

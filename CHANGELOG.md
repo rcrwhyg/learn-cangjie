@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 46《性能分析与优化》（初稿，阶段四·方法论层，与 35/40 严格分界）并配套 `examples/cangjie/049-performance.cj`：减少堆分配/GC 四招（Array 预分配、VArray 零堆索引遍历、StringBuilder、std.objectpool）实测；强调"加速比必须 cjprof 实测、本示例只证写法正确"
 - 文章 45《仓颉并发模型与内存模型》（初稿，阶段四·原理层，与 22/23/24 严格分界）并配套 `examples/cangjie/048-memory-model.cj`：**1.0.5 MemoryOrder 枚举只有 SeqCst**（无 Acquire/Release/Relaxed/AcqRel 实测）、无 `std.concurrent`/无 `actor` 关键字（Channel/CSP 得手写）、CAS 名 `compareAndSwap`、CLQ `remove()` 返 Option（无 `poll`）；HB 三条路径
 - 文章 44《值类型、引用类型与内存管理》（初稿，阶段四·原理层）并配套 `examples/cangjie/047-value-ref-memory.cj`：值/引用两分法、**Array 名义 struct 但共享 backing**（官方 array.html 直引）、`VArray<T,$N>` 真值数组、struct 浅拷贝穿透到 class 字段、~init 在 open class 里禁（实测）、`std.runtime.gc` 手动触发、GC≠资源释放
 - 文章 43《const 函数与常量求值：把计算搬到编译期》（初稿，阶段四·原理层）并配套 `examples/cangjie/046-const-eval.cj`：const 上下文永远编译期求值、const 函数"两种时机"（同函数在 const 上下文编译期算、否则运行时算）、三条铁律(var/调非const/副作用)、允许递归、`const X: Int8 = 200` 编译期拒 vs `--int-overflow` 运行时策略的分界
