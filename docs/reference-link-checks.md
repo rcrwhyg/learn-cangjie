@@ -323,3 +323,7 @@
 - match 表达式：.../match.html
 - Option：.../option_type.html ｜ 枚举：.../enum.html
 - 泛型类型子类型：.../generic/generic_subtype.html
+
+文章：`articles/43-const-eval.md`（curl 200）
+- const 函数和常量求值：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/function/const_func_and_eval.html
+- 整数类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/integer.html

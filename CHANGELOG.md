@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 43《const 函数与常量求值：把计算搬到编译期》（初稿，阶段四·原理层）并配套 `examples/cangjie/046-const-eval.cj`：const 上下文永远编译期求值、const 函数"两种时机"（同函数在 const 上下文编译期算、否则运行时算）、三条铁律(var/调非const/副作用)、允许递归、`const X: Int8 = 200` 编译期拒 vs `--int-overflow` 运行时策略的分界
 - 文章 42《代数数据类型与模式匹配原理：和之积、穷尽性、不可反驳性与死分支》（初稿，阶段四·原理层，与基础篇 10/11/20 严格分界）并配套 `examples/cangjie/045-adt-pattern.cj`：`non-exhaustive patterns`/`unreachable pattern`/`isn't irrefutable pattern`/or-pattern/nested/match 各支类型一致 全部本地实测；Option 与自定义 enum 同构实测通过
 - 文章 41《仓颉类型系统：静态强类型、类型格、名义子类型与类型安全保证》（初稿，待审核，阶段四首篇，**原理层不重复基础篇**）并配套 `examples/cangjie/044-type-system.cj`：编译错证据反推规则、Any⊤/Nothing⊥、struct 不进子类型格、泛型不变、`as` 返 Option（**1.0.5 无 `as?`/无声明点变型关键字**）、穷尽性/Option 不解包/编译期溢出
 - 文章 40《仓颉工具链补全：cjdb 调试、cjprof 性能分析与构建发布》（**无 CI 运行示例**的工具链篇，同文章37）：cjdb=LLDB15 内核本地实测、cjprof(本机未含/Linux-only)与调试会话取自手册、target 结构、四运行时环境变量、打包发布(cjpm install；无 cjpm publish)

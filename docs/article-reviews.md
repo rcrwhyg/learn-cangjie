@@ -1446,3 +1446,30 @@
 **与基础篇零重复核对**：10 篇讲 enum 语法 → 本篇讲"和×积"代数；11 篇讲 match 写法 → 本篇讲反演/穷尽/不可反驳；20 篇讲 Option 用法 → 本篇证 Option 就是 enum。零重叠。
 
 **状态**：✅ 已核验。CI(Linux) success：045 运行 6 行输出（`area Square3=9` / `area Rect2x5=10` / `area Empty=0` / `orElse(N,7)=7` / `orElse(V3,7)=3` / `count=1`）与预期一致。
+
+---
+
+## 文章 43《const 函数与常量求值》核验记录（阶段四·原理层）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：从"编译期管类型/分支"（41/42）推进到"编译期算值"。基础篇 03 只提过"不可变变量"，本篇讲求值时机。
+
+**本地 cjc 实测（原理证据）**
+- const 上下文永远编译期算：`const X: Int8 = 200` → `error: the number '200' exceeds the value range of type 'Int8'`（编译期折叠、直接拒；与运行时 `--int-overflow` 策略是两条路）
+- const 函数三条铁律（实测）：
+  - `var` 不允许：`cannot define 'var' variable in 'const' function`
+  - 调非 const 函数不允许：`expected 'const' expression`
+  - I/O 副作用不允许（同 5.2，因 println 非 const）
+- const 函数允许递归：`const func fact(n: Int64)` 编译通过；`fact(5)` 编译期折叠
+- **两种时机**（核心心智）：`const S = sq(5)` 编译期算；`sq(n)` 里 n 来自运行时则运行期算——实测两段一起通过、无冲突
+- struct/class 单写 `const` 会报 `expected static before const member variable`（→ 类级要 `static const`）
+- 官方"暂不支持 throw 作 const 表达式"实测坐实：`const X = throw ...` → `expected 'const' expression guaranteed to be evaluated at compile time`
+- `const` 局部必须初始化：`const f: (Int64) => Int64 = ...` 若不给 = 会报 `const variable declaration must be initialized`
+- `Array` 字面量不作 const expr、`VArray` 行（官方明文；本篇不深入）
+
+**未深入项**（避免臆造）：`const init` 完整机制、`distance(Point,Point)` 官方例——本文只给方向、不展开未验证签名。
+
+**示例 046**：const func sq/hyp/fact(递归) + const 上下文 TRIPLE=42/HYP=25 + static const Magic.SEVEN=7 + 运行时上下文 runtimeSquares(4)=30（1+4+9+16），5 行输出。sync 计 49。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 5 行输出。
