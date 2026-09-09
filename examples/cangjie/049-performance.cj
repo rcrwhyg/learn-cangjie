@@ -3,7 +3,7 @@ package perf
 // 性能分析与优化示例（配合文章 46）。演示"少分配、少 GC"的几个正确写法。
 // 注意：本程序证明**写法正确**（结果确定、可编译），**不证明速度**——
 // 真实性能必须用 cjprof（文章 40）在 Linux 上测量，别凭感觉。
-import std.convert.*
+// （StringBuilder 在 std.core、无需 import）
 
 // 1) Array 预分配：一次到位，避免 add 触发多次"扩容 + 拷贝"
 func sumPreallocated(n: Int64): Int64 {
