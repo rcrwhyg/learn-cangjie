@@ -1396,3 +1396,29 @@
 **链接**：cjdb/cjprof/cjpm/runtime_env 四手册链接 curl 200（/cjnative/ latest）
 
 **状态**：✅ 文档来源 + 本地 CLI 面核验完成（本类无 CI 运行环节）。
+
+---
+
+## 文章 41《仓颉类型系统》核验记录（阶段四首篇：原理层，不重复基础篇）
+
+**版本基线**：1.0.5 LTS
+
+**定位（防重叠）**：本篇从"怎么写类型"（基础篇 03/08/10/11/18/20）**切换到"编译器为什么这样管你"**——用编译错证据反推类型系统模型。所有小节都对应至少一条本地实测编译错或运行时行为。
+
+**本地 cjc 实测（原理级证据）**
+- 静态 & 强：`let b:Int32=a` (a:Int64)→`mismatched types expected 'Int32' found 'Int64'`；`a+1.0`(Int64)→`invalid binary operator '+' on type 'Int64' and 'Float64'`；数值转换唯一通路 `T(e)`（构造形式），**`x.toInt32()`/`x.convert<T>()` 均不存在**（undeclared identifier）
+- 类型格：`let a:Any=1` OK（Any 顶）；`let x:Int64 = die():Nothing` OK（Nothing 底可出现在期望任何类型处）
+- 名义子类型：`class C <: Struct` → `class 'C' can only inherit a class or implement interfaces`（**struct 不进子类型格**）；基方法要 `public open func` 才可 override（仅 `public func` → `cannot override function 's'`，实测踩过）
+- **`as` 返回 Option<T>**（官方《类型转换》页明说 `let b = 1 as String // b = Option<String>.None`）——**1.0.5 无 `as?`**（多次试写均解析失败；本文示例改用 `x is B` + `match (x as B) { case Some(v) => ...; case None => ... }` 组合）
+- 泛型不变性：`Box<Int64>` 赋给 `Box<Any>` → `mismatched types`；同参数 `Box<Int64>→Box<Int64>` OK；**`out T` / `T covariant` 声明点变体关键字**均不能解析（unclosed delimiter），1.0.5 无声明点变型
+- 编译期安全三条：`match` 少一支 → `non-exhaustive patterns`（编译错）；`Option<Int64>+Int64` → `invalid binary operator ... 'Enum-Option<Int64>'`；常量 `Int64.max+1` → `arithmetic operation '+' overflow`（编译期折叠、按默认 throwing 判错，承文章 35）
+- 类型推断极限：`let v = []` → `array literal type cannot be inferred`（需 `let v: Array<Int64> = []`）
+
+**订正直觉错误（我一开始按其他语言习惯写、本地编译错才发现）**：
+- 直觉 `as?` 存在 → 实际只有 `as` 返 Option；曾写 `x as D; d.s()` 报 `'s' is not a member of Option<Class-D>` 才知
+- 直觉 override 只需 open class → 实际基方法本身要 `public open func`
+- 直觉 `Int64?.convert<Int32>()` 类方法 → 实际只有 `Int32(x)`
+
+**示例 044（单文件，9 行确定输出）**：n=42,trunc=3 / animal:woof / desc Dog=dog / desc Cat=cat says meow / desc Int=not-an-animal / positive=5 / box=7 / even=8 / status=warn。sync 计 47。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 9 行输出。

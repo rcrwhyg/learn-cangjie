@@ -307,3 +307,12 @@
 - cjprof：.../cjprof_manual_cjnative.html（本机未含，正文标注未实测）
 - cjpm：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjpm_manual_cjnative_community.html
 - runtime 环境变量：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/runtime_env.html
+
+文章：`articles/41-type-system.md`（curl 200）
+- 类型转换：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/class_and_interface/typecast.html
+- 子类型关系：.../class_and_interface/subtype.html
+- 泛型类型子类型：.../generic/generic_subtype.html
+- Nothing 类型：.../basic_data_type/nothing.html
+- 模式 Refutability：.../enum_and_pattern_match/pattern_refutability.html
+- Option 类型：.../enum_and_pattern_match/option_type.html
+- 整数类型：.../basic_data_type/integer.html
