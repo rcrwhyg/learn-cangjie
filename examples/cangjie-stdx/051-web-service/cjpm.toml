@@ -1,0 +1,10 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "webdemo"
+  description = "stdx.net.http 实战：HTTP 服务端 + 客户端，输出确定"
+  version = "0.1.0"
+  output-type = "executable"
+  compile-option = "-ldl"
+
+[dependencies]
+  stdx = { git = "https://gitcode.com/Cangjie/cangjie_stdx.git", branch = "v1.0.5", output-type = "dynamic" }

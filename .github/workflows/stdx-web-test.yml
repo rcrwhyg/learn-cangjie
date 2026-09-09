@@ -1,0 +1,53 @@
+name: Test stdx Web Example
+
+# 独立、非阻塞：验证依赖 stdx.net.http 的 051-web-service 能否在 Linux CI 上构建运行。
+# 与主 "Test Code Examples" 分开，失败不影响 main 的绿色状态。
+
+on:
+  push:
+    branches: [main, draft]
+  pull_request:
+    branches: [main, draft]
+  workflow_dispatch:
+
+jobs:
+  stdx-web:
+    name: Build & run stdx.net.http example
+    runs-on: ubuntu-latest
+    continue-on-error: true        # 实验期容错：stdx 从源码构建易受工具链影响
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install build deps (OpenSSL3 + cmake/ninja for stdx source build)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake ninja-build git libssl-dev pkg-config
+
+      - name: Download Cangjie 1.0.5 LTS SDK
+        run: |
+          wget --https-only --no-verbose \
+            'https://cangjie-lang.cn/v1/files/auth/downLoad?nsId=142267&fileName=cangjie-sdk-linux-x64-1.0.5.tar.gz&objectKey=698acf46bd66ae22b62330b0' \
+            -O cangjie-sdk-linux-x64-1.0.5.tar.gz
+          printf '%s  %s\n' \
+            'bacad84df8e0281c5395bab4c40e481e3ea6cc712eed5c953903b0d561a14562' \
+            'cangjie-sdk-linux-x64-1.0.5.tar.gz' | sha256sum --check
+
+      - name: Install Cangjie SDK
+        run: |
+          tar -xzf cangjie-sdk-linux-x64-1.0.5.tar.gz
+          sudo mv cangjie /opt/cangjie
+          echo "/opt/cangjie/bin" >> "$GITHUB_PATH"
+          echo "/opt/cangjie/tools/bin" >> "$GITHUB_PATH"
+          echo "CANGJIE_HOME=/opt/cangjie" >> "$GITHUB_ENV"
+
+      - name: Build the stdx web example (cjpm clones + builds stdx source dep)
+        working-directory: examples/cangjie-stdx/051-web-service
+        run: |
+          cjpm build 2>&1 | tail -40
+
+      - name: Run it (expects: Hello Cangjie!)
+        working-directory: examples/cangjie-stdx/051-web-service
+        run: |
+          export LD_LIBRARY_PATH="/opt/cangjie/runtime/lib/linux_x86_64_cjnative:$(pwd)/target/release:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          ./target/release/bin/main
