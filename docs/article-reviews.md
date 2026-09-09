@@ -1524,3 +1524,5 @@
 **示例 048**：seqcst=7 / mutex_hb=2 / clq_sum=60（10+20+30），三行确定输出；sync 计 51。
 
 **状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 3 行输出。
+
+**CI 复核修正（重大：MemoryOrder 已弃用）**：首版示例用 `a.store(7, memoryOrder: MemoryOrder.SeqCst)`，CI(Linux) 报 4 条 **deprecation 警告**：`function 'store' is deprecated. Use store(val) instead` + `enum 'MemoryOrder' is deprecated`。结论订正——**1.0.5 不公开内存序**，推荐 `store(v)`/`load()` 不带 memoryOrder；`MemoryOrder` 枚举弃用中。已把 048 改为非弃用 API（本地复查只剩 unused-main、无弃用告警），并改写正文 §2（"只有 SeqCst"→"不公开内存序/枚举已弃用"）/§3/§6.3/对照表/总结/FAQ Q1。重嵌后 sync 51。运行值不变（seqcst=7/mutex_hb=2/clq_sum=60）。

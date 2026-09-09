@@ -1,6 +1,6 @@
 # 仓颉并发模型与内存模型：SeqCst 原语、happens-before 与死锁原理
 
-> **摘要**: 文章 22 讲了 M:N 调度、23 讲了 `spawn`/`Future`、24 讲了 `Mutex`/`Atomic`/`Condition` 的**用法**——本篇讲它们**背后承诺了什么**（内存模型），以及在 1.0.5 上做并发设计的**取舍**。三个核心实测结论：① **`MemoryOrder` 只有 `SeqCst` 一支**——`Acquire`/`Release`/`Relaxed` 在 1.0.5 SDK 里都取不到（实测），意味着仓颉原子操作**没有 C++/Rust 那种细粒度内存序**；② **`Channel` / `actor` 关键字都不存在**（实测：`std.concurrent` 无、`actor` 语法解析失败），跨线程消息传递靠 `std.collection.concurrent.ConcurrentLinkedQueue`；③ **happens-before 只由同步动作建立**（`spawn`+`Task.get()` / `Mutex.lock()`-`unlock()` / SeqCst 原子），**不加同步就没有任何可见性/顺序保证**。所有断言 1.0.5 本地实测；示例 `048-memory-model.cj` 演示三种同步各建立一条 HB，Linux CI 核对。
+> **摘要**: 文章 22 讲了 M:N 调度、23 讲了 `spawn`/`Future`、24 讲了 `Mutex`/`Atomic`/`Condition` 的**用法**——本篇讲它们**背后承诺了什么**（内存模型），以及在 1.0.5 上做并发设计的**取舍**。三个核心实测结论：① **1.0.5 根本不公开内存序**——`AtomicInt64` 推荐 API 是 `store(v)`/`load()`（**不带** `memoryOrder` 参数），而 `MemoryOrder` 枚举与带 `memoryOrder:` 的重载**已弃用**（实测 CI 报 `enum 'MemoryOrder' is deprecated`），意味着仓颉原子操作**没有 C++/Rust 那种可选手动内存序**、只有编译器固定的一套；② **`Channel` / `actor` 关键字都不存在**（实测：`std.concurrent` 无、`actor` 语法解析失败），跨线程消息传递靠 `std.collection.concurrent.ConcurrentLinkedQueue`；③ **happens-before 只由同步动作建立**（`spawn`+`Task.get()` / `Mutex.lock()`-`unlock()` / SeqCst 原子），**不加同步就没有任何可见性/顺序保证**。所有断言 1.0.5 本地实测；示例 `048-memory-model.cj` 演示三种同步各建立一条 HB，Linux CI 核对。
 
 ## 前置知识
 
@@ -18,21 +18,20 @@
 
 > **⚠️ 抢占式调度的现实**：官方 overview 明写"仓颉提供**抢占式**的线程模型"。这意味着**任何一行代码之间**都可能被切走——你绝不能靠"我这段循环不长、不会被打断"来保不变性。**同步不是"防并发"，是"给硬件与编译器立字据"**：我保证这段的可见性顺序。
 
-## 2. 1.0.5 的内存模型：**只有 SeqCst**
+## 2. 1.0.5 的内存模型：**不公开内存序**
 
-C++11/Rust/Java VarHandle 都给你**四五种内存序**（`Relaxed`/`Acquire`/`Release`/`AcqRel`/`SeqCst`），换不同性能/表达力。**Cangjie 1.0.5 里 `MemoryOrder` 枚举只有 `SeqCst` 一支**：
+C++11/Rust/Java VarHandle 都给你**四五种内存序**（`Relaxed`/`Acquire`/`Release`/`AcqRel`/`SeqCst`）让你手选。Cangjie 1.0.5 的做法更省心——**干脆不给你选**：
 
 ```cangjie
-import std.sync.{AtomicInt64, MemoryOrder}
-a.store(7, memoryOrder: MemoryOrder.SeqCst)      // ✅ 实测通过
-a.load(memoryOrder: MemoryOrder.Acquire)          // ❌ 'Acquire' is not a member of enum 'MemoryOrder'
+a.store(7)      // ✅ 1.0.5 推荐：不带 memoryOrder
+a.load()        // ✅
+// 下面这种带 memoryOrder 的写法在 1.0.5 已【弃用】：
+a.store(7, memoryOrder: MemoryOrder.SeqCst)   // warning: enum 'MemoryOrder' is deprecated
 ```
 
-（实测：`Acquire`/`Release`/`AcqRel`/`Relaxed` **全部**报"不是 MemoryOrder 成员"。SDK 二进制里能搜到 `SeqCst` 一个枚举 case。）
+（CI 实测：`function 'store' is deprecated. Use public func store(val: Int64): Unit instead` + `enum 'MemoryOrder' is deprecated`。）也就是说，**内存序是编译器内部固定的、不进公开 API**。你既不需要、也**没法**为单个原子操作挑 `Acquire`/`Release`/`Relaxed`。
 
-**含义**：所有原子操作都是**顺序一致**（sequentially consistent）——最强、最保守、最"符合直觉"，代价是**编译器/CPU 不能对它们做最激进的重排优化**。
-
-> **💡 为什么"够用"**：绝大多数正确程序不需要 Relaxed/Acquire/Release——它们是为**锁-free 数据结构实现者**（写一个 `Arc`、写一个无锁队列）准备的微优化。业务代码走 SeqCst，等价于 Rust 的 `Ordering::SeqCst` 或 Java 里"把 atomic 当 volatile 变量看 + 原子自增"，**心智负担最小**。想要细粒度内存序的人，1.0.5 给不了。
+> **💡 为什么这样设计**：绝大多数程序不需要细粒度内存序，给了反而会**误用**（Relaxed 用错就是 bug）。Cangjie 选择"一套固定强度、别碰"——等价于让所有原子默认走最强可观察语义，**心智负担直接砍半**。代价是给"无锁数据结构实现者"留的调优余地小；但业务代码几乎不受影响。想手动降级内存序的人，1.0.5 给不了（`MemoryOrder` 已弃用）。
 
 ## 3. happens-before：三条建立路径（实测在 048 里）
 
@@ -41,9 +40,9 @@ Cangjie 没有形式化 JMM 那种"HB 完整定义"，但从**实际行为**上�
 ### 3.1 `spawn` + `Task.get()`
 
 ```cangjie
-let t = spawn { a.store(7, memoryOrder: MemoryOrder.SeqCst) }
+let t = spawn { a.store(7) }
 t.get()                                       // HB：t 里所有写 → 对 t.get() 之后的读可见
-println(a.load(memoryOrder: MemoryOrder.SeqCst))   // 一定看得到 7
+println(a.load())                          // 一定看得到 7
 ```
 
 `spawn { ... }` 起任务时——**主线程在 spawn 之前的写** 对**子任务** 可见；反过来 `t.get()` 返回时——**子任务的所有写** 对**主线程** 可见。这是**任务边界**天然给的（023 篇讲过 `Future`，本篇给它一个"内存"名字）。
@@ -63,7 +62,7 @@ mutex.lock(); let v = sharedSum; mutex.unlock()   // 一定看到 A 的写
 
 ### 3.3 SeqCst 原子**之间**
 
-`a.store(1, memoryOrder: MemoryOrder.SeqCst)` 和后面 `a.load(memoryOrder: MemoryOrder.SeqCst)` **在同一个原子对象**上构成 HB 关系。**不同**原子对象之间，SeqCst 只保证"所有线程看到的**全局顺序**一致"（不保证"我以为先写的能被你先读到"）。
+`a.store(1)` 和后面 `a.load()` **在同一个原子对象**上构成 HB 关系。**不同**原子对象之间，SeqCst 只保证"所有线程看到的**全局顺序**一致"（不保证"我以为先写的能被你先读到"）。
 
 ## 4. 消息传递 ≠ 共享：1.0.5 的现实
 
@@ -125,13 +124,13 @@ DCLP 在 C++/Java 老代码里因为"编译器可能重排 `new` + `ptr = ...`"�
 
 ### 6.3 "共享状态靠原子指针发布"
 
-一个 class 对象的构造是引用类型、堆上；把它赋给一个 `AtomicReference` 后**必须** `store(..., memoryOrder: MemoryOrder.SeqCst)` 才让别的线程 `load()` 拿到"完整构造好的对象"——SeqCst 帮你保这一点。**普通 `var ref: AtomicReference<T>` 的字段写不算**。
+一个 class 对象的构造是引用类型、堆上；把它赋给一个 `AtomicReference` 后，用 `store(obj)`（非弃用写法）发布，别的线程 `load()` 才能拿到"完整构造好的对象"——**这套固定强度帮你保这一点**。**普通 `var ref: T` 的字段写不算**。
 
 ## 7. 与其它语言内存模型对照
 
 | 维度 | Cangjie 1.0.5 | Rust | C++11 | Java |
 |---|---|---|---|---|
-| 内存序 API | **只有 SeqCst** | `Ordering::{Relaxed..SeqCst}` 5 种 | `memory_order_*` 6 种 | VarHandle 4 种（Acquire/Release/Plain/Opaque） |
+| 内存序 API | **不公开**（`MemoryOrder` 已弃用） | `Ordering::{Relaxed..SeqCst}` 5 种 | `memory_order_*` 6 种 | VarHandle 4 种（Acquire/Release/Plain/Opaque） |
 | 形式化 JMM | 无专门文档、行为跟 SeqCst | 部分形式化 | 有 | 有（JSR-133） |
 | Actor / Channel 内建 | ❌（CLQ 手工搭） | crossbeam / tokio mpsc | 无 | 无（Reactor/LMAX） |
 | Mutex 可重入 | ✅ | ❌（原生） | ❌（std） | ❌ |
@@ -149,9 +148,9 @@ package conc
 
 // 并发模型与内存模型原理示例（配合文章 45）。
 // 前置：文章 24 讲了 Mutex / Atomic / Condition 的**用法**；本篇讲**它们承诺了什么**——
-// 也就是"内存模型"这一层。所有构造均在 1.0.5 本地实测通过。
+// 也就是"内存模型"这一层。所有构造均在 1.0.5 本地实测通过（且无弃用告警）。
 
-import std.sync.{AtomicInt64, Mutex, MemoryOrder}
+import std.sync.{AtomicInt64, Mutex}
 import std.collection.concurrent.*
 
 // 全局共享状态 + Mutex 保护：官方 029 篇同款姿势
@@ -159,32 +158,33 @@ let mutex = Mutex()
 var sharedSum: Int64 = 0
 
 main(): Int64 {
-    // 1) 显式 SeqCst 内存序——1.0.5 只暴露这一种（无 Acquire/Release/Relaxed）
+    // 1) 原子操作：1.0.5 推荐写法 store(v)/load() **不带** memoryOrder 参数
+    //    （`MemoryOrder` 枚举与带 `memoryOrder:` 的重载在 1.0.5 已弃用；语言不公开内存序）
     let a = AtomicInt64(0)
-    let w = spawn { a.store(7, memoryOrder: MemoryOrder.SeqCst) }
-    w.get()                                              // 用 Task.get() 建立 happens-before
-    println("seqcst=${a.load(memoryOrder: MemoryOrder.SeqCst)}")   // 7
+    let w = spawn { a.store(7) }          // 无 memoryOrder：非弃用 API
+    w.get()                               // Task.get() 建立 happens-before
+    println("seqcst=${a.load()}")         // 7（load 同样不带 memoryOrder）
 
     // 2) Mutex 建立 happens-before：写和读都在同一把锁里，主线程一定能看到 worker 的写
     let t1 = spawn { mutex.lock(); sharedSum += 1; mutex.unlock() }
     let t2 = spawn { mutex.lock(); sharedSum += 1; mutex.unlock() }
-    t1.get(); t2.get()                                    // 等两个都完成
+    t1.get(); t2.get()
     mutex.lock()
     let seen = sharedSum
     mutex.unlock()
-    println("mutex_hb=${seen}")                          // 2
+    println("mutex_hb=${seen}")           // 2
 
-    // 3) ConcurrentLinkedQueue：无锁的消息传递（1.0.5 std 无 Channel / 无 actor 关键字，CLQ 是最接近的）
+    // 3) ConcurrentLinkedQueue：无锁的消息传递（1.0.5 std 无 Channel / 无 actor 关键字，CLQ 最接近）
     let q = ConcurrentLinkedQueue<Int64>()
     q.add(10); q.add(20); q.add(30)
     var sum: Int64 = 0
     while (true) {
-        match (q.remove()) {                             // remove() 返回 Option<T>
+        match (q.remove()) {              // remove() 返回 Option<T>（没有 poll）
             case Some(v) => sum += v
             case None => break
         }
     }
-    println("clq_sum=${sum}")                            // 60
+    println("clq_sum=${sum}")             // 60
 
     return 0
 }
@@ -241,7 +241,7 @@ clq_sum=60
 ## 10. 总结
 
 1. **数据竞争 4 条件**：多线访问同一内存、至少一写、无 HB——**四条全中**才是 race。抢占式调度让你**不能靠"这段很快"避同步**。
-2. **1.0.5 只有 SeqCst**——`MemoryOrder` 枚举里 **`Acquire`/`Release`/`Relaxed` 都不存在**（实测），意味着原子**默认最强**、也**没有降级选项**。
+2. **1.0.5 不公开内存序**——推荐 `store(v)`/`load()` 不带 `memoryOrder`；`MemoryOrder` 枚举已**弃用**（CI 实测告警），原子强度由编译器固定、你**不能也不需要**手选。
 3. **三条 HB 建立路径**：`spawn` 起点 / `Task.get()` 终点、`Mutex.lock/unlock` 配对、SeqCst 原子**之间**——048 里三种各一次。
 4. **无 Channel、无 actor 关键字**：消息传递靠 `std.collection.concurrent.ConcurrentLinkedQueue`（`add`/`remove`→`Option`）；CSP 风格要自己攒。
 5. **死锁**：Coffman 4 条件；Cangjie 招 = 锁顺序 / `tryLock` / 缩短临界区 / `Mutex` 可重入（只治自锁）/ 无锁结构。
