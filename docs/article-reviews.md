@@ -1421,4 +1421,4 @@
 
 **示例 044（单文件，9 行确定输出）**：n=42,trunc=3 / animal:woof / desc Dog=dog / desc Cat=cat says meow / desc Int=not-an-animal / positive=5 / box=7 / even=8 / status=warn。sync 计 47。
 
-**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 9 行输出。
+**状态**：✅ 已核验。CI(Linux) success：044 运行输出 9 行（`n=42, trunc=3` / `animal: woof` / `desc Dog=dog` / `desc Cat=cat says meow` / `desc Int=not-an-animal` / `positive=5` / `box=7` / `even=8` / `status=warn`），与预期逐行一致。GitHub 网络瞬断恢复后推送成功。
