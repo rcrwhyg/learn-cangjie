@@ -1445,4 +1445,4 @@
 
 **与基础篇零重复核对**：10 篇讲 enum 语法 → 本篇讲"和×积"代数；11 篇讲 match 写法 → 本篇讲反演/穷尽/不可反驳；20 篇讲 Option 用法 → 本篇证 Option 就是 enum。零重叠。
 
-**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 045 的 6 行输出。
+**状态**：✅ 已核验。CI(Linux) success：045 运行 6 行输出（`area Square3=9` / `area Rect2x5=10` / `area Empty=0` / `orElse(N,7)=7` / `orElse(V3,7)=3` / `count=1`）与预期一致。
