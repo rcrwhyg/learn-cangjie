@@ -1422,3 +1422,27 @@
 **示例 044（单文件，9 行确定输出）**：n=42,trunc=3 / animal:woof / desc Dog=dog / desc Cat=cat says meow / desc Int=not-an-animal / positive=5 / box=7 / even=8 / status=warn。sync 计 47。
 
 **状态**：✅ 已核验。CI(Linux) success：044 运行输出 9 行（`n=42, trunc=3` / `animal: woof` / `desc Dog=dog` / `desc Cat=cat says meow` / `desc Int=not-an-animal` / `positive=5` / `box=7` / `even=8` / `status=warn`），与预期逐行一致。GitHub 网络瞬断恢复后推送成功。
+
+---
+
+## 文章 42《代数数据类型与模式匹配原理》核验记录（阶段四·原理层）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：承接 41；与基础篇 10/11/20 严格分界——只讲"编译器为何这样管"，用编译错/告警证据反推。
+
+**本地 cjc 实测（原理证据）**
+- Option 与自定义 enum 同构：`enum MyOpt { | Some(Int64) | None }` + match 全 OK → Option **不特殊**、就是和类型
+- 不可反驳性：`let Some(v) = o` → **`error: the pattern isn't irrefutable pattern and it can not be initialized`**；同样模式放 match（有 None 兜）合法
+- 穷尽性：`match (e) { case A => 1 }` 少 B → **`error: non-exhaustive patterns`**
+- 有 `_` 兜底 = 穷尽自动过；**全分支已写满再加 `_` → `warning: unreachable pattern`**（编译器识别死分支）
+- 或模式 `case A | B => ...`、嵌套 `case Some(Some(_)) => ...` 均编译通过
+- match 各支返回类型不一致 → `mismatched types`
+
+**编译流水线证据**：`cjc -V` 显示 `cjc-frontend → llvm`（match 在 cjc-frontend 降解为 tag 分支）；未强推 .chir 文件形态。
+
+**示例 045（单文件 enum ADT）**：Shape(3 支和之积) / 自定义 Opt(演示 Option 同构) / 泛型 Opt2<T>；预期 6 行输出。sync 计 48。
+
+**与基础篇零重复核对**：10 篇讲 enum 语法 → 本篇讲"和×积"代数；11 篇讲 match 写法 → 本篇讲反演/穷尽/不可反驳；20 篇讲 Option 用法 → 本篇证 Option 就是 enum。零重叠。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 045 的 6 行输出。

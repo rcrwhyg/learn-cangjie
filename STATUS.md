@@ -99,6 +99,7 @@
 - [ ] 文章39: 质量工具链 cjfmt/cjlint/cjdoc（cjfmt/cjlint 本地实测、cjdoc 本机 SDK 未含标注未实测；CI 通过——043 输出 0C->32F/100C->212F 一致）
 - [ ] 文章40: cjdb/cjprof/构建产物/运行时/打包发布（cjdb=lldb15 内核实测、cjprof 本机未含 Linux-only；调试不支持 macOS；**无运行示例**、会话取自手册；无 cjpm publish）
 - [ ] 文章41: 仓颉类型系统（原理层：静态强类型/Any⊤-Nothing⊥/名义子类型/泛型不变/穷尽性/Option 不解包；as 返 Option、无 as?/无 out 关键字；struct 不进格子；**CI 通过**——044 输出 9 行逐行一致）
+- [ ] 文章42: 代数数据类型与模式匹配原理（和×积/Option 就是 enum/反演+穷尽/不可反驳性/unreachable 死分支/或模式/嵌套；045 编译错告警实测；待 CI）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option

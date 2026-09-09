@@ -316,3 +316,10 @@
 - 模式 Refutability：.../enum_and_pattern_match/pattern_refutability.html
 - Option 类型：.../enum_and_pattern_match/option_type.html
 - 整数类型：.../basic_data_type/integer.html
+
+文章：`articles/42-adt-pattern.md`（curl 200）
+- 模式概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/enum_and_pattern_match/pattern_overview.html
+- 模式 Refutability：.../pattern_refutability.html
+- match 表达式：.../match.html
+- Option：.../option_type.html ｜ 枚举：.../enum.html
+- 泛型类型子类型：.../generic/generic_subtype.html
