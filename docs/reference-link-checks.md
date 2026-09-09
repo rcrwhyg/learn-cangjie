@@ -343,3 +343,7 @@
 - cjc 编译选项：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
 - cjprof：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjprof_manual_cjnative.html
 - 数组类型：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/basic_data_type/array.html
+
+文章：`articles/48-cli-tool.md`（curl 200）
+- cjpm 手册：https://docs.cangjie-lang.cn/cjnative/tools/source_zh_cn/tools/cjpm_manual_cjnative_community.html
+- 程序入口 main(args)：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/entry.html

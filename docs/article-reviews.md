@@ -1569,3 +1569,26 @@
 **链接**：无外链（内部文章 + specs 交叉引用为主）；未新增 URL。
 
 **状态**：✅ 综述篇核验完成（事实回指实测、观点标注清晰；本类无 CI 运行环节）。阶段四 41–47 全部完成。
+
+---
+
+## 文章 48《命令行工具实战》核验记录（阶段五·实战，cjpm 工程 050）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：阶段五首个实战 = 分层 CLI 工具（迷你 wc）。非"讲 API"而是"用前面 API 造真东西"，API 细节回指 13/15/20/36/38/40/44。
+
+**本地实测（踩到的真坑，全部写进正文/FAQ）**
+- Rune 字面量必须 `r'\n'`/`r' '`（带 r 前缀）；裸 `'\n'` 是 String，与 Rune 比报 `Rune == Struct-String`（承 13）
+- struct 构造**位置参数**：`Config(v,t)`、`ParseResult(...)`；命名 `Config(verbose:..)` 报 invalid named arguments
+- `match` 分支 `=> { ... }` 花括号块被解析成 lambda → `expected '=>' in lambda`；断言宏 @Expect 放分支里同样触发 → 多语句提函数、测试先 match 取值再断言
+- Option 无 `.get()`；用 `match(o){case Some(_)=>..;case None=>..}` 取值/转 bool
+- 字符串判前缀用 `a.startsWith("-")`（实测有）；`a[0]` 返回 Byte(UInt8) 不便比
+
+**std.argopt 诚实处理**：本机 `std.argopt` 存在，但其字段宏 `@Option` 与内建 Option 撞名（实测 error），API 参考此刻不可达 → **不臆造、手写解析**，正文+FAQ 明说"argopt 可用时应换它"。符合项目"不可验证不硬编"纪律。
+
+**工程**：cjpm.toml output-type=executable；src/{wc,args,main}.cj + wc_test.cj(5 用例)。cjpm check 本地通过；main 无参→usage 退出 0 保证 CI 的 cjpm run 不判红。
+
+**CI 待核**：cjpm build(macOS 链接坑)→Linux 跑；cjpm run 无参=usage 一行；cjpm test=5 用例 PASSED（harness 已支持 *_test.cj）。sync 计 56。
+
+**状态**：🔄 初稿完成，本地 cjpm check+sync 通过，待 CI 实跑 build/run/test。

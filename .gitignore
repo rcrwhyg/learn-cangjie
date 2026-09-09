@@ -87,3 +87,7 @@ release_report_*.md
 
 # 摘要文件
 *_summary.txt
+
+# cjpm build output
+target/
+*.cjo

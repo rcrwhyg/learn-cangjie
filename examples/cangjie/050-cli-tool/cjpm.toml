@@ -1,0 +1,8 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "clitool"
+  description = "命令行工具实战：手写参数解析 + 纯函数核心 + 单元测试"
+  version = "0.1.0"
+  output-type = "executable"
+
+[dependencies]

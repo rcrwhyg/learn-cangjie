@@ -105,6 +105,7 @@
 - [ ] 文章45: 并发模型与内存模型（1.0.5 **不公开内存序**、MemoryOrder 已弃用由 CI 抓出订正、无 std.concurrent/actor、CAS 名 compareAndSwap、CLQ add/remove；HB 三条；CI 通过——048 三行一致且无弃用告警）
 - [ ] 文章46: 性能分析与优化（方法论/少分配四招实测 Array 预分配·VArray 索引·StringBuilder·objectpool；参数归 35、测量归 40；**CI 通过**——049 三行一致且去净警告）
 - [ ] 文章47: 语言演进与设计实践（**阶段四收官·综述/实践篇、无运行示例**，同 37；事实全回指 41–46 实测、观点标注；含工程清单+版本策略；阶段四 41–47 全部完成）
+- [ ] 文章48: 命令行工具实战（cjpm 工程 050：分层 wc 工具/手写 argopt 撞名诚实处理/Rune 字面量与 struct 位置构造与 match-block 坑实测/5 用例 cjpm test；待 CI build+run+test）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option

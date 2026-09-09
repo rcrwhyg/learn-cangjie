@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 48《仓颉命令行工具实战》（初稿，阶段五实战首篇）并配套 cjpm 工程 `examples/cangjie/050-cli-tool/`（wc.cj 纯核心 / args.cj 手写解析 / main.cj 入口 / wc_test.cj 5 用例）：分层换可测性；`std.argopt` 宏与 Option 撞名故手写解析并诚实标注；实测 Rune 字面量 `r'\n'`、struct 位置构造、`match` 花括号块=lambda 等坑
 - 文章 47《仓颉语言演进与设计实践》（**阶段四收官·综述/实践篇，无 CI 运行示例**，同文章37，经作者确认）：版本演进(LTS/STS/Nightly+锁 1.0.5)、设计取舍(把 41–46 实测归纳为"偏可推性/低心智负担"主线)、兼容迁移、五组工程实践 checklist；纯判断处标注为观点。阶段四《深入原理》41–47 全部完成
 - 文章 46《性能分析与优化》（初稿，阶段四·方法论层，与 35/40 严格分界）并配套 `examples/cangjie/049-performance.cj`：减少堆分配/GC 四招（Array 预分配、VArray 零堆索引遍历、StringBuilder、std.objectpool）实测；强调"加速比必须 cjprof 实测、本示例只证写法正确"
 - 文章 45《仓颉并发模型与内存模型》（初稿，阶段四·原理层，与 22/23/24 严格分界）并配套 `examples/cangjie/048-memory-model.cj`：**1.0.5 MemoryOrder 枚举只有 SeqCst**（无 Acquire/Release/Relaxed/AcqRel 实测）、无 `std.concurrent`/无 `actor` 关键字（Channel/CSP 得手写）、CAS 名 `compareAndSwap`、CLQ `remove()` 返 Option（无 `poll`）；HB 三条路径
