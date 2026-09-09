@@ -1,10 +1,13 @@
 [package]
   cjc-version = "1.0.5"
   name = "webdemo"
-  description = "stdx.net.http 实战：HTTP 服务端 + 客户端，输出确定"
+  description = "stdx.net.http 实战：HTTP 服务端 + 客户端（CI 注入 stdx 二进制路径）"
   version = "0.1.0"
   output-type = "executable"
   compile-option = "-ldl"
 
 [dependencies]
-  stdx = { git = "https://gitcode.com/Cangjie/cangjie_stdx.git", branch = "v1.0.5", output-type = "dynamic" }
+
+[target.x86_64-unknown-linux-gnu]
+  [target.x86_64-unknown-linux-gnu.bin-dependencies]
+    path-option = ["__STDX_DYNAMIC_DIR__"]

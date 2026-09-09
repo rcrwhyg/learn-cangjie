@@ -1,7 +1,7 @@
 name: Test stdx Web Example
 
 # 独立、非阻塞：验证依赖 stdx.net.http 的 051-web-service 能否在 Linux CI 上构建运行。
-# 与主 "Test Code Examples" 分开，失败不影响 main 的绿色状态。
+# 用官方推荐的 build.py 从源码构建 stdx（net.http 依赖 OpenSSL3），再把产物路径注入 cjpm.toml。
 
 on:
   push:
@@ -12,17 +12,19 @@ on:
 
 jobs:
   stdx-web:
-    name: Build & run stdx.net.http example
+    name: Build stdx + run web example
     runs-on: ubuntu-latest
-    continue-on-error: true        # 实验期容错：stdx 从源码构建易受工具链影响
+    continue-on-error: true        # 实验期容错：stdx 源码构建受工具链/OpenSSL 影响
+    env:
+      CANGJIE_HOME: /opt/cangjie
     steps:
       - uses: actions/checkout@v5
 
-      - name: Install build deps (OpenSSL3 + cmake/ninja for stdx source build)
+      - name: Install build deps (OpenSSL3 + cmake/ninja + clang)
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            cmake ninja-build git libssl-dev pkg-config
+            cmake ninja-build git libssl-dev pkg-config python3 clang
 
       - name: Download Cangjie 1.0.5 LTS SDK
         run: |
@@ -39,16 +41,30 @@ jobs:
           sudo mv cangjie /opt/cangjie
           echo "/opt/cangjie/bin" >> "$GITHUB_PATH"
           echo "/opt/cangjie/tools/bin" >> "$GITHUB_PATH"
-          echo "CANGJIE_HOME=/opt/cangjie" >> "$GITHUB_ENV"
           echo "LD_LIBRARY_PATH=/opt/cangjie/runtime/lib/linux_x86_64_cjnative:/opt/cangjie/tools/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
 
-      - name: Build the stdx web example (cjpm clones + builds stdx source dep)
-        working-directory: examples/cangjie-stdx/051-web-service
+      - name: Clone + build stdx (v1.0.5) via build.py
         run: |
-          cjpm build 2>&1 | tail -40
+          git clone --depth 1 --branch v1.0.5 https://gitcode.com/Cangjie/cangjie_stdx.git "$GITHUB_WORKSPACE/_stdx"
+          cd "$GITHUB_WORKSPACE/_stdx"
+          export OPENSSL_LIB="$(dirname "$(find /usr/lib -name 'libssl.so*' | head -1)")"
+          echo "openssl lib dir: $OPENSSL_LIB"
+          python3 build.py build -t release --target-lib="$OPENSSL_LIB"
+          python3 build.py install
+
+      - name: Inject stdx dynamic dir into cjpm.toml
+        run: |
+          STDX_DIR="$(dirname "$(find "$GITHUB_WORKSPACE/_stdx/target" -name 'libstdx.net.http.so' -o -name 'stdx.net.http.cjo' 2>/dev/null | head -1)")"
+          echo "stdx dynamic dir: $STDX_DIR"
+          sed -i "s|__STDX_DYNAMIC_DIR__|$STDX_DIR|" examples/cangjie-stdx/051-web-service/cjpm.toml
+
+      - name: Build the web example (cjpm against stdx)
+        working-directory: examples/cangjie-stdx/051-web-service
+        run: cjpm build 2>&1 | tail -40
 
       - name: Run it (expects "Hello Cangjie!")
         working-directory: examples/cangjie-stdx/051-web-service
         run: |
-          export LD_LIBRARY_PATH="/opt/cangjie/runtime/lib/linux_x86_64_cjnative:$(pwd)/target/release:${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          STDX_DIR="$(dirname "$(find "$GITHUB_WORKSPACE/_stdx/target" -name 'libstdx.net.http.so' 2>/dev/null | head -1)")"
+          export LD_LIBRARY_PATH="$STDX_DIR:/opt/cangjie/runtime/lib/linux_x86_64_cjnative${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
           ./target/release/bin/main
