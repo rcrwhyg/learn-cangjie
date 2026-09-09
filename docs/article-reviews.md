@@ -1591,4 +1591,4 @@
 
 **CI 待核**：cjpm build(macOS 链接坑)→Linux 跑；cjpm run 无参=usage 一行；cjpm test=5 用例 PASSED（harness 已支持 *_test.cj）。sync 计 56。
 
-**状态**：🔄 初稿完成，本地 cjpm check+sync 通过，待 CI 实跑 build/run/test。
+**状态**：✅ 已核验。CI(Linux) success：050 `cjpm build success` → `cjpm run` 输出 `usage: clitool [-v] <text>` 退出 0 → `cjpm test` 5 用例 counts/edges/ok/unknownOptionIsError/noArgsMeansHelp 全 PASSED、`cjpm test success`。harness 的 build+run+test 三合一在此实战工程兑现。
