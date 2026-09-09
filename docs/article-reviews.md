@@ -1473,3 +1473,5 @@
 **示例 046**：const func sq/hyp/fact(递归) + const 上下文 TRIPLE=42/HYP=25 + static const Magic.SEVEN=7 + 运行时上下文 runtimeSquares(4)=30（1+4+9+16），5 行输出。sync 计 49。
 
 **状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 5 行输出。
+
+**CI 复核修正**：CI(Linux) success 但 `runtimeSquares(4)` 实际输出 **14**（非我原注的 30）——`for (i in 1..n)` 是**上界不含**，n=4 时 i∈{1,2,3}，1+4+9=14。已把 046 注释与文章"预期输出"块、§8 说明都订正到 14；重嵌后 sync 49/49 一致。这类范围语义在文章 05/11 已讲，本篇因**注释写口算太快**踩到，CI 又抓出来了——正是本工作流的价值。

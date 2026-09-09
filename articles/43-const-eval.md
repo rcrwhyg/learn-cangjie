@@ -188,7 +188,7 @@ main(): Int64 {
     println("HYP=${HYP}")                       // 25
     println("fact5=${local}")                   // 120
     println("MAGIC=${Magic.SEVEN}")             // 7
-    println("runtime_sq_1_to_4=${runtimeSquares(4)}")   // 30（运行期算：1+4+9+16）
+    println("runtime_sq_1_to_4=${runtimeSquares(4)}")   // 14（1..4 上界不含 → i=1,2,3 → 1+4+9）
     return 0
 }
 ```
@@ -206,7 +206,7 @@ TRIPLE=42
 HYP=25
 fact5=120
 MAGIC=7
-runtime_sq_1_to_4=30
+runtime_sq_1_to_4=14
 ```
 
 ## 9. 与其它语言"编译期求值"对照
