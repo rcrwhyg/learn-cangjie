@@ -102,6 +102,7 @@
 - [ ] 文章42: 代数数据类型与模式匹配原理（和×积/Option 就是 enum/反演+穷尽/不可反驳性/unreachable 死分支/或模式/嵌套；**CI 通过**——045 输出 6 行逐行一致）
 - [ ] 文章43: const 函数与常量求值（两个求值域/const 上下文永远编译期/const 函数两种时机/三条铁律 var·非const调用·副作用/允许递归；throw 不支持作 const 实测；**CI 通过**——046 输出 5 行一致；runtimeSquares(4)=14 由 CI 抓出上界不含并订正）
 - [ ] 文章44: 值/引用类型与内存管理（struct 全量拷·class 共享·**Array 名值实引用**·**VArray 真值数组**·浅拷贝穿透·~init 时机不可靠·open class 禁终结器·std.runtime.gc·无借用系统；**CI 通过**——047 五行全命中：Array 确实别名、VArray 确实深拷）
+- [ ] 文章45: 并发模型与内存模型（1.0.5 MemoryOrder 只有 SeqCst、无 std.concurrent/actor、CAS 名 compareAndSwap；HB 三条；CLQ add/remove 姿势；待 CI）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option

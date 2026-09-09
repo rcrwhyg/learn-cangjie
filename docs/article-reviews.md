@@ -1500,3 +1500,27 @@
 **示例 047**：单文件 5 段演示；预期 5 行输出（见文章 §12）。sync 计 50。
 
 **状态**：✅ 已核验。CI(Linux) success：047 输出全部 5 行逐行一致——含 D 行 `array: a[0]=99 b[0]=99`（Array 别名）与 E 行 `VArray: va[0]=1 vb[0]=99`（VArray 深拷）两条此前只由官方文档断言、无本地运行证据的语义，均实测坐实。
+
+---
+
+## 文章 45《并发模型与内存模型》核验记录（阶段四·原理层）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：22/23/24 讲"工具怎么用"；本篇讲"**它们承诺了什么**"——内存模型 + 并发设计取舍。零重叠。
+
+**本地 cjc 实测（重要"缺什么"发现）**
+- **MemoryOrder 枚举只有 `SeqCst` 一支**——`Acquire`/`Release`/`Relaxed`/`AcqRel` 全部报 "not a member of enum 'MemoryOrder'"（本文最重要发现）；SDK 二进制 strings 也只匹配 SeqCst
+- **`std.concurrent` 不存在**（`can not find package`）
+- **`actor` 关键字不存在**（`expected declaration, found 'actor'`）
+- **ConcurrentLinkedQueue**：`add`/`remove`→`Option<T>`/`peek`/`size`/`isEmpty`/`contains`；**没有 `poll`**（我一开始写 `poll` 报"不是成员"）
+- AtomicInt64 `.load()`/`.store()` 有 `memoryOrder:` 命名参数，默认（029 用法）走 SeqCst；显式 `MemoryOrder.SeqCst` 也 OK
+- **CAS 方法名 `compareAndSwap` 不是 `compareAndSet`**（`'compareAndSet' is not a member`）
+- **Mutex 无泛型参数、可重入**（`let mutex = Mutex()` + `.lock()/.unlock()`，与 024 一致；`*m` 解引用形式不存在）
+- `synchronized(someObject)` 报 "import 'sync'"——它只作用于 Mutex、非 Java 式对象监视器
+
+**happens-before 三条**（048 里各一次）：spawn+Task.get() / Mutex.lock-unlock 配对 / SeqCst 原子之间——**行为**上从官方 sync.html + 抢占式并发描述综合推得；**形式化 JMM 官方未给出**（本篇正文如实说明，不冒充有）
+
+**示例 048**：seqcst=7 / mutex_hb=2 / clq_sum=60（10+20+30），三行确定输出；sync 计 51。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 3 行输出。
