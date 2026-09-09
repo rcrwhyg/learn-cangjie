@@ -100,7 +100,7 @@
 - [ ] 文章40: cjdb/cjprof/构建产物/运行时/打包发布（cjdb=lldb15 内核实测、cjprof 本机未含 Linux-only；调试不支持 macOS；**无运行示例**、会话取自手册；无 cjpm publish）
 - [ ] 文章41: 仓颉类型系统（原理层：静态强类型/Any⊤-Nothing⊥/名义子类型/泛型不变/穷尽性/Option 不解包；as 返 Option、无 as?/无 out 关键字；struct 不进格子；**CI 通过**——044 输出 9 行逐行一致）
 - [ ] 文章42: 代数数据类型与模式匹配原理（和×积/Option 就是 enum/反演+穷尽/不可反驳性/unreachable 死分支/或模式/嵌套；**CI 通过**——045 输出 6 行逐行一致）
-- [ ] 文章43: const 函数与常量求值（两个求值域/const 上下文永远编译期/const 函数两种时机/三条铁律 var·非const调用·副作用/允许递归；throw 不支持作 const 实测；待 CI）
+- [ ] 文章43: const 函数与常量求值（两个求值域/const 上下文永远编译期/const 函数两种时机/三条铁律 var·非const调用·副作用/允许递归；throw 不支持作 const 实测；**CI 通过**——046 输出 5 行一致；runtimeSquares(4)=14 由 CI 抓出上界不含并订正）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option
