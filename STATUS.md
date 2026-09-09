@@ -103,7 +103,7 @@
 - [ ] 文章43: const 函数与常量求值（两个求值域/const 上下文永远编译期/const 函数两种时机/三条铁律 var·非const调用·副作用/允许递归；throw 不支持作 const 实测；**CI 通过**——046 输出 5 行一致；runtimeSquares(4)=14 由 CI 抓出上界不含并订正）
 - [ ] 文章44: 值/引用类型与内存管理（struct 全量拷·class 共享·**Array 名值实引用**·**VArray 真值数组**·浅拷贝穿透·~init 时机不可靠·open class 禁终结器·std.runtime.gc·无借用系统；**CI 通过**——047 五行全命中：Array 确实别名、VArray 确实深拷）
 - [ ] 文章45: 并发模型与内存模型（1.0.5 **不公开内存序**、MemoryOrder 已弃用由 CI 抓出订正、无 std.concurrent/actor、CAS 名 compareAndSwap、CLQ add/remove；HB 三条；CI 通过——048 三行一致且无弃用告警）
-- [ ] 文章46: 性能分析与优化（方法论/少分配四招实测 Array 预分配·VArray 索引·StringBuilder·objectpool；参数归 35、测量归 40；待 CI）
+- [ ] 文章46: 性能分析与优化（方法论/少分配四招实测 Array 预分配·VArray 索引·StringBuilder·objectpool；参数归 35、测量归 40；**CI 通过**——049 三行一致且去净警告）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option
