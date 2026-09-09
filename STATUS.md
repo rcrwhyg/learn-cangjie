@@ -104,6 +104,7 @@
 - [ ] 文章44: 值/引用类型与内存管理（struct 全量拷·class 共享·**Array 名值实引用**·**VArray 真值数组**·浅拷贝穿透·~init 时机不可靠·open class 禁终结器·std.runtime.gc·无借用系统；**CI 通过**——047 五行全命中：Array 确实别名、VArray 确实深拷）
 - [ ] 文章45: 并发模型与内存模型（1.0.5 **不公开内存序**、MemoryOrder 已弃用由 CI 抓出订正、无 std.concurrent/actor、CAS 名 compareAndSwap、CLQ add/remove；HB 三条；CI 通过——048 三行一致且无弃用告警）
 - [ ] 文章46: 性能分析与优化（方法论/少分配四招实测 Array 预分配·VArray 索引·StringBuilder·objectpool；参数归 35、测量归 40；**CI 通过**——049 三行一致且去净警告）
+- [ ] 文章47: 语言演进与设计实践（**阶段四收官·综述/实践篇、无运行示例**，同 37；事实全回指 41–46 实测、观点标注；含工程清单+版本策略；阶段四 41–47 全部完成）
 - [ ] 文章18: 泛型编程
 - [ ] 文章19: 扩展机制
 - [ ] 文章20: 错误处理与Option
