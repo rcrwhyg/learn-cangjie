@@ -58,6 +58,7 @@
 
 - 文章 31《仓颉标准库数据结构：容器进阶、迭代器、双端队列与集合算法》（复盘补齐 ArrayList/HashMap/HashSet 进阶，含 std.sort 替代弃用的 ArrayList.sort、HashMap[]+Option 返回、HashSet.subsetOf；cjc 逐条实测）（初稿，待审核）并配套 `examples/cangjie/036-collections-advanced.cj`：Iterable/Iterator 协议与 for-in 脱糖、自定义可迭代类型、ArrayDeque、filter/map/reduce/any/all 管道算法；API 全部经本地 cjc 实证
 
+- 文章 51《仓颉跨语言项目实战》（阶段五实战，与 29 分界）并配套 `examples/cangjie/053-cross-language.cj`：C 互操作的 ABI(@C struct sizeOf=16)/标量宽度(Int32 vs IntNative)/资源所有权(mallocCString↔free、inout 借用不 free)/构建链接(libc 自动链接 vs 自定义 .so 的 -L -l + LD_LIBRARY_PATH)；C 回调函数指针(qsort)本环境无法安全验证 → 只给方向不硬编
 - 文章 50《仓颉并发应用实战》（阶段五·实战）并配套 `examples/cangjie/052-concurrency-app.cj`：把 45 的内存模型/原语组装成 map-reduce+fan-in+原子归约；实测 spawn{} 块、闭包捕获不可变 let、ArrayList<Future>、CLQ remove→Option、AtomicInt64 归约，三行确定输出 CI 核对
 - 文章 49《仓颉 Web 服务实战：用 stdx.net.http 起 HTTP 服务》（阶段五；全系列首篇真跑通 stdx）并配套 `examples/cangjie-stdx/051-web-service/` + 独立 workflow `.github/workflows/stdx-web-test.yml`：GitHub Actions 上从源码 `build.py`（`NO_ASPECTCJ=1` 跳过 cjnative 无 include/ 的 aspectCJ、`libssl-dev` 供 OpenSSL3）构建 stdx v1.0.5 → cjpm 挂 bin-dependencies → 运行输出 `Hello Cangjie!` 实跑通过；encoding.json 未逐个验证故只给方向不硬编
 - 文章 48《仓颉命令行工具实战》（初稿，阶段五实战首篇）并配套 cjpm 工程 `examples/cangjie/050-cli-tool/`（wc.cj 纯核心 / args.cj 手写解析 / main.cj 入口 / wc_test.cj 5 用例）：分层换可测性；`std.argopt` 宏与 Option 撞名故手写解析并诚实标注；实测 Rune 字面量 `r'\n'`、struct 位置构造、`match` 花括号块=lambda 等坑

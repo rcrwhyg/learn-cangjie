@@ -356,3 +356,8 @@
 文章：`articles/50-concurrency-app.md`（curl 200）
 - 同步机制：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sync.html
 - 内部：23（线程/Future/取消）、45（内存模型/CLQ/无 Channel）、46（cjprof）
+
+文章：`articles/51-cross-language.md`（curl 200）
+- 仓颉-C 互操作：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/FFI/cangjie-c.html
+- cjc 编译选项(链接)：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/compile_options.html
+- runtime 环境变量：https://docs.cangjie-lang.cn/cjnative/user_manual/source_zh_cn/Appendix/runtime_env.html

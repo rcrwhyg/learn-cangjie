@@ -1659,3 +1659,22 @@
 **示例 052（单文件）**：sum1_100=5050（1..100）/ fanin=220（4×55）/ atomic=36（1..8）。三行确定，CI 核对。sync 计 58。
 
 **状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 3 行。
+
+---
+
+## 文章 51《跨语言项目实战》核验记录（阶段五·实战；与 29 严格分界）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：29 = C 互操作语法课；51 = 工程课（ABI/资源所有权/构建链接）。不重讲 foreign 基本写法。
+
+**本地 cjc 实测（安全子集，全用 29 已验证的 FFI 形态）**
+- @C struct Vec2（两个 Int64）→ sizeOf=16（与 C struct{int64_t x,y;} 对齐）
+- foreign strlen(CString):UIntNative / atoi(CString):Int32（libc 符号自动链接，无需 -l）
+- @C func scale(CPointer<Vec2>) 用 p.read()/p.write() 读写；仓颉侧 `scale(inout v)` 就地改（借用托管地址，不 free）
+- LibC.mallocCString ↔ LibC.free 资源配对（示例内注释强调）
+- 预期运行值：atoi=42 strlen=7 / scaled=(6,12) sizeOf=16（Linux CI 核对）
+
+**诚实不纳入（本环境无法安全验证）**：把仓颉函数指针交给 C 回调（qsort 场景）所需的 C 函数指针类型 `CFunctionPointer<...>`/`func<...>` 在本机 cjc 均解析失败、官方 API 参考此刻不可达 → 正文 §4/FAQ Q5 只给方向、不写签名，延续"未验证不硬编"。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 核对 053 两行输出。
