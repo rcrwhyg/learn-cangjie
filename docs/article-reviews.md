@@ -1609,3 +1609,34 @@
 **要真跑通**需：CI 里 clone stdx 后**裁剪/跳过 aspectCJ**（或只构建 net+encoding 子集）再 build.py——属独立的 CI 工具链工程，多轮调。已把实验全留在 `draft` 分支（`examples/cangjie-stdx/051` + `.github/workflows/stdx-web-test.yml`），main 未受影响、主 CI 仍绿。
 
 **给 49 的三条路**（见会话汇报）：① 我继续投入在 CI 里 hack stdx 构建（跳过 aspectCJ）；② 你提供可 wget 的 stdx-1.0.5 linux-x64 直链；③ 先把 49 按官方 stdx 文档写成"文档来源、无 CI 运行示例"（同 37/47），stdx-on-CI 待后续。
+
+---
+
+## 文章 49《Web 服务实战》核验记录（阶段五；全系列首篇真跑通 stdx）
+
+**版本基线**：1.0.5 LTS；stdx 取 tag v1.0.5
+
+**验证方式（与作者定的"CI 上验证 stdx"一致）**：draft 分支迭代 5+ 次，最终 GitHub Actions(Linux) 端到端全绿：
+`cjpm build success` → 运行输出 `Hello Cangjie!`（客户端 GET 本地服务端 /hello，同进程自测）。
+
+**stdx-on-CI 完整链路（真实跑通、含踩坑）**
+1. apt 装 cmake/ninja/libssl-dev/clang（OpenSSL3 供 net.tls/net.http FFI）
+2. 下载解压 1.0.5 SDK → CANGJIE_HOME/LD_LIBRARY_PATH
+3. `git clone --depth 1 -b v1.0.5 cangjie_stdx` → **`NO_ASPECTCJ=1`** python3 build.py build -t release --target-lib=/usr/lib/x86_64-linux-gnu && install
+4. find 出 `.../dynamic/stdx` 目录 sed 注入 051 的 cjpm.toml `path-option`
+5. cjpm build → ./target/release/bin/main → `Hello Cangjie!`
+
+**关键真实坑（正文 §2 详记）**：cjnative SDK 无 `include/` 目录，stdx 的 aspectCJ CMakeLists 检查 `$ENV{CANGJIE_HOME}/include/cangjie` 失败即 FATAL_ERROR、build 在编 net 前中止；stdx CMakeLists 内置 `NO_ASPECTCJ` 开关，设之即跳过 aspectCJ、正常出 net.http。**官方文档未强调、实测必踩**。
+
+**逐错修复轨迹**（都是 CI 抓出）：
+- git 源码依赖 `{git=..}` → 失败（stdx 根无 cjpm.toml，走 build.py）
+- cjpm 运行期 libcangjie-runtime.so 找不到 → workflow 装 SDK 步补 LD_LIBRARY_PATH
+- aspectCJ FATAL_ERROR → NO_ASPECTCJ=1
+- find 误选 static 目录 → 改 `find -type d -path '*dynamic/stdx'`
+- `LogLevel undeclared` → 该符号在 stdx.log 不是 net.http → `import stdx.log.*`、去掉未用 std.time
+
+**诚实边界**：stdx.encoding.json 的具体 API 未在 CI 逐个验证 → 正文只给"手写 JSON 字符串 + 方向"，精确 json 包 API 标"留 stdx 序列化专篇实测"，不硬编。
+
+**工程**：`examples/cangjie-stdx/051-web-service/`（main.cj 与 stdx 无关、可被 sync 引用；cjpm.toml 用 `__STDX_DYNAMIC_DIR__` 占位符，由 CI sed 注入）；独立 workflow `.github/workflows/stdx-web-test.yml`（continue-on-error，不污染 main 主门禁）。
+
+**状态**：✅ 已核验（stdx.net.http CI 实跑）。同步入 main。
