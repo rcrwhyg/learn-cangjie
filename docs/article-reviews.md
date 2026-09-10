@@ -1592,3 +1592,20 @@
 **CI 待核**：cjpm build(macOS 链接坑)→Linux 跑；cjpm run 无参=usage 一行；cjpm test=5 用例 PASSED（harness 已支持 *_test.cj）。sync 计 56。
 
 **状态**：✅ 已核验。CI(Linux) success：050 `cjpm build success` → `cjpm run` 输出 `usage: clitool [-v] <text>` 退出 0 → `cjpm test` 5 用例 counts/edges/ok/unknownOptionIsError/noArgsMeansHelp 全 PASSED、`cjpm test success`。harness 的 build+run+test 三合一在此实战工程兑现。
+
+---
+
+## 文章 49《Web 服务实战》stdx-on-CI 可行性诊断（draft 实验，未并入 main）
+
+**结论：当前无法简单地把 stdx.net.http 放进 CI 验证，卡在 stdx 源码构建。**
+
+逐轮排查（draft 分支 5+ 次 CI）：
+1. cjpm `[dependencies] stdx={git}` → 失败：stdx 仓根**无 cjpm.toml**（它靠 `build.py`+cmake 构建，非纯 cjpm 源码依赖）
+2. 改 `build.py` 源码构建 → `cjpm: error while loading libcangjie-runtime.so` → 已在 workflow 装 SDK 步导出 LD_LIBRARY_PATH 解决
+3. 再构建 → **硬失败**：`src/stdx/aspectCJ/plugins/CMakeLists.txt` 检查 `$ENV{CANGJIE_HOME}/include/cangjie` 不存在即 `FATAL_ERROR`，build.py 在编 net.http 前就中止
+4. 本地核对 cjnative SDK（mac/Linux 同）**根本没有 include/ 目录** → aspectCJ（C++ 插件）与 cjnative 发布包不匹配，这是官方构建脚本自身的坎
+5. 预编译二进制路：`cangjie-stdx-bin` tags 止于 v1.0.1.1；1.0.5 的 linux-x64 资产在 gitcode JS 发行页，无稳定可脚本化直链（试多个 download URL 形状均 404）
+
+**要真跑通**需：CI 里 clone stdx 后**裁剪/跳过 aspectCJ**（或只构建 net+encoding 子集）再 build.py——属独立的 CI 工具链工程，多轮调。已把实验全留在 `draft` 分支（`examples/cangjie-stdx/051` + `.github/workflows/stdx-web-test.yml`），main 未受影响、主 CI 仍绿。
+
+**给 49 的三条路**（见会话汇报）：① 我继续投入在 CI 里 hack stdx 构建（跳过 aspectCJ）；② 你提供可 wget 的 stdx-1.0.5 linux-x64 直链；③ 先把 49 按官方 stdx 文档写成"文档来源、无 CI 运行示例"（同 37/47），stdx-on-CI 待后续。
