@@ -44,6 +44,8 @@ jobs:
           echo "LD_LIBRARY_PATH=/opt/cangjie/runtime/lib/linux_x86_64_cjnative:/opt/cangjie/tools/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
 
       - name: Clone + build stdx (v1.0.5) via build.py
+        env:
+          NO_ASPECTCJ: "1"          # 跳过 aspectCJ（cjnative SDK 无 include/，aspectCJ 会 FATAL_ERROR）
         run: |
           git clone --depth 1 --branch v1.0.5 https://gitcode.com/Cangjie/cangjie_stdx.git "$GITHUB_WORKSPACE/_stdx"
           cd "$GITHUB_WORKSPACE/_stdx"
