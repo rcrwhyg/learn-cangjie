@@ -56,17 +56,19 @@ jobs:
 
       - name: Inject stdx dynamic dir into cjpm.toml
         run: |
-          STDX_DIR="$(dirname "$(find "$GITHUB_WORKSPACE/_stdx/target" -name 'libstdx.net.http.so' -o -name 'stdx.net.http.cjo' 2>/dev/null | head -1)")"
+          STDX_DIR="$(find "$GITHUB_WORKSPACE/_stdx/target" -type d -path '*dynamic/stdx' | head -1)"
           echo "stdx dynamic dir: $STDX_DIR"
+          test -f "$STDX_DIR/libstdx.net.http.so" && echo "found net.http.so"
           sed -i "s|__STDX_DYNAMIC_DIR__|$STDX_DIR|" examples/cangjie-stdx/051-web-service/cjpm.toml
 
       - name: Build the web example (cjpm against stdx)
         working-directory: examples/cangjie-stdx/051-web-service
-        run: cjpm build 2>&1 | tail -40
+        run: cjpm build
 
       - name: Run it (expects "Hello Cangjie!")
         working-directory: examples/cangjie-stdx/051-web-service
         run: |
-          STDX_DIR="$(dirname "$(find "$GITHUB_WORKSPACE/_stdx/target" -name 'libstdx.net.http.so' 2>/dev/null | head -1)")"
+          STDX_DIR="$(find "$GITHUB_WORKSPACE/_stdx/target" -type d -path '*dynamic/stdx' | head -1)"
           export LD_LIBRARY_PATH="$STDX_DIR:/opt/cangjie/runtime/lib/linux_x86_64_cjnative${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+          ls -l ./target/release/bin/main
           ./target/release/bin/main
