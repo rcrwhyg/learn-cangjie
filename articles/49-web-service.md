@@ -11,7 +11,7 @@ package webdemo
 // port(0) 让 OS 分配空闲端口、避开 CI 端口冲突；输出确定：`Hello Cangjie!`。
 
 import stdx.net.http.*
-import std.time.*
+import stdx.log.*
 
 let server = ServerBuilder().addr("127.0.0.1").port(0).build()
 
