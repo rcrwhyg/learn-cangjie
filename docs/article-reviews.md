@@ -1639,4 +1639,4 @@
 
 **工程**：`examples/cangjie-stdx/051-web-service/`（main.cj 与 stdx 无关、可被 sync 引用；cjpm.toml 用 `__STDX_DYNAMIC_DIR__` 占位符，由 CI sed 注入）；独立 workflow `.github/workflows/stdx-web-test.yml`（continue-on-error，不污染 main 主门禁）。
 
-**状态**：✅ 已核验（stdx.net.http CI 实跑）。同步入 main。
+**状态**：✅ 已核验并并入 main。**main 分支 stdx workflow 再次实跑**：`Build the web example`=success → `Run it`=success → `cjpm build success` + 输出 `Hello Cangjie!`（run 34430420876）。draft 实验分支已完成使命。
