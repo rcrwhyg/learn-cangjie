@@ -352,3 +352,7 @@
 - HTTP 编程：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/Net/net_http.html （200）
 - stdx 源码仓：https://gitcode.com/Cangjie/cangjie_stdx （git clone 验证 tag v1.0.5 可达）
 - stdx-bin：https://gitcode.com/Cangjie/cangjie-stdx-bin （README 获取方式；具体 1.0.5 二进制资产页 JS 渲染、故 CI 走源码构建）
+
+文章：`articles/50-concurrency-app.md`（curl 200）
+- 同步机制：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/concurrency/sync.html
+- 内部：23（线程/Future/取消）、45（内存模型/CLQ/无 Channel）、46（cjprof）

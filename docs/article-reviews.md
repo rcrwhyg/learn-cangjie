@@ -1640,3 +1640,22 @@
 **工程**：`examples/cangjie-stdx/051-web-service/`（main.cj 与 stdx 无关、可被 sync 引用；cjpm.toml 用 `__STDX_DYNAMIC_DIR__` 占位符，由 CI sed 注入）；独立 workflow `.github/workflows/stdx-web-test.yml`（continue-on-error，不污染 main 主门禁）。
 
 **状态**：✅ 已核验并并入 main。**main 分支 stdx workflow 再次实跑**：`Build the web example`=success → `Run it`=success → `cjpm build success` + 输出 `Hello Cangjie!`（run 34430420876）。draft 实验分支已完成使命。
+
+---
+
+## 文章 50《并发应用实战》核验记录（阶段五·实战）
+
+**版本基线**：1.0.5 LTS
+
+**定位**：22–24/45 是"并发零件与内存模型"，本篇"组装成真并发作业"——map-reduce / fan-in / 原子归约 三结构。集成、非重述。
+
+**本地 cjc 实测（承 45 的坑，都写进正文/FAQ）**
+- `spawn { }` 需块（`spawn 函数名` 报 expected '{'）
+- 闭包捕获可变局部受限 → 先 `let lo=los[i]` 绑不可变再捕获（承 45 §…）
+- `Array<Future<T>>` 不能用 `+` 拼接（invalid binary operator '+'）→ 用 `ArrayList<Future<T>>.add`
+- `Future<T>.get()` 取值兼屏障；CLQ `remove()` 返回 Option（无 poll）；抽干用 `match` 不碰 isEmpty 竞态
+- `AtomicInt64.fetchAdd/load` 原子归约；加法可交换 → 结果与调度无关、确定
+
+**示例 052（单文件）**：sum1_100=5050（1..100）/ fanin=220（4×55）/ atomic=36（1..8）。三行确定，CI 核对。sync 计 58。
+
+**状态**：🔄 初稿完成，本地编译+sync 通过，待 CI 运行核对 3 行。
