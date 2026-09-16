@@ -226,7 +226,7 @@ cjpm 会校验它，避免"你以为在用 A 版、实际是 B 版"的错乱。�
 
 1. 仓颉 1.0.5 LTS 包的概述：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/package_overview.html
 2. 仓颉 1.0.5 LTS 使用 import 语句导入其他包中的声明或定义：https://docs.cangjie-lang.cn/docs/1.0.5/dev-guide/source_zh_cn/package/import.html
-3. 仓颉 1.0.5 LTS 库文档入口（叙事/API）：https://docs.cangjie-lang.cn/docs/1.0.5/
+3. 仓颉 1.0.5 LTS 库 API 文档入口（`?url=` 形式，示例为 std.math 概览）：https://cangjie-lang.cn/docs?url=%2F1.0.5%2Flibs%2Fstd%2Fmath%2Fmath_package_overview.html
 4. 仓颉 1.0.5 LTS 官方下载中心：https://cangjie-lang.cn/download/1.0.5
 
 **版本信息**: 本文基于仓颉 1.0.5 LTS 编写
