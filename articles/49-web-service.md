@@ -152,7 +152,7 @@ import stdx.encoding.json.*
 
 main(): Int64 {
     // 1) 解析 JSON 数组字符串 → JsonValue → 再序列化回紧凑串（往返，顺序确定）
-    let src = ##"[1,2,3,true,\"cj"]"##
+    let src = ##"[1,2,3,true,"cj"]"##
     let jv = JsonValue.fromStr(src)
     println("roundtrip=${jv.toString()}")
 
