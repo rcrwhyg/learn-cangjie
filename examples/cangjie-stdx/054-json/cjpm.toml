@@ -1,0 +1,13 @@
+[package]
+  cjc-version = "1.0.5"
+  name = "jsondemo"
+  description = "stdx.encoding.json 实战：JsonValue 往返/构造/取用（CI 注入 stdx 二进制路径）"
+  version = "0.1.0"
+  output-type = "executable"
+  compile-option = "-ldl"
+
+[dependencies]
+
+[target.x86_64-unknown-linux-gnu]
+  [target.x86_64-unknown-linux-gnu.bin-dependencies]
+    path-option = ["__STDX_DYNAMIC_DIR__"]

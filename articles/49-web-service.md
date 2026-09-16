@@ -9,7 +9,7 @@
 - 已完成《cjpm》（36）——`cjpm.toml`、`bin-dependencies`、构建/运行
 - 已完成《并发》（23/45）——示例用 `spawn` 在服务端与客户端间并发
 
-> 定位：这是本系列**首个 stdx 实战**。stdx 不是"装好 SDK 就有"，所以本篇把"怎么拿到 stdx 并让它被 cjpm 认到"讲透——这也是为什么它值得单独一篇。
+> 定位：这是本系列**首个 stdx 实战**。stdx 不是"装好 SDK 就有"，所以本篇把"怎么拿到 stdx 并让它被 cjpm 认到"讲透——这也是为什么它值得单独一篇。本篇的 `net.http` 与 `encoding.json` 两块均在 Linux CI 实跑通过。
 
 ## 1. 先认清：HTTP 在 stdx，不在 base std
 
@@ -135,19 +135,44 @@ Hello Cangjie!
 
 CI 里我们的完整作业链路是：装 `libssl-dev`/cmake/ninja → 下载解压 SDK → `git clone -b v1.0.5 stdx` → `NO_ASPECTCJ=1 python3 build.py build -t release --target-lib=... && build.py install` → 把 `dynamic/stdx` 路径 `sed` 注入 `cjpm.toml` → `cjpm build`（`cjpm build success`）→ 带正确 `LD_LIBRARY_PATH` 运行 → 打印 `Hello Cangjie!`。**每一步都绿**。
 
-## 6. 再套一层：让 Web 服务返回 JSON
+## 6. 再套一层：JSON 序列化（`stdx.encoding.json`，已 CI 实跑）
 
-真实 Web 服务几乎都返回 JSON。序列化用 **`stdx.encoding.json`**（`JsonValue`/`DataModel` 与 String 互转，承 §1 的 stdx 分层）。典型形态：
+真实 Web 服务几乎都收发 JSON。`stdx.encoding.json` 的核心是 **`JsonValue`**（`fromStr`/`toString`/`toJsonString`）+ 按类型的子类（`JsonObject`/`JsonArray`/`JsonInt`/`JsonString`/`JsonBool`/`JsonFloat`/`JsonNull`）+ `DataModel`↔`JsonValue` 的 `ToJson` 接口。示例 `054-json`：解析→往返→构造→按下标取用（**只用数组/标量保证顺序确定**，不依赖 object 的 HashMap 键序）：
 
+<!-- example: cangjie-stdx/054-json/src/main.cj -->
 ```cangjie
+package jsondemo
+
+// stdx.encoding.json 实战（配合文章 49 的 JSON 小节）。
+// 只用官方文档确证的 API：JsonValue.fromStr / toString / JsonInt / JsonArray.get/size。
+// 刻意用"数组+标量"（顺序确定），不依赖 object 的键序（HashMap 顺序不定）。
+// 输出确定，Linux CI 实跑核对。
+
 import stdx.encoding.json.*
-// 命中 /api 时，把一个结构序列化成 JSON 再塞进响应体
-server.distributor.register("/api", { ctx =>
-    ctx.responseBuilder.body("""{"msg":"hi","n":1}""")
-})
+
+main(): Int64 {
+    // 1) 解析 JSON 数组字符串 → JsonValue → 再序列化回紧凑串（往返，顺序确定）
+    let src = ##"[1,2,3,true,\"cj"]"##
+    let jv = JsonValue.fromStr(src)
+    println("roundtrip=${jv.toString()}")
+
+    // 2) 构造：把 Int64 包成 JsonValue 再转串
+    println("made=${JsonInt(7).toString()}")
+
+    // 3) 按类型取用：as 下转到 JsonArray（返回 Option），拿 size
+    let size = match (jv as JsonArray) {
+        case Some(a) => a.size()
+        case None => 0
+    }
+    println("size=${size}")
+    return 0
+}
 ```
 
-> **说明**：本示例（051）**只固化了已在 CI 实跑通过的 `net.http` 收发**；`stdx.encoding.json` 的具体 API（`JsonValue`、`DataModel`、`parseJson`/`toJsonString` 等）本系列尚未逐一在 CI 上编译验证，故这里只给**方向与手写 JSON 字符串**的安全写法，精确的 json 包 API 以官方 stdx 手册为准、留待"stdx 序列化"专篇实测补全——延续本系列"**没验证过的一律不硬编**"的纪律。
+`import stdx.encoding.json.*`；`JsonValue.fromStr(str)` 解析、`.toString()` 紧凑序列化；`jv as JsonArray` 下转（返回 `Option`，承文章 41 的 `as`）、`a.size()`/`a.get(i): Option<JsonValue>` 取元素。运行（同 §5 的 stdx 链接前置）输出确定，见文末 CI 核对。
+
+> **仍守的边界**：`DataModel`/`@ derivable ToJson`（把自定义 struct 反射式转 JSON）涉及 `stdx.serialization`，本系列未逐个 CI 验证其确切宏用法，故 **054 只演示确证过的 `JsonValue` 直接用法**；自定义类型序列化的精确写法以 stdx 手册为准、不硬编。
+
 
 ## 7. 与其它语言 Web 起步对照
 
@@ -198,7 +223,7 @@ stdx 版本号前 3 位 = cjc 版本。**1.0.5 SDK → 取 tag `v1.0.5` 的 stdx
 2. **两种获取**：预编译二进制发行包；或源码 `build.py build/install`。**cjnative 源码构建要 `NO_ASPECTCJ=1` 跳过缺 `include/` 的 aspectCJ**（本 CI 实测）；`net` 依赖 **OpenSSL 3**。
 3. **API 直接**：`ServerBuilder`+`distributor.register`+`responseBuilder.body`+`serve`（服务端）、`ClientBuilder().get`+`response.body.read`（客户端）。
 4. **端到端已 CI 实跑**：同进程 server+client，`cjpm build success` → 运行打印 `Hello Cangjie!`；这是全系列第一篇真跑通 stdx 的实战。
-5. **纪律仍在**：`encoding.json` 等未逐一验证的 stdx 细节只给方向、不硬编 API——留"stdx 序列化"专篇实测。
+5. **纪律仍在**：`encoding.json` 的 `JsonValue` 直接用法已 CI 实跑；`DataModel`/`stdx.serialization` 反射式序列化未逐一验证、只给方向不硬编。
 
 ## 参考资料
 
@@ -207,7 +232,7 @@ stdx 版本号前 3 位 = cjc 版本。**1.0.5 SDK → 取 tag `v1.0.5` 的 stdx
 3. stdx 二进制发布说明（bin-dependencies.path-option 配置）：https://gitcode.com/Cangjie/cangjie-stdx-bin
 4. 承接：Socket 裸 TCP/UDP（文章 26）、cjpm 依赖（文章 36）、值/引用与动态库（文章 44）
 
-**版本信息**: 本文基于仓颉 1.0.5 LTS 编写。`stdx.net.http` 起服务 + 客户端收发为 **GitHub Actions（Linux）实跑通过**（`cjpm build success`、输出 `Hello Cangjie!`）；stdx 用 tag `v1.0.5` 经 `build.py` 源码构建、`NO_ASPECTCJ=1` 跳过 aspectCJ、`libssl-dev` 提供 OpenSSL 3。`stdx.encoding.json` 等未逐一 CI 验证的包 API 仅给方向、不硬编。
+**版本信息**: 本文基于仓颉 1.0.5 LTS 编写。`stdx.net.http` 起服务 + 客户端收发为 **GitHub Actions（Linux）实跑通过**（`cjpm build success`、输出 `Hello Cangjie!`）；stdx 用 tag `v1.0.5` 经 `build.py` 源码构建、`NO_ASPECTCJ=1` 跳过 aspectCJ、`libssl-dev` 提供 OpenSSL 3。`stdx.encoding.json` 的 `JsonValue.fromStr/toString/JsonInt/JsonArray` 亦 CI 实跑；`DataModel`/serialization 未验证仅给方向。
 
 ---
 

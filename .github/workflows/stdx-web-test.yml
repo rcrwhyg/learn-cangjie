@@ -59,16 +59,23 @@ jobs:
           STDX_DIR="$(find "$GITHUB_WORKSPACE/_stdx/target" -type d -path '*dynamic/stdx' | head -1)"
           echo "stdx dynamic dir: $STDX_DIR"
           test -f "$STDX_DIR/libstdx.net.http.so" && echo "found net.http.so"
-          sed -i "s|__STDX_DYNAMIC_DIR__|$STDX_DIR|" examples/cangjie-stdx/051-web-service/cjpm.toml
+          test -f "$STDX_DIR/libstdx.encoding.json.so" && echo "found encoding.json.so"
+          for proj in examples/cangjie-stdx/051-web-service examples/cangjie-stdx/054-json; do
+            sed -i "s|__STDX_DYNAMIC_DIR__|$STDX_DIR|" "$proj/cjpm.toml"
+          done
 
-      - name: Build the web example (cjpm against stdx)
-        working-directory: examples/cangjie-stdx/051-web-service
-        run: cjpm build
-
-      - name: Run it (expects "Hello Cangjie!")
+      - name: Build & run HTTP example (expects "Hello Cangjie!")
         working-directory: examples/cangjie-stdx/051-web-service
         run: |
+          cjpm build
           STDX_DIR="$(find "$GITHUB_WORKSPACE/_stdx/target" -type d -path '*dynamic/stdx' | head -1)"
           export LD_LIBRARY_PATH="$STDX_DIR:/opt/cangjie/runtime/lib/linux_x86_64_cjnative${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-          ls -l ./target/release/bin/main
+          ./target/release/bin/main
+
+      - name: Build & run JSON example (stdx.encoding.json)
+        working-directory: examples/cangjie-stdx/054-json
+        run: |
+          cjpm build
+          STDX_DIR="$(find "$GITHUB_WORKSPACE/_stdx/target" -type d -path '*dynamic/stdx' | head -1)"
+          export LD_LIBRARY_PATH="$STDX_DIR:/opt/cangjie/runtime/lib/linux_x86_64_cjnative${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
           ./target/release/bin/main
