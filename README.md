@@ -69,6 +69,10 @@ learn-cangjie/
 所有AI Agent的行为规范详见 [AGENT.md](./AGENT.md)
 
 
+## 文章目录
+
+全系列 **52 篇**（1.0.5 LTS）索引见 → [articles/README.md](./articles/README.md)（进度：1–23 已发布，24–52 已核验待发）。
+
 ## 快速开始
 
 1. 克隆仓库
