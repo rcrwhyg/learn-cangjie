@@ -1,321 +1,121 @@
 # 项目状态
 
-> 仓颉编程语言学习笔记项目当前状态和进度跟踪
+> 仓颉编程语言学习笔记项目 —— 当前状态与进度跟踪。（变更历史见 `CHANGELOG.md`；逐篇核验记录见 `docs/article-reviews.md`；链接核验见 `docs/reference-link-checks.md`。）
 
-## 项目概述
+## 概览
 
-- **项目名称**: 仓颉编程语言学习笔记
-- **目标版本**: 仓颉1.0.5 LTS
-- **项目目标**: 系统学习仓颉语言，输出高质量微信公众号文章
-- **当前阶段**: 基础阶段文章撰写与官方核验
+- **目标版本**：仓颉 **1.0.5 LTS**（基线锁定，见 `specs/version-strategy.md`）
+- **写作进度**：**52 篇全部成稿**（编号 01–52 连续、无缺号）
+- **发布进度**：公众号已发布至**第 23 篇**（1–23）；**24–52 为已核验待发草稿**
+- **CI**：`main` 上两道 workflow 全绿 —— `Test Code Examples`（sync + 编译/运行）与 `Test stdx Web Example`（stdx HTTP/JSON 实跑）
+- **示例**：**60 个规范示例**（48 单文件 + 5 cjpm 工程 + 1 stdx 网络 + stdx JSON），全部单一真源、经 CI 编译/运行
 
-## 基础设施状态
+## 进度总表
 
-### ✅ 已完成
-- [x] README.md - 项目说明文档
-- [x] AGENT.md - AI Agent行为规范
-- [x] rules/content-quality.md - 内容质量要求
-- [x] rules/official-docs.md - 官方文档核验规范
-- [x] rules/git-workflow.md - Git工作流程规范
-- [x] specs/learning-plan.md - 学习计划
-- [x] specs/article-template.md - 文章模板规范
-- [x] specs/version-strategy.md - 版本策略
-- [x] knowledge-base/cheatsheet.md - 速查表
-- [x] knowledge-base/glossary.md - 术语表
-- [x] tools/publish.sh - 发布脚本
-- [x] LICENSE - MIT许可证
-- [x] .gitignore - Git忽略文件
-- [x] articles/templates/ - 文章模板目录
-- [x] docs/ - 学习文档目录结构
-- [x] docs/reference-link-checks.md - 参考资料链接检查记录
-- [x] articles/ - 文章目录结构
+图例：✅ 已发布 ｜ 🟢 初稿完成·CI 通过·待发 ｜ 📄 综述/文档来源篇（无 CI 运行示例，经作者确认）
 
-### ✅ 已完成（基础设施）
-- [x] 初始化Git仓库
-- [x] 创建初始提交
-- [x] 创建GitHub仓库: https://github.com/rcrwhyg/learn-cangjie
-- [x] 创建贡献指南（CONTRIBUTING.md）
-- [x] 创建更新日志（CHANGELOG.md）
-- [x] 创建快速开始指南（QUICKSTART.md）
+### 阶段一 · 语言基础（1–15）— 全部 ✅
+| # | 标题 | 状态 |
+|---|---|---|
+| 1 | 仓颉编程语言简介与特性概览 | ✅ |
+| 2 | 开发环境搭建与 Hello World | ✅ |
+| 3 | 变量与数据类型 | ✅ |
+| 4 | 运算符与表达式 | ✅ |
+| 5 | 控制流语句 | ✅ |
+| 6 | 函数基础 | ✅ |
+| 7 | 结构类型 struct | ✅ |
+| 8 | 类类型 class | ✅ |
+| 9 | 接口、属性与子类型 | ✅ |
+| 10 | 枚举类型 enum | ✅ |
+| 11 | 模式匹配 | ✅ |
+| 12 | 数组、元组与区间 | ✅ |
+| 13 | 字符串与字符处理 | ✅ |
+| 14 | Collection 集合类型 | ✅ |
+| 15 | 包、模块与程序入口 | ✅ |
 
-### 🔄 进行中
-- [ ] 学习文档编写
-- [ ] 知识库完善
-- [x] 统一代码示例目录与文章同步机制
-- [ ] 第十二篇文章：仓颉数组、元组与区间（撰写中）
-- [ ] 第十三篇文章：仓颉字符串与字符处理（撰写中）
-- [ ] 第十四篇文章：仓颉 Collection 集合类型（撰写中）
-- [ ] 第十五篇文章：仓颉包、模块与程序入口（撰写中）
-- [x] 重构本地测试和GitHub Actions测试流程
+### 阶段二 · 核心语言特性（16–27）— 16–23 ✅，24–27 🟢
+| # | 标题 | 状态 |
+|---|---|---|
+| 16 | 函数类型、Lambda 与闭包 | ✅ |
+| 17 | 函数重载与操作符重载 | ✅ |
+| 18 | 泛型编程 | ✅ |
+| 19 | 扩展机制 | ✅ |
+| 20 | 错误处理与 Option | ✅ |
+| 21 | 资源管理 | ✅ |
+| 22 | 并发模型概述 | ✅ |
+| 23 | 线程与协程使用 | ✅ |
+| 24 | 同步与并发原语 | 🟢 |
+| 25 | 基础 I/O | 🟢 |
+| 26 | Socket 网络编程（TCP/UDP） | 🟢（HTTP/WS 属 stdx → 见 49） |
+| 27 | 宏与编译时元编程 | 🟢 |
 
-### ⏳ 待开始
-- [ ] 更多文章撰写
-- [ ] 工具开发
-- [ ] 社区建设
+### 阶段三 · 运行时·标准库·互操作·工具链（28–40）
+| # | 标题 | 状态 |
+|---|---|---|
+| 28 | 反射、注解与动态特性 | 🟢 |
+| 29 | 仓颉-C 互操作 | 🟢 |
+| 30 | 标准库总览与使用方法 | 🟢 |
+| 31 | 标准库数据结构（容器进阶/迭代器/Deque/算法） | 🟢 |
+| 32 | 标准库 I/O 与文本处理（编码/convert/regex/内存流） | 🟢 |
+| 33 | 标准库数学、时间与随机数 | 🟢（JSON 属 stdx → 见 49） |
+| 34 | 标准库系统能力（env/process/端序/POSIX） | 🟢（HTTP/WS 属 stdx → 见 49） |
+| 35 | cjc 编译器（流程/产物/参数/诊断/链接） | 🟢 |
+| 36 | cjpm 包管理器（init/toml/依赖/构建/运行） | 🟢 |
+| 37 | IDE 与语言服务（VS Code） | 📄 文档来源 |
+| 38 | 单元测试与覆盖率 | 🟢 |
+| 39 | 质量工具链 cjfmt/cjlint/cjdoc | 🟢（cjdoc 本机 SDK 未含，手册为准） |
+| 40 | 调试 cjdb / 性能 cjprof / 构建发布 | 📄 无运行示例（调试不支持 macOS、cjprof Linux-only） |
 
-## 学习计划进度
+### 阶段四 · 深入原理（41–47）
+| # | 标题 | 状态 |
+|---|---|---|
+| 41 | 类型系统（强类型/类型格/名义子类型/安全保证） | 🟢 |
+| 42 | 代数数据类型与模式匹配原理 | 🟢 |
+| 43 | const 函数与常量求值 | 🟢 |
+| 44 | 值/引用类型与内存管理 | 🟢 |
+| 45 | 并发模型与内存模型 | 🟢 |
+| 46 | 性能分析与优化 | 🟢 |
+| 47 | 语言演进与设计实践 | 📄 综述 |
 
-### 阶段一：语言基础（15/15篇已发布）
-- [x] 文章1: 仓颉编程语言简介与特性概览（已发布）
-- [x] 文章2: 开发环境搭建与Hello World（已发布）
-- [x] 文章3: 变量与数据类型（已发布）
-- [x] 文章4: 运算符与表达式（已发布）
-- [x] 文章5: 控制流语句（已发布）
-- [x] 文章6: 函数与闭包（已发布）
-- [x] 文章7: struct结构类型（已发布）
-- [x] 文章8: class类类型（已发布）
-- [x] 文章9: 接口、属性与子类型（已发布）
-- [x] 文章10: enum枚举类型（已发布）
-- [x] 文章11: 模式匹配（已发布）
-- [x] 文章12: 数组、元组与区间（已发布）
-- [x] 文章13: 字符串与字符处理（已发布）
-- [x] 文章14: Collection集合类型（已发布）
-- [x] 文章15: 包、模块与程序入口（已发布）
+### 阶段五 · 实战项目（48–52）
+| # | 标题 | 状态 |
+|---|---|---|
+| 48 | 命令行工具实战 | 🟢 |
+| 49 | Web 服务实战（stdx.net.http + stdx.encoding.json） | 🟢 **stdx，main CI 实跑** |
+| 50 | 并发应用实战 | 🟢 |
+| 51 | 跨语言项目实战 | 🟢 |
+| 52 | 综合项目与最佳实践（终章复盘） | 📄 综述 |
 
-### 阶段二：核心语言特性（文章 16-17 已发布，18-33 初稿 CI 通过待发布）
-- [x] 文章16: 函数类型、Lambda与闭包（已发布）
-- [x] 文章17: 函数重载与操作符重载（已发布）
-- [ ] 文章18: 泛型编程（初稿完成，CI 通过，等待发布审核）
-- [ ] 文章19: 扩展机制（初稿完成，CI 通过，等待发布审核）
-- [ ] 文章20: 错误处理与 Option（初稿完成，CI 通过，等待发布审核）
-- [ ] 文章21: 资源管理（初稿完成，CI 通过 + 修正多资源逆序输出，等待发布审核）
-- [ ] 文章22: 并发模型概述（初稿完成，CI 通过，等待发布审核）
-- [ ] 文章23: 线程与协程使用（初稿完成，CI 两次通过，等待发布审核）
-- [ ] 文章24: 同步与并发原语（初稿完成，CI 多次通过，等待发布审核）
-- [ ] 文章25: 基础 I/O（初稿完成，CI 通过含真实文件往返，等待发布审核）
-- [ ] 文章26: 网络编程（传输层 Socket，HTTP/WebSocket 拆出另篇）（初稿完成，CI 3 次匹配，等待发布审核）
-- [ ] 文章27: 宏与编译时元编程（初稿完成，CI 通过 cjpm build+run 宏展开输出，等待发布审核）
-- [ ] 文章28: 反射、注解与动态特性（初稿完成，CI(Linux) 通过 std.reflect 编译运行 + 标注 TypeInfo.of 弃用；基线锁定 1.0.5）
-- [ ] 文章29: 仓颉-C 互操作（初稿完成，CI 通过并修正 CString 长度 11→13）
-- [ ] 文章30: 标准库总览与使用方法（初稿完成，CI 通过，3 行输出匹配）
-- [ ] 文章31: 标准库数据结构（复盘补齐三容器进阶；CI 通过，11 行输出匹配）
-- [ ] 文章32: 标准库 I/O 与文本处理（编码/convert/regex/内存流；CI 5 行匹配）
-- [ ] 文章33: 标准库数学/时间/随机数（CI 通过；month 是枚举名由 CI 抓出并订正；JSON 属 stdx 不覆盖）
-- [ ] 文章34: 标准库系统能力（env/process/端序/POSIX；HTTP/WS 属 stdx 不覆盖；CI 通过——execute 签名与"子进程继承stdout"两处由 CI 抓出并订正）
-- [ ] 文章35: cjc 编译器（流程/产物/参数/诊断/链接/交叉编译；CI 通过——040 三行输出与预期逐行一致）
-- [ ] 文章36: cjpm 包管理器（init/toml/依赖/构建/运行；两包示例 041；CI 通过——Linux cjpm build+run 输出逐行一致；无 fetch 已纠正）
-- [ ] 文章37: IDE 与语言服务（VS Code 插件；**文档来源、无 CI 运行示例**，经作者确认；调试不支持 macOS / 静态检查仅 src 等边界如实摘出；7 工具链接 200）
-- [ ] 文章38: 单元测试与覆盖率（@Test/@TestCase/@Assert/@Expect/生命周期 + cjpm test + cjcov；CI 通过——042 cjpm test 3 用例全 PASSED、TOTAL:3；harness 新增 cjpm test 分支已生效）
-- [ ] 文章39: 质量工具链 cjfmt/cjlint/cjdoc（cjfmt/cjlint 本地实测、cjdoc 本机 SDK 未含标注未实测；CI 通过——043 输出 0C->32F/100C->212F 一致）
-- [ ] 文章40: cjdb/cjprof/构建产物/运行时/打包发布（cjdb=lldb15 内核实测、cjprof 本机未含 Linux-only；调试不支持 macOS；**无运行示例**、会话取自手册；无 cjpm publish）
-- [ ] 文章41: 仓颉类型系统（原理层：静态强类型/Any⊤-Nothing⊥/名义子类型/泛型不变/穷尽性/Option 不解包；as 返 Option、无 as?/无 out 关键字；struct 不进格子；**CI 通过**——044 输出 9 行逐行一致）
-- [ ] 文章42: 代数数据类型与模式匹配原理（和×积/Option 就是 enum/反演+穷尽/不可反驳性/unreachable 死分支/或模式/嵌套；**CI 通过**——045 输出 6 行逐行一致）
-- [ ] 文章43: const 函数与常量求值（两个求值域/const 上下文永远编译期/const 函数两种时机/三条铁律 var·非const调用·副作用/允许递归；throw 不支持作 const 实测；**CI 通过**——046 输出 5 行一致；runtimeSquares(4)=14 由 CI 抓出上界不含并订正）
-- [ ] 文章44: 值/引用类型与内存管理（struct 全量拷·class 共享·**Array 名值实引用**·**VArray 真值数组**·浅拷贝穿透·~init 时机不可靠·open class 禁终结器·std.runtime.gc·无借用系统；**CI 通过**——047 五行全命中：Array 确实别名、VArray 确实深拷）
-- [ ] 文章45: 并发模型与内存模型（1.0.5 **不公开内存序**、MemoryOrder 已弃用由 CI 抓出订正、无 std.concurrent/actor、CAS 名 compareAndSwap、CLQ add/remove；HB 三条；CI 通过——048 三行一致且无弃用告警）
-- [ ] 文章46: 性能分析与优化（方法论/少分配四招实测 Array 预分配·VArray 索引·StringBuilder·objectpool；参数归 35、测量归 40；**CI 通过**——049 三行一致且去净警告）
-- [ ] 文章47: 语言演进与设计实践（**阶段四收官·综述/实践篇、无运行示例**，同 37；事实全回指 41–46 实测、观点标注；含工程清单+版本策略；阶段四 41–47 全部完成）
-- [x] 文章48: 命令行工具实战（cjpm 工程 050：分层 wc 工具/手写 argopt 撞名诚实处理/Rune 字面量与 struct 位置构造与 match-block 坑实测；**CI 通过**——050 build+run(usage,exit0)+test 5 用例全 PASSED）
-- [ ] 文章18: 泛型编程
-- [ ] 文章19: 扩展机制
-- [ ] 文章20: 错误处理与Option
-- [ ] 文章21: 资源管理
-- [ ] 文章22: 并发模型概述
-- [ ] 文章23: 线程与协程使用
-- [ ] 文章24: 同步与并发原语
-- [ ] 文章25: 基础I/O
-- [ ] 文章26: 网络编程
-- [ ] 文章27: 宏与编译时元编程
+## 基础设施
 
-### 阶段三：运行时、标准库、互操作与工具链（28-40，13 篇）
-> 编号以 `specs/learning-plan.md`（52 篇版）为准；34 的 Socket 并入文章 26、HTTP/WebSocket 属 stdx 另立。
-- [ ] 文章28: 反射、注解与动态特性
-- [ ] 文章29: 仓颉-C 互操作
-- [ ] 文章30: 标准库总览与使用方法
-- [ ] 文章31: 标准库数据结构
-- [ ] 文章32: 标准库基础 I/O 与文本处理
-- [ ] 文章33: 标准库数学、时间与随机数（JSON 属 stdx 未覆盖）
-- [ ] 文章34: 标准库系统能力（进程/环境；Socket 见 26、HTTP/WS 属 stdx）
-- [ ] 文章35: cjc 编译器
-- [ ] 文章36: cjpm 包管理器
-- [ ] 文章37: IDE 与语言服务
-- [ ] 文章38: 单元测试与覆盖率
-- [ ] 文章39: 代码格式化、静态检查与文档（cjfmt/cjlint/cjdoc）
-- [ ] 文章40: 调试、性能、构建与部署工具（cjdb/cjprof）
+- [x] `README.md` / `AGENT.md` / `CONTRIBUTING.md` / `QUICKSTART.md` / `CHANGELOG.md`
+- [x] `rules/`（content-quality / official-docs / git-workflow）
+- [x] `specs/`（learning-plan 52 篇 / article-template / version-strategy）
+- [x] `knowledge-base/`（cheatsheet / glossary）
+- [x] `docs/`（article-reviews / reference-link-checks）
+- [x] `.github/workflows/code-examples-test.yml`（主 CI：sync + test-local）
+- [x] `.github/workflows/stdx-web-test.yml`（stdx CI：源码构建 stdx + 跑 HTTP/JSON）
+- [x] `tools/test-local.sh`、`tools/publish.sh`、`.github/scripts/sync_examples.py`
+- [x] LICENSE (MIT) / `.gitignore`（含 `target/`）
 
-### 阶段四：深入原理（41-47，7 篇）
-- [ ] 文章41: 仓颉类型系统
-- [ ] 文章42: 代数数据类型与模式匹配原理
-- [ ] 文章43: const 函数与常量求值
-- [ ] 文章44: 值类型、引用类型与内存管理
-- [ ] 文章45: 并发模型与内存模型
-- [ ] 文章46: 性能分析与优化
-- [ ] 文章47: 仓颉语言演进与设计实践
+## CI 与质量门禁（三道）
 
-### 阶段五：实战项目（48-52，5 篇）
-- [ ] 文章48: 命令行工具实战
-- [ ] 文章49: Web 服务实战
-- [ ] 文章50: 并发应用实战
-- [ ] 文章51: 跨语言项目实战
-- [ ] 文章52: 综合项目与最佳实践
+1. **一致性**：`sync_examples.py` —— 每个 `<!-- example: 路径 -->` 绑定唯一真源文件，双向校验"文件被引用 + 文内块与文件逐字节一致"（当前 60/60）。
+2. **编译/运行**：`test-local.sh`（本地 macOS staticlib + `[SKIP-DARWIN]`；Linux CI 编译并运行）；`test_cangjie_projects` 对 cjpm 工程跑 `cjpm build`/`run`/（含 `*_test.cj` 则）`test`。
+3. **平台真相**：本机 macOS SDK 残缺（不能链接 std 可执行、缺 `std.reflect`/`stdx`/`cjdoc`），故运行事实以 **Linux CI** 为准。
 
+## 已知平台事实与诚实边界（全系列实测汇总）
 
-## 质量指标
+- **工具链缺口**：`cjpm` 无 `fetch`（拉依赖=`cjpm check`）、无 `publish`；1.0.5 base SDK **无 `std.json`**（JSON 在 `stdx.encoding.json`）、无 `std.concurrent`/`Channel`、无 `actor` 关键字；`unittest` 断言是宏 `@Expect`/`@Assert`（非 `assertEquals`）；`as` 返回 `Option`（**无 `as?`**）；泛型**不变**、无声明点变体关键字；**`MemoryOrder` 已弃用、内存序不进公开 API**；原子只有默认最强强度。
+- **语义坑（均实测）**：`Array` 名义 struct 实为共享 backing（`VArray` 才值拷贝）；`String.size` 是码点；`1..n` 上界不含；`match` 少支=`non-exhaustive`、多余 `_`=死分支告警；Rune 字面量 `r'\n'`；`struct` 构造位置参数；`match` 分支 `=>{}` 会被当 lambda；`throw` 暂不作 const 表达式。
+- **stdx**：`stdx.net.http`（HTTP）+ `stdx.encoding.json`（`JsonValue`）已在 main CI 实跑（源码 `build.py` 构建 + `NO_ASPECTCJ=1` 绕开 cjnative 缺 `include/` 的 aspectCJ + OpenSSL3）；`DataModel`/serialization、WebSocket、TLS、argopt 宏、C 回调函数指针类型**未验证 → 不硬编**。
 
-### 内容质量
-- **技术准确性**: 待评估
-- **代码可运行性**: 5个仓颉示例已通过本地编译检查
-- **原创性**: 待评估
-- **实用性**: 待评估
+## 风险与维护
 
-### 读者反馈
-- **阅读量**: 待统计
-- **点赞数**: 待统计
-- **评论数**: 待统计
-- **分享数**: 待统计
-
-## 近期计划
-
-### 本周目标
-1. ✅ 完成Git仓库初始化
-2. ✅ 创建GitHub仓库
-3. ✅ 完成第一篇文章初稿
-4. ✅ 完成文章 5「控制流」与文章 6「函数基础」
-5. ✅ 扩展学习计划为 52 篇（覆盖矩阵 + 阶段门禁）
-6. ✅ 文章 6 完成本地静态库编译、参考资料访问核验与语义核验
-
-### 下周目标
-1. 完成文章 12「数组、元组与区间」审核与发布
-2. 推进文章 13「字符串与字符处理」
-3. 完善知识库内容
-
-### 本月目标
-1. 完成阶段一前3篇文章
-2. 建立稳定的写作流程
-3. 收集读者反馈
-
-## 问题与风险
-
-### 当前问题
-- macOS 上仓颉 1.0.5 native runtime 与最新 macOS SDK 的链接兼容性仍需在 Windows/Linux 环境验证
-
-### 潜在风险
-- **版本更新**: 仓颉版本更新可能导致内容过时
-- **技术准确性**: 需要确保技术内容准确无误
-- **时间投入**: 需要持续投入时间完成学习计划
-
-### 应对措施
-- **版本管理**: 使用LTS版本，定期检查版本兼容性
-- **质量保证**: 严格遵循内容质量要求，多轮审核
-- **时间管理**: 制定合理的学习计划，保持持续输出
-
-## 更新日志
-
-### 2024-01-XX
-- 完成项目基础设施建设
-- 创建所有必要的文档和目录
-- 制定学习计划和版本策略
-- 创建GitHub仓库并推送代码
-- 添加贡献指南、更新日志和快速开始指南
+- **版本更新**：锁 1.0.5 LTS；升版前重跑 `test-local` + 两道 CI + 复核每篇"版本信息"，弃用告警清零再发。
+- **stdx 脆弱性**：stdx workflow 标 `continue-on-error`（源码构建受工具链/OpenSSL 影响，不阻塞主门禁）。
+- **技术准确性**：每篇经 `cjc` 本地实测 + Linux CI 运行核对 + 官方链接核验，未验证者如实标注。
 
 ---
 
-### 2026-08-22
-- 完成文章 6「仓颉函数基础」撰写与本地静态库编译校验
-- 依据 `rules/official-docs.md` 完成 3 个官方 1.0.5 链接实际访问检查
-- 新增 `docs/article-reviews.md` 记录文章 6 审核结论（含 cjc 语义核验）
-- 修复文章 6 中 2 处措辞不准确问题（嵌套函数定义位置、Go 命名返回值）
-
----
-
-
-### 2026-08-22（续）
-- 完成文章 7「仓颉结构类型 struct」初稿与 `examples/cangjie/011-struct.cj`
-- 同步检查 11/11 通过；本地静态库编译 11/11 通过
-- 4 个官方 1.0.5 struct 章节链接已完成实际访问核验
-- 修复文章 7 中 1 处语义错误（Q7 关于 `mut` 与 `let` 成员变量）
-
-
-### 2026-08-23
-- 完成文章 8「仓颉类类型 class」初稿与 `examples/cangjie/012-class.cj`
-- 同步检查 12/12 通过；本地静态库编译 12/12 通过
-- 4 个官方 1.0.5 class_and_interface 链接完成实际访问核验
-
-
-### 2026-08-23（续）
-- 完成文章 9「仓颉接口、属性与子类型」初稿与 `examples/cangjie/013-interface.cj`
-- 同步检查 13/13 通过；本地静态库编译 13/13 通过
-- 4 个官方 1.0.5 class_and_interface 链接完成实际访问核验
-
-
-### 2026-08-23（续 2）
-- 完成文章 10「仓颉枚举类型 enum」初稿与 `examples/cangjie/014-enum.cj`
-- 同步检查 14/14 通过；本地静态库编译 14/14 通过
-- 4 个官方 1.0.5 enum_and_pattern_match 链接完成实际访问核验
-
-
-### 2026-08-23（续 3）
-- 完成文章 11「仓颉模式匹配」初稿与 `examples/cangjie/015-pattern.cj`
-- 同步检查 15/15 通过；本地静态库编译 15/15 通过
-- 4 个官方 1.0.5 enum_and_pattern_match 链接完成实际访问核验
-
-### 2026-08-23（续 4）
-- 完成文章 12「仓颉数组、元组与区间」初稿与 `examples/cangjie/016-array-tuple-range.cj`
-- 同步检查 16/16 通过；本地静态库编译 16/16 通过
-- 3 个官方 1.0.5 basic_data_type 链接（array / tuple / range）完成实际访问核验
-
-
-### 2026-08-23（续 5）
-- 完成文章 13「仓颉字符串与字符处理」初稿与 `examples/cangjie/017-strings-and-characters.cj`
-- 同步检查 17/17 通过；本地静态库编译 17/17 通过
-- 2 个官方 1.0.5 basic_data_type 链接（strings / characters）完成实际访问核验
-
-
-### 2026-08-23（续 6）
-- 完成文章 14「仓颉 Collection 集合类型」初稿与 `examples/cangjie/018-collection.cj`
-- 同步检查 18/18 通过；本地静态库编译 18/18 通过
-- 在线 dev-guide 暂未提供 std.collection 完整 API 页面，1.0.5 文档索引根链接（200 OK）作为唯一参考入口
-- 验证：ArrayList/HashSet/HashMap 关键 API（构造器、add/remove/contains、| & - 运算、keys/values、sort 全局函数）全部通过 cjc 编译
-
-
-### 2026-08-23（续 7）
-- 补充文章 14 官方参考链接：用户提示 cangjie-lang.cn 域名（无 docs. 前缀）+ /docs?url=/1.0.5/libs/... 路径后，6 个 std.collection 链接全部 200 OK
-- 更新 reference-link-checks、article-reviews，修正"文档缺失"说明为真实 URL
-- 文章 14 "关于文档来源"提示和"参考资料"小节已同步补充 5 个 std.collection 详细页
-
-
-### 2026-08-23（续 8）
-- 完成文章 15「仓颉包、模块与程序入口」初稿与 `examples/cangjie/019-package-module-entry.cj`
-- 同步检查 19/19 通过；本地静态库编译 19/19 通过
-- 6 个官方 1.0.5 dev-guide 链接（package_overview / import / toplevel_access / entry / program_structure / hello_world）完成实际访问核验
-- 阶段一（语言基础 15 篇）全部完成 🎉
-
-### 2026-08-25
-- 阶段一已发布文章数量更新为 8 篇（文章 1 至文章 8）
-- 文章 1 至文章 6 已确认发布
-- 文章 7《仓颉结构类型 struct》已完成用户审核并发布
-- 文章 8《仓颉类类型 class》已完成用户审核并发布
-
-### 2026-08-30
-- 文章 13/14/15 完成逐条官方文档核验与修订并推送（13 修正 `.size` 为码点数语义；14 修正 `HashMap[]` 缺键抛异常与 `ArrayList.retain` 误述；15 修正 package 默认修饰符表与 cjpm.toml 最小结构）
-- 完成文章 16《仓颉函数类型、Lambda 与闭包》初稿，配套 `examples/cangjie/021-functions-lambda-closure.cj`
-- 依据官方 `function` 章节（函数类型/嵌套函数/Lambda/闭包/调用语法糖）逐条核验，负例（重载名歧义、混写类型参数名、捕获 var 闭包不可作一等公民、命名参数变长、lambda 声明返回类型）均以 cjc 实测报错确认
-- 按用户决定：函数重载与操作符重载从文章 16 拆出，独立成专题篇
-- 文章 16 CI(Linux) 真实运行输出与正文预期输出逐行匹配（`gh run view --log` 抽样确认）
-- 完成文章 17《仓颉函数重载与操作符重载》初稿与 `examples/cangjie/022-overloading.cj`
-- 学习计划由 52 篇扩为 53 篇，Stage 2+ 全部编号 +1 平移（覆盖矩阵、汇总、状态表同步更新）
-- 文章 17《函数重载与操作符重载》完成 CI(Linux) 真实运行验证，输出与正文预期一致
-- 完成文章 18《仓颉泛型编程》初稿与 `examples/cangjie/023-generics.cj`，依据官方 generic 全部 9 个章节（overview/function/interface/class/struct/enum/subtype/typealias/constraint）逐条核验；负例（静态成员引用类型形参、`I<D><:I<C>` 违反不型变、多 class 上界不同链、别名循环引用、别名类型转换、泛型别名带 where）均以 cjc 实测报错确认
-- 文章 18 CI(Linux) 真实运行输出与正文预期逐行匹配（gh run view --log 抽样确认 13 行）
-- 完成文章 19《仓颉扩展机制》初稿与 `examples/cangjie/024-extension.cj`，依据官方 extension 全部 4 个章节（overview/direct/interface/access_rules）逐条核验；10 条负例（成员变量、`public extend`、`open` 修饰、private 访问、遮盖、`super`、扩展 interface、未实例化泛型、未用类型形参、约束不满足）均以 cjc 实测报错确认
-- 文章 19 CI(Linux) 真实运行输出与正文预期逐行匹配（7 行 shout/lenSq/v3/scaled/pair equals/counter 全部一致）
-- 完成文章 20《仓颉错误处理与 Option》初稿与 `examples/cangjie/025-error-option.cj`，依据官方 error_handle 全 4 页 + Option 类型页逐条核验；SDK 实测确认 1.0.5 **不存在** `Result<T,E>`（`Result`/`Ok` 未定义）
-- 文章 20 CI(Linux) 真实运行 19 行输出与正文预期逐行匹配
-- 完成文章 21《仓颉资源管理》初稿与 `examples/cangjie/026-resource-management.cj`；终结器 12 条限制以 class.html 为准，其中规则 1/2/4 通过 cjc 实测报错确认（open 类禁止终结器、不能显式调用、不能定义在扩展中、不能有修饰符），未承诺的多资源关闭顺序与不确定的终结器时机在正文与示例中做了诚实标注
-- 文章 21 CI(Linux) 运行确认多资源为逆序(LIFO)关闭，据此修正正文"预期输出"并保留"勿依赖顺序"警示
-- 完成文章 22《仓颉并发模型概述》初稿与 `examples/cangjie/027-concurrency-overview.cj`；依据 concurrency_overview/create_thread/use_thread 三页；`Future.get()` 阻塞语义经官方 use_thread + SDK 探针双重确认；`std.concurrent` 不存在（属 core）已实测
-- 文章 22 CI(Linux) 运行 2 行输出与正文逐行匹配
-- 完成文章 23《仓颉线程与协程使用》初稿与 `examples/cangjie/028-thread-usage.cj`；依据 create_thread/use_thread/terminal_thread/sleep 四页；Future.get/get(timeout)/tryGet、Thread、cancel+hasPendingCancellation、sleep(Duration) 全部 SDK 探针确认，并用 SyncCounter 门控 + 超时窗把并发示例做成完全确定输出
-
-
-*本状态文档将定期更新，反映项目最新进展*
-
-### 2026-08-31（版本决策）
-- 核实：本地 macOS 26.5.2 的 1.0.5 SDK 缺 `std.reflect.cjo` + native runtime 链接失败，属本地环境残缺；同版本 Linux CI 有 std.reflect 且能编译运行
-- 决定：**教学基线锁定 1.0.5 LTS，不切 STS**（详见 specs/version-strategy.md「版本决策记录」）；已发布/初稿文章无需返工
-- 手段：test-local.sh 的 [SKIP-DARWIN] 消化本地残缺；Linux CI 为运行事实来源
-
-### 2026-08-31（学习计划调整：删除并不存在的 Python 互操作篇）
-- 用户核实：1.0.5 官方 FFI 章**只有 C 互操作**、base SDK 无 std.python、且无对应 stdx 官方包——原计划的"仓颉-Python 互操作"系**虚构任务**，予以删除。
-- 学习计划由 53 篇 → 52 篇；阶段三末尾与阶段四、五全部编号 -1；跨语言实战篇改为"C 互操作"；覆盖矩阵同步修正。
-- 下一篇文章：文章 30《标准库总览与使用方法》。
+*本状态文档定期更新；变更历史见 `CHANGELOG.md`。*

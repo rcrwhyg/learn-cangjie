@@ -1690,3 +1690,17 @@
 **引用可回指**：§4 语言事实全部回指 41–45 实测（无隐式转换/穷尽/Option/Array 名值实引用/SeqCst-only/无 Channel-actor）；§9 复盘表逐条给"篇号 + 教训"；§3 stdx 无 ABI 兼容承诺、`--enable-borrows` 实验项均承实测。无新 API 主张、无需新实测。
 
 **状态**：✅ 终章完成。全 52 篇规划（README/AGENT 治理 + 阶段一~五）至此收官。
+
+
+---
+
+## 文章 49 增补《stdx.encoding.json 子示例 054》核验（审计轮）
+
+**背景**：应用户"对 stdx 受影响文章做 CI 验证"要求，借已打通的 stdx-on-CI 流水线补验 `stdx.encoding.json`。
+
+**本地无法验（无 stdx）→ 全部经 CI**：从 stdx 源码仓 v1.0.5 的 doc（`json_value_sample.md`/classes）取确证 API：`JsonValue.fromStr`、`.toString()`、`JsonInt(n).toString()`、`jv as JsonArray`→`Option`、`arr.size()/get(i)`。
+- 首版 054：`##"[1,2,3,true,\"cj"]"##` → 编译过但 **运行抛 `JsonException`**（raw 串里反斜杠是字面量、JSON 非法）——CI 抓出。改 `##"[1,2,3,true,"cj"]"##`（内层引号不转义）后 **CI 实跑**：`roundtrip=[1,2,3,true,"cj"]` / `made=7` / `size=5`。
+- 刻意只用数组/标量（顺序确定），不依赖 object(HashMap) 键序，保 CI 可复现。
+
+**未验证不硬编**：`DataModel`/`stdx.serialization` 反射式序列化仍只给方向。
+**状态**：✅ 054 JSON 经 main CI 实跑；文章49 §6 已更新为真实 API + 输出 + 该 raw 串坑。

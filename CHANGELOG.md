@@ -12,7 +12,10 @@
 ## [未发布]
 
 ### 发布进度（2026-08-31）
-- 公众号已发布至**文章 17**（阶段一 1-15 + 阶段二 16-17 全部发布）
+- 公众号已发布至**文章 23**（阶段一 1-15 + 阶段二 16-23 全部发布）
+- **52 篇全部成稿**：阶段三 28-40、阶段四 41-47、阶段五 48-52 均初稿完成并 CI 核验（37/40/47/52 为综述/文档来源、无运行示例）；24-52 为待发草稿
+- **文章 49 扩展为 HTTP+JSON 并在 main CI 实跑**：新增 `examples/cangjie-stdx/054-json/`（`stdx.encoding.json` 的 `JsonValue.fromStr/toString/JsonInt/JsonArray`），`stdx-web-test.yml` 同时跑 HTTP(`Hello Cangjie!`)与 JSON(`roundtrip`/`made=7`/`size=5`)；CI 抓到并修正 raw 串 `"` 转义导致 fromStr 运行时抛 JsonException
+- **全面审计收尾**：修正 26/30/33/34 里"HTTP/JSON 留待后续 stdx 专题"的旧前向引用→指向已交付的文章49；文章30 库文档入口裸目录404→改 `?url=` API 页；115 条外链全查（唯一真 404 已修）；代码围栏/内部 16 引用/结构小节/H1 全通过；STATUS.md 去重重写（清除中途 changelog 副本与陈旧目标段）
 
 ### 新增
 - 文章 1 至文章 8 已发布，覆盖仓颉语言基础阶段前 8 篇文章
