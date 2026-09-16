@@ -1,6 +1,6 @@
 # 仓颉标准库：系统能力（环境 / 进程 / 端序 / POSIX）
 
-> **摘要**: 承接文章 26 的传输层 Socket，本篇覆盖"程序与操作系统交互"这一层——`std.env`（进程号、家目录、命令行参数、环境变量、标准流）、`std.process`（`execute` 跑外部命令拿退出码、`SubProcess` 起子进程读写管道）、`std.binary`（大/小端序读写扩展）、`std.posix`（POSIX 常量与系统调用封装）。**注意**：HTTP/WebSocket 属 `stdx.net`（同前面拆解的 `stdx` 系），本篇**不覆盖**、留给"stdx 网络专题"；`std.binary`/`std.posix` 的完整签名以官方库 API 为准，本文只写本地/CI 实测过的部分。示例聚焦 `std.env` + `std.process`，输出完全确定。
+> **摘要**: 承接文章 26 的传输层 Socket，本篇覆盖"程序与操作系统交互"这一层——`std.env`（进程号、家目录、命令行参数、环境变量、标准流）、`std.process`（`execute` 跑外部命令拿退出码、`SubProcess` 起子进程读写管道）、`std.binary`（大/小端序读写扩展）、`std.posix`（POSIX 常量与系统调用封装）。**注意**：HTTP/WebSocket 属 `stdx.net`（**文章 49 已用 stdx.net.http 在 CI 实跑**），本篇**不覆盖**；`std.binary`/`std.posix` 的完整签名以官方库 API 为准，本文只写本地/CI 实测过的部分。示例聚焦 `std.env` + `std.process`，输出完全确定。
 
 ## 前置知识
 
@@ -8,7 +8,7 @@
 - 已完成《包、模块与程序入口》（`main(args: Array<String>)`）、《Socket 网络编程》（文章 26）、《标准库总览》（文章 30）
 - 了解"进程 / 环境变量 / 退出码 / 字节序"等系统概念
 
-> 定位：这是阶段三"标准库网络与系统能力"的落地。网络层已分两篇——传输层 Socket（26）、应用层 HTTP/WebSocket（属 stdx，另立）；本篇补齐**系统能力**（env/process/binary/posix）。
+> 定位：这是阶段三"标准库网络与系统能力"的落地。网络层已分两篇——传输层 Socket（26）、应用层 HTTP/JSON（属 stdx，见 **49**、已 CI 实跑）；本篇补齐**系统能力**（env/process/binary/posix）。
 
 ## 1. `std.env`：环境与进程信息
 
@@ -155,7 +155,7 @@ process: execute(echo) exit=0
 
 ### Q7: HTTP/WebSocket 在哪篇？
 
-**属 `stdx.net`**，与本文的 `std.net` Socket（文章 26）不是一个包；需 `cjpm` 下载。本系列把 HTTP/WebSocket 拆到"stdx 网络专题"，本篇只覆盖 base SDK。
+**属 `stdx.net`**，与本文的 `std.net` Socket（文章 26）不是一个包；需 `cjpm` 下载。HTTP/WebSocket 属 `stdx.net`，见**文章 49**（已 CI 实跑 stdx.net.http + encoding.json）；本篇只覆盖 base SDK。
 
 ## 8. 总结
 

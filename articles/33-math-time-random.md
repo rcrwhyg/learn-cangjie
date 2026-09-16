@@ -1,6 +1,6 @@
 # 仓颉标准库：数学、时间与随机数
 
-> **摘要**: 本文按"标准库补全"的目标，覆盖 `std.math`（幂/开方/三角/对数等浮点函数）、`std.time`（`Duration` 时间算术与单位换算、`DateTime` 日期时刻构造与字段访问）、`std.random`（`Random` 伪随机数发生器，同种子→同序列，可复现）。**注意**：1.0.5 base SDK **没有** `std.json`——**JSON/序列化属 stdx 扩展包**（同 HTTP/WebSocket 一样需另装），本篇**不覆盖**该主题，留待"stdx 专题"。本文所有 API 均经 1.0.5 SDK `cjc` 本地实测确认真实存在，示例输出完全确定。
+> **摘要**: 本文按"标准库补全"的目标，覆盖 `std.math`（幂/开方/三角/对数等浮点函数）、`std.time`（`Duration` 时间算术与单位换算、`DateTime` 日期时刻构造与字段访问）、`std.random`（`Random` 伪随机数发生器，同种子→同序列，可复现）。**注意**：1.0.5 base SDK **没有** `std.json`——**JSON/序列化属 `stdx.encoding.json` 扩展包**（同 HTTP 一样需另装），本篇**不覆盖**——但 **`stdx.encoding.json` 的 `JsonValue` 用法已在文章 49 于 CI 实跑**。本文所有 API 均经 1.0.5 SDK `cjc` 本地实测确认真实存在，示例输出完全确定。
 
 ## 前置知识
 
@@ -166,7 +166,7 @@ random: same_seed_eq=true
 
 ### Q6: 仓颉有内置 JSON 吗？
 
-1.0.5 **base SDK 没有** `std.json`；JSON/序列化属 stdx 扩展（需 `cjpm` 下载、配依赖），与 HTTP/WebSocket 同类。本篇按"只写可验证部分"原则不展开，留给 stdx 专题。
+1.0.5 **base SDK 没有** `std.json`；JSON/序列化属 `stdx.encoding.json`（需 `cjpm` 下载/构建、配依赖），与 HTTP 同类。本篇按"只写可验证部分"不展开——**JSON 的 `JsonValue.fromStr/toString` 已在文章 49 于 CI 实跑**（自定义类型的 DataModel 序列化仍以 stdx 手册为准）。
 
 ### Q7: π 到底怎么取？
 
@@ -177,7 +177,7 @@ random: same_seed_eq=true
 1. `std.math`：`pow`/`sqrt`/`atan2`/三角/对数/取整等；`Float64` 打印 6 位小数、有浮点误差→等值判定用可整除组合；π/e 常量名本文未臆造。
 2. `std.time`：`Duration`（单位常量 + 算术 + `toMilliseconds/toSeconds`）；`DateTime`（`UnixEpoch` + `addXxx` + `year/month/dayOfMonth`，无 `day`）；教程别用当前时刻、用 epoch 派生保持确定。
 3. `std.random`：`Random(seed)` 同种子→同序列可复现；无参则每次不同。
-4. 三块均在 1.0.5 base SDK、本地编译 + CI 可运行；**JSON/序列化属 stdx，本篇不覆盖**。
+4. 三块均在 1.0.5 base SDK、本地编译 + CI 可运行；**JSON/序列化属 `stdx.encoding.json`，见文章 49（已 CI 实跑）**。
 
 ## 参考资料
 

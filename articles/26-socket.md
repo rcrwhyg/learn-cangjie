@@ -1,6 +1,6 @@
 # 仓颉 Socket 网络编程（TCP 与 UDP）
 
-> **摘要**: 仓颉用 `std.net` 提供传输层网络编程，把可靠/不可靠传输分别抽象为 `StreamSocket`（典型 TCP）与 `DatagramSocket`（典型 UDP），具体类型有 `TcpSocket`/`TcpServerSocket`/`UdpSocket`。要点：服务端**先 bind 再 accept**、客户端**指定远端再 connect**；UDP 无需区分端、`sendTo`/`receiveFrom` 收发数据报；仓颉网络是**阻塞式**，但阻塞的是**仓颉线程**而非系统线程。本文依据仓颉 1.0.5 LTS 官方 `Net` 概述与 Socket 页，用一个**本机回环、输出确定**的示例跑通 TCP 回显与 UDP 收发。HTTP 与 WebSocket 属 `stdx.net` 包（需另行安装），**留待后续专题**。
+> **摘要**: 仓颉用 `std.net` 提供传输层网络编程，把可靠/不可靠传输分别抽象为 `StreamSocket`（典型 TCP）与 `DatagramSocket`（典型 UDP），具体类型有 `TcpSocket`/`TcpServerSocket`/`UdpSocket`。要点：服务端**先 bind 再 accept**、客户端**指定远端再 connect**；UDP 无需区分端、`sendTo`/`receiveFrom` 收发数据报；仓颉网络是**阻塞式**，但阻塞的是**仓颉线程**而非系统线程。本文依据仓颉 1.0.5 LTS 官方 `Net` 概述与 Socket 页，用一个**本机回环、输出确定**的示例跑通 TCP 回显与 UDP 收发。HTTP 与 WebSocket 属 `stdx.net` 包（需另行安装），**已在文章 49 用 `stdx.net.http` + `stdx.encoding.json` 在 CI 实跑**。
 
 ## 前置知识
 
@@ -8,7 +8,7 @@
 - 已完成《基础 I/O》（流、`read`/`write`/`flush`、`Resource`/try-with-resources）与《线程与协程使用》（`spawn`/`Future`/`sleep`）
 - 了解 TCP/UDP、IP 地址与端口的基本概念
 
-> 范围说明：官方 `Net` 章含 Socket、HTTP、WebSocket 三块。HTTP/WebSocket 依赖 `stdx.net`（官方明确"net、log 等库已从 SDK 移到 stdx，需下载包并在 `cjpm.toml` 配置"），**本环境与本篇不做编译验证**，故本篇只覆盖 **`std.net` 传输层 Socket**；HTTP/WebSocket 将单列一篇。
+> 范围说明：官方 `Net` 章含 Socket、HTTP、WebSocket 三块。HTTP/WebSocket 依赖 `stdx.net`（官方明确"net、log 等库已从 SDK 移到 stdx，需下载包并在 `cjpm.toml` 配置"），**本环境与本篇不做编译验证**，故本篇只覆盖 **`std.net` 传输层 Socket**；HTTP（含 JSON）已在 **文章 49** 单列并 CI 实跑（WebSocket 同属 stdx.net.http，49 未展开、以手册为准）。
 
 ## 1. 传输层抽象：StreamSocket 与 DatagramSocket
 
@@ -232,7 +232,7 @@ TCP 是字节流、不保留消息边界，一次 `read` 可能只返回部分�
 
 ### Q5: 本篇怎么没有 HTTP / WebSocket？
 
-官方把它们放在 `stdx.net`（已从 SDK 拆出，需 `cjpm` 下载并在 `cjpm.toml` 配置）。本环境未安装该包，为遵守"示例必须编译运行验证"的规矩，本篇只做 `std.net` 传输层，HTTP/WebSocket 另起一篇。
+官方把它们放在 `stdx.net`（已从 SDK 拆出，需 `cjpm` 下载并在 `cjpm.toml` 配置）。当时本环境未接入该包，为遵守"示例必须编译运行验证"的规矩，本篇只做 `std.net` 传输层；HTTP/JSON 见**文章 49**（现已在 CI 实跑 stdx）。
 
 ### Q6: 用完套接字要关吗？
 
@@ -245,7 +245,7 @@ TCP 是字节流、不保留消息边界，一次 `read` 可能只返回部分�
 3. UDP：两端都是 `UdpSocket`，`bind`+`sendTo`/`receiveFrom`；**数据报有边界但不保证可靠**。
 4. `bindAt: 0` 让系统分配临时端口，配 `localAddress` 读回——本机/CI 首选；地址用 `IPSocketAddress`。
 5. 网络 I/O **阻塞的是仓颉线程**（M:N 下让渡系统线程）；套接字实现 `Resource`，用 try-with-resources 关闭。
-6. HTTP/WebSocket 属 `stdx.net`，另起专题。
+6. HTTP/WebSocket 属 `stdx.net`——HTTP/JSON 见**文章 49**（已 CI 实跑 stdx.net.http + encoding.json）。
 
 ## 参考资料
 

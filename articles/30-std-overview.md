@@ -20,7 +20,7 @@
 
 - **`core` 隐式导入**：`main.cj` 里不写 import 也能 `println("...")` 与用 `Array`——编译器自动引入 `core` 里所有 `public` 声明（见《包、模块与程序入口》）。
 - **`std.*` 按需引**：容器、数学、并发、文件等按需 `import`，避免污染。
-- **`stdx.*` 可选装**：把体量较大或迭代较快的能力（如 HTTP/WebSocket）从 base SDK 剥离，随 stdx 独立发行，用 `cjpm` 拉取。
+- **`stdx.*` 可选装**：把体量较大或迭代较快的能力（如 HTTP/WebSocket、JSON）从 base SDK 剥离，随 stdx 独立发行、用 `cjpm` 拉取（**文章 49 已实测 stdx.net.http + encoding.json 在 CI 跑通**，含 `build.py` 源码构建 + OpenSSL3 + `NO_ASPECTCJ`）。
 
 > **💡 判断依据**：如果 `import std.reflect` 之类突然"找不到包"，**先分清是包真不存在、还是你本机 SDK 装得不全**。1.0.5 官方 base SDK 的 std 里其实**有** `std.reflect`（在 CI 里我们实测过），只是有些开发机（如新版 macOS）会拿到残缺包。这种"环境差异"应通过**升级到完整官方 SDK**、或**以 Linux CI 为准**来解决，而不是怀疑语言本身。
 
@@ -189,7 +189,7 @@ sync: count=10
 ### Q3: `std.net` 和 `stdx.net` 到底哪个是 HTTP？
 
 - **`std.net`**（base SDK）：**传输层 Socket**——`TcpSocket`/`UdpSocket`/`TcpServerSocket`。
-- **`stdx.net`**（需 `cjpm` 下载）：**HTTP/WebSocket**——`ServerBuilder`/`ClientBuilder`。
+- **`stdx.net`**（需 `cjpm` 下载）：**HTTP/WebSocket**——`ServerBuilder`/`ClientBuilder`（**文章 49 已 CI 实跑**）。
 
 同理，`std.reflect`（反射）在 base SDK，但个别 macOS 发行包会缺失——以 CI 或重新装完整 SDK 为准。
 
