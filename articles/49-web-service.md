@@ -1,4 +1,4 @@
-# 仓颉 Web 服务实战：用 stdx.net.http 起 HTTP 服务（CI 实跑验证）
+# 仓颉 Web 服务实战：用 stdx.net.http + stdx.encoding.json（CI 实跑验证）
 
 > **摘要**: 阶段五第二篇实战，也是全系列**第一篇真正跑通 stdx 扩展库**的文章。前面 26 篇用 base `std.net` 写裸 TCP；HTTP 这一层在仓颉里属于**扩展标准库 `stdx`**（`stdx.net.http`）——**不在 SDK 里、要单独获取**。本篇给出：① `stdx.net.http` 起服务 + 发请求的**完整可运行示例**，② `cjpm.toml` 如何用 `bin-dependencies.path-option` 挂上 stdx 二进制，③ `net` 依赖 **OpenSSL 3** 的运行时要求，④ 我们在 Linux CI 上**从源码构建 stdx 并真跑**（客户端 GET 服务端、打印 `Hello Cangjie!`）的完整经过，包括一个真实踩坑——cjnative SDK 无 `include/`，须 `NO_ASPECTCJ=1` 跳过 aspectCJ 模块才能 `build.py` 到 `net`。**本示例经 GitHub Actions 实测：`cjpm build success` + 运行输出 `Hello Cangjie!`**（非文档转述）。
 
@@ -169,7 +169,15 @@ main(): Int64 {
 }
 ```
 
-`import stdx.encoding.json.*`；`JsonValue.fromStr(str)` 解析、`.toString()` 紧凑序列化；`jv as JsonArray` 下转（返回 `Option`，承文章 41 的 `as`）、`a.size()`/`a.get(i): Option<JsonValue>` 取元素。运行（同 §5 的 stdx 链接前置）输出确定，见文末 CI 核对。
+`import stdx.encoding.json.*`；`JsonValue.fromStr(str)` 解析、`.toString()` 紧凑序列化；`jv as JsonArray` 下转（返回 `Option`，承文章 41 的 `as`）、`a.size()`/`a.get(i): Option<JsonValue>` 取元素。**CI 实跑输出**（Linux，`cjpm build success` 后运行）：
+
+```text
+roundtrip=[1,2,3,true,"cj"]
+made=7
+size=5
+```
+
+> **CI 抓到的真实坑**：初版把内层引号写成 `\"cj\"`，在 `##"…"##` **raw 字符串**里反斜杠是字面量 → JSON 变 `\"cj\"` 非法、`JsonValue.fromStr` 运行时抛 `JsonException`（编译却通过）。raw 串里内层 `"` **直接写、不加反斜杠**才对。这正是"编译过≠运行对、必须实跑"的又一例。
 
 > **仍守的边界**：`DataModel`/`@ derivable ToJson`（把自定义 struct 反射式转 JSON）涉及 `stdx.serialization`，本系列未逐个 CI 验证其确切宏用法，故 **054 只演示确证过的 `JsonValue` 直接用法**；自定义类型序列化的精确写法以 stdx 手册为准、不硬编。
 
