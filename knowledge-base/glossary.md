@@ -260,4 +260,47 @@
 
 ---
 
+---
+
+## 类型系统与原理术语（阶段四）
+
+### 类型系统
+- **名义子类型 (Nominal Subtyping)**: 只有显式声明 `class D <: B` / `<: Interface` 才构成子类型；与结构子类型（TypeScript/Go 隐式）相对。`struct` 不进子类型格。
+- **顶类型 / 底类型 (Top/Bottom Type)**: `Any` 是所有类型的父（万物可归）；`Nothing` 是所有类型的子（无值、永不正常返回，可置于任何"期望某类型"处）。
+- **泛型不变性 (Invariant)**: `Box<Int64>` 与 `Box<Any>` 之间无子类型关系；1.0.5 无 `out`/`covariant` 声明点变体关键字。
+- **`as` 转型**: 1.0.5 中 `e as T` **返回 `Option<T>`**（成功 Some、失败 None）；**没有 `as?`**。
+
+### 代数数据类型与匹配
+- **积类型 (Product Type)**: "既…又…"，如 `struct`/元组/构造器带多个字段。
+- **和类型 (Sum Type)**: "或…或…"，如 `enum` 的多构造器；`Option<T>` 即 `Some(T) | None`。
+- **穷尽性 (Exhaustiveness)**: `match` 必须覆盖所有构造器，少一支 → `non-exhaustive patterns` 编译错；写满再加 `_` → `unreachable pattern` 告警。
+- **不可反驳性 (Irrefutability)**: 模式是否对所有输入都匹配成功。`let` 左侧必须不可反驳（`Some(v)` 可反驳，故不能出现在 `let`）。
+
+### const 与编译期
+- **const 上下文**: `const` 变量初始化表达式等，**总在编译期求值**（超范围/溢出现在就报错）。
+- **const 函数 (`const func`)**: 具备编译期求值能力的函数；在 const 上下文编译期跑、否则运行期跑（同一函数两种时机）。禁 `var`、禁非 const 调用、禁副作用；可递归。
+
+### 内存与生命周期
+- **值类型 / 引用类型**: `struct`/枚举/基础类型/元组/`VArray` 为值（赋值全拷）；`class`/接口/`Array`/闭包为引用（赋值共享）。
+- **`VArray<T,$N>`**: 真值数组，`$N` 为字面量长度、不堆分配、不参与 GC；元素类型受限、不实现 for-in。
+- **终结器 `~init`**: `class` 被 GC 回收时调用，时机不确定；不能用于确定性资源释放（用 `try-with-resources`）。
+
+## 并发与内存模型术语（阶段四）
+
+- **数据竞争 (Data Race)**: 两个访问同一内存、至少一个写、无 happens-before 关系——四条同时成立才算。
+- **happens-before**: 跨线程可见性/顺序的保证；由 `spawn`/`Future.get()`、`Mutex` lock/unlock 配对、SeqCst 原子建立。
+- **SeqCst（顺序一致）**: 1.0.5 原子操作唯一暴露的内存序强度；`MemoryOrder` 枚举其余取值及带 `memoryOrder:` 的重载**已弃用**，语言不公开细粒度内存序。
+- **CAS / `compareAndSwap`**: 比较并交换原子操作（1.0.5 方法名是 `compareAndSwap`，非 `compareAndSet`）。
+- **`ConcurrentLinkedQueue`**: `std.collection.concurrent` 的无锁队列，`remove` 返回 `Option`；1.0.5 **无 Channel / 无 actor 关键字**，消息传递靠它。
+- **屏障 (Barrier)**: 等待若干并发任务全部完成的同步点，常用 `Future.get()` 收口实现。
+
+## 工具链与生态术语（阶段三/五）
+
+- **cjpm / cjc / cjfmt / cjlint / cjdoc / cjdb / cjprof / cjcov**: 包管理 / 编译 / 格式化 / 静态检查 / 文档 / 调试（LLDB 内核，仅 Win/Linux）/ 性能（Linux-only）/ 覆盖率工具。
+- **stdx（扩展标准库）**: `net.http`、`encoding.json`、`serialization`、`net.tls`、`crypto`、`log` 等**不随 base SDK**，需下载/构建 stdx 并经 `cjpm.toml` 的 `[target.<triple>.bin-dependencies]` 挂载；`net` 依赖 OpenSSL 3。
+- **`Array` 的"名值实引用"**: `Array` 声明为 struct，但内部只持元素引用 → 赋值/传参共享 backing store（要独立用 `.clone()`）。
+- **LTS / STS / Nightly**: 长期支持 / 标准技术演进 / 每日构建；本系列锁 **1.0.5 LTS**。
+
+---
+
 *本术语表基于仓颉1.0.5 LTS版本，将随版本更新而更新*

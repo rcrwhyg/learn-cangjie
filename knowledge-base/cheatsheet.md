@@ -523,4 +523,88 @@ executor.shutdown()
 
 ---
 
+---
+
+## 类型系统原理（阶段四实测）
+
+```cangjie
+// 无隐式转换：跨界一律显式 T(e)（实测 Int64->Int32 / Int64+Float64 均编译错）
+let i: Int64 = 42
+let j: Int32 = Int32(i)      // 必须写 Int32(...)，`j = i` 不合法
+// as 返回 Option（1.0.5 没有 as?）；is 判类型
+let o = (someObj as Sub)      // o: Option<Sub>
+// 底/顶类型
+let x: Any = anything          // Any 顶：万物可进
+// Nothing 底：永不返回的表达式可置于任何"期望某类型"处
+```
+
+**要点**：`struct` 不进子类型格；`open func` 才可 `override`；泛型**不变**（`Box<Int64>` 非 `Box<Any>`）；无声明点变体关键字。
+
+## ADT 与模式匹配（阶段四实测）
+
+```cangjie
+enum Status { | Ok, Warn, Error }        // enum 用 | 分隔构造器
+let s = Status.Ok
+let r = match (s) {                       // 少一支 -> 编译错 non-exhaustive patterns
+    case Ok => "ok"; case Warn => "warn"; case Error => "error"
+}
+// let 左侧必须"不可反驳"：`let Some(v) = opt` 非法，只能放进 match
+```
+
+**要点**：已写满所有分支还加 `_` → `warning: unreachable pattern`（编译器识别死分支）；`Option` 就是普通 enum、不特殊。
+
+## const 与编译期求值（阶段四实测）
+
+```cangjie
+const func sq(x: Int64): Int64 { x * x }   // 纯、可递归、无 var / 无副作用 / 只调 const
+const N: Int64 = sq(5)                      // const 上下文 → 编译期算(=25)；溢出/超范围编译期即报错
+```
+
+## 值/引用与内存（阶段四实测）
+
+```cangjie
+// struct=值(赋值全拷)，class/Array=引用(赋值共享)
+// Array 名值实引用：let b=a; b[0]=x 会改到 a！要独立 b=a.clone()
+let v: VArray<Int64, $3> = [1,2,3]   // 真值数组：拷贝数据、零堆；但 不实现 for-in，用索引 0..v.size
+```
+
+**要点**：`~init` 终结器仅 GC 时触发、时机不可靠；`open class` 禁 `~init`；释放文件/资源用 `try-with-resources` 不靠 GC。
+
+## 并发内存模型（阶段四实测）
+
+```cangjie
+let a = AtomicInt64(0)
+a.store(7); let x = a.load()          // 1.0.5 推荐：不带 memoryOrder（MemoryOrder 枚举已弃用）
+let f = spawn { work() }                // spawn 接块、返回 Future<Unit>；f.get() 建 happens-before
+let q = ConcurrentLinkedQueue<Int64>()  // 无锁队列（1.0.5 无 Channel/actor）
+q.add(1); match (q.remove()) { case Some(v)=>…; case None=>… }  // remove 返回 Option；无 poll
+```
+
+**要点**：无同步即数据竞争；CAS 方法名是 `compareAndSwap`（非 compareAndSet）；只有 SeqCst 一档内存序。
+
+## 工具链与 stdx（阶段三/五实测）
+
+```shell
+cjpm check / build / run / test / update / tree / install   # 无 fetch（拉依赖=check）、无 publish
+cjfmt -f a.cj -o b.cj        # 幂等格式化；短选项 -h/-v（--help 报错）
+cjlint -f src/               # 报告 G.NAM.* 规则码；配好 CANGJIE_HOME 免传 -c/-m
+cjpm test                    # 只编 *_test.cj；断言是宏 @Expect(继续)/@Assert(fail-fast)
+cjpm test --coverage && cjcov --html-details
+```
+
+stdx（`stdx.net.http`/`encoding.json`/`net.tls`…）不随 SDK：下预编译包或 `build.py` 源码构建（cjnative 需 `NO_ASPECTCJ=1` 绕开缺 `include/` 的 aspectCJ + OpenSSL3），`cjpm.toml` 用 `[target.<triple>.bin-dependencies] path-option` 挂 `dynamic/stdx`。
+
+## 高频语法坑（全系列实测）
+
+| 坑 | 事实 |
+|---|---|
+| `1..n` | **上界不含**；含界写 `1..=n` |
+| Rune 字面量 | `r'\n'`（带 `r`），裸 `'\n'` 是 String |
+| struct 构造 | **位置参数** `Config(a,b)`（`Config(x: a)` 常报错） |
+| `match` 分支 | `case X => { … }` 花括号被当 lambda；多语句提函数 |
+| Option | 无 `.get()`；用 `match`/`getOrElse`；`isEmpty`+`remove` 是 race |
+| raw 串 | `##"…"##` 内层 `"` **不加反斜杠**（否则 JSON 非法） |
+
+---
+
 *本速查表基于仓颉1.0.5 LTS版本，将随版本更新而更新*
